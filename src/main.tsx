@@ -1,4 +1,11 @@
-import { render } from 'preact'
-import { App } from './app.tsx'
+import { render } from 'preact';
+import App from './app';
+import GlobalStyles from './component/GlobalStyles';
 
-render(<App />, document.getElementById('app')!)
+const root = document.getElementById('app')!;
+render(
+    <GlobalStyles>
+        <App />
+    </GlobalStyles>,
+    root,
+);

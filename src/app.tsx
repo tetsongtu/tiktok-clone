@@ -1,13 +1,39 @@
-import { useState } from 'preact/hooks';
-import Content from './Content';
+import { Fragment } from 'preact';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { publicRoutes } from './routes';
+import { DefaultLayout } from './component/Layout';
 
-export function App() {
-    const [show, setShow] = useState(false);
-
+function App() {
     return (
-        <div style={{ padding: 20 }}>
-            <button onClick={() => setShow(!show)}>Toggle</button>
-            {show && <Content />}
-        </div>
+        <Router>
+            <div className="app">
+                <Routes>
+                    {publicRoutes.map((route: any, index) => {
+                        let Layout: any = DefaultLayout;
+
+                        if (route.layout) {
+                            Layout = route.layout;
+                        } else if (route.layout === null) {
+                            Layout = Fragment;
+                        }
+
+                        const Page = route.component;
+                        return (
+                            <Route
+                                key={index}
+                                path={route.path}
+                                element={
+                                    <Layout>
+                                        <Page />
+                                    </Layout>
+                                }
+                            />
+                        );
+                    })}
+                </Routes>
+            </div>
+        </Router>
     );
 }
+
+export default App;
