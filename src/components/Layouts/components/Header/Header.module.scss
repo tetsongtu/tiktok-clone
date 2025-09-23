@@ -65,16 +65,6 @@
 .logo {
 }
 
-.search-btn {
-    left: var(--search-padding-x);
-    opacity: 0.5;
-
-    &:hover {
-        cursor: pointer;
-        background: rgba(22, 24, 35, 0.06);
-    }
-}
-
 .clear,
 .loading {
     right: var(--search-padding-x);
