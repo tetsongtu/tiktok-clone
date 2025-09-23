@@ -3,11 +3,15 @@ import classNames from 'classnames/bind';
 import images from '~/assets/images';
 
 import { Wrapper as PopperWrapper } from '~/components/Popper';
-import SearchTooltip from '~/components/SearchTooltip';
+import Tooltip from '~/components/Tooltip';
+import { useRef, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Header() {
+    const searchBtnRef = useRef<HTMLButtonElement>(null);
+    const [searchResult, setSearchResult] = useState([]);
+
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -18,8 +22,15 @@ function Header() {
                     <div className={cx('search-result')}>Ket qua</div>
                 </PopperWrapper>
                 <div className={cx('search')}>
-                    <input type="text" placeholder="Search" spellcheck={false} />
-                    <SearchTooltip content="My tooltip with more content"></SearchTooltip>
+                    <Tooltip content="Ket qua">
+                        <input type="text" placeholder="Search" spellcheck={false} />
+                    </Tooltip>
+
+                    <Tooltip content="My tooltip with more content">
+                        <button ref={searchBtnRef} className={cx('search-btn')}>
+                            <img src={images.search} alt="Search" />
+                        </button>
+                    </Tooltip>
 
                     <button className={cx('clear')}>
                         <img src={images.clear} alt="Clear" />

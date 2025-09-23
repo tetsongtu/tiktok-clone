@@ -1,8 +1,7 @@
-import styles from './SearchTooltip.module.scss';
+import styles from './Tooltip.module.scss';
 import classNames from 'classnames/bind';
 
-import { useEffect, useRef } from 'react';
-import images from '~/assets/images';
+import React, { useEffect, useRef } from 'react';
 
 import {
     computePosition,
@@ -15,48 +14,53 @@ import {
 
 const cx = classNames.bind(styles);
 
-interface MyTooltipProps {
+interface TooltipProps {
+    children: React.ReactElement;
+    visible?: boolean;
     content: string;
     showArrow?: boolean;
 }
 
-function SearchTooltip({ content, showArrow = true }: MyTooltipProps) {
-    const searchBtnRef = useRef<HTMLButtonElement>(null);
-    const searchTooltipRef = useRef<HTMLDivElement>(null);
-    const tooltipArrowRef = useRef<HTMLDivElement>(null);
+function Tooltip({ children, visible = true, content, showArrow = true }: TooltipProps) {
+    const triggerRef = useRef<HTMLElement>(null);
+    const TooltipRef = useRef<HTMLDivElement>(null);
+    const ArrowRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const button = searchBtnRef.current;
-        const tooltip = searchTooltipRef.current;
-        const arrowEl = tooltipArrowRef.current;
+        if (!visible) return;
 
-        if (!button || !tooltip) return;
+        const trigger = triggerRef.current;
+        const tooltip = TooltipRef.current;
+        const arrowEl = ArrowRef.current;
+
+        if (!trigger || !tooltip) return;
 
         const updatePosition = () => {
             const middleware = [shift({ padding: 5 }), offset(6)];
             if (showArrow && arrowEl) middleware.push(arrow({ element: arrowEl }));
 
-            computePosition(button, tooltip, {
+            computePosition(trigger, tooltip, {
                 middleware,
             }).then(({ x, y, placement, middlewareData }) => {
                 Object.assign(tooltip.style, { left: `${x}px`, top: `${y}px` });
+
                 if (!middlewareData.arrow) return;
                 applyArrowStyles(arrowEl!, placement, middlewareData);
             });
         };
 
-        button.addEventListener('mouseenter', updatePosition);
-    }, [showArrow]);
+        trigger.addEventListener('mouseenter', updatePosition);
+    }, [showArrow, visible]);
     return (
-        <>
-            <button ref={searchBtnRef} className={cx('search-btn')}>
-                <img src={images.search} alt="Search" />
-            </button>
-            <div ref={searchTooltipRef} className={cx('tooltip')}>
-                {content}
-                {showArrow && <div ref={tooltipArrowRef} className={cx('arrow')} />}
-            </div>
-        </>
+        <div className={cx('tooltipWrapper')}>
+            {React.cloneElement(children, { ref: triggerRef })}
+            {visible && (
+                <div ref={TooltipRef} className={cx('tooltipContent')}>
+                    {content}
+                    {showArrow && <div ref={ArrowRef} className={cx('tooltipArrow')} />}
+                </div>
+            )}
+        </div>
     );
 }
 
@@ -77,4 +81,4 @@ function applyArrowStyles(
     });
 }
 
-export default SearchTooltip;
+export default Tooltip;

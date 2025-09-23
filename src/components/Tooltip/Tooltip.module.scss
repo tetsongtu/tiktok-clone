@@ -1,18 +1,8 @@
-.search-btn {
-    left: var(--search-padding-x);
-    opacity: 0.5;
-
-    &:hover {
-        cursor: pointer;
-        background: rgba(22, 24, 35, 0.06);
-
-        + .tooltip {
-            display: block;
-        }
-    }
+.tooltipWrapper {
+    display: block;
 }
 
-.tooltip {
+.tooltipContent {
     display: none;
     position: absolute;
     width: max-content;
@@ -25,7 +15,11 @@
     font-size: 90%;
 }
 
-.arrow {
+.tooltipWrapper:hover .tooltipContent {
+    display: block;
+}
+
+.tooltipArrow {
     position: absolute;
     background: var(--black);
     width: 8px;
