@@ -1,25 +1,22 @@
-.tooltipWrapper {
-    display: block;
-}
-
-.tooltipContent {
-    display: none;
-    position: absolute;
-    width: max-content;
-    top: 0;
-    background: var(--black);
+.wrapper {
     color: white;
     font-weight: bold;
+
+    &:hover .content {
+        display: block;
+    }
+}
+
+.content {
+    display: none;
+    position: absolute;
+    background: var(--black);
     padding: 5px;
     border-radius: 4px;
     font-size: 90%;
 }
 
-.tooltipWrapper:hover .tooltipContent {
-    display: block;
-}
-
-.tooltipArrow {
+.arrow {
     position: absolute;
     background: var(--black);
     width: 8px;
