@@ -4,12 +4,12 @@ import images from '~/assets/images';
 
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { Tooltip } from '~/components/Tooltip';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import AccountItem from '~/components/AccountItem';
 
 const cx = classNames.bind(styles);
 
 function Header() {
-    const searchBtnRef = useRef<HTMLButtonElement>(null);
     const [searchResult, setSearchResult] = useState<any>([]);
 
     useEffect(() => {
@@ -25,30 +25,34 @@ function Header() {
                     <img src={images.logo} alt="TikTok" />
                 </div>
 
-                {searchResult.length > 0 && (
-                    <div className={cx('search-result')}>
-                        <PopperWrapper>Ket qua</PopperWrapper>
-                    </div>
-                )}
-
-                <div className={cx('search')}>
-                    <Tooltip content="Ket qua" visible={searchResult.length > 0}>
+                <Tooltip
+                    visible={searchResult.length > 0}
+                    render={(attrs) => (
+                        <div className={cx('search-result')} {...attrs}>
+                            <PopperWrapper>
+                                <h4 className={cx('search-title')}>Accounts</h4>
+                                <AccountItem />
+                            </PopperWrapper>
+                        </div>
+                    )}
+                >
+                    <div className={cx('search')}>
                         <input type="text" placeholder="Search" spellcheck={false} />
-                    </Tooltip>
 
-                    <Tooltip content="My tooltip with more content">
-                        <button ref={searchBtnRef} className={cx('search-btn')}>
-                            <img src={images.search} alt="Search" />
+                        <Tooltip content="Tim kiem">
+                            <button className={cx('search-btn')}>
+                                <img src={images.search} alt="Search" />
+                            </button>
+                        </Tooltip>
+
+                        <button className={cx('clear')}>
+                            <img src={images.clear} alt="Clear" />
                         </button>
-                    </Tooltip>
-
-                    <button className={cx('clear')}>
-                        <img src={images.clear} alt="Clear" />
-                    </button>
-                    <button className={cx('loading')}>
-                        <img src={images.loading} alt="Loading" />
-                    </button>
-                </div>
+                        <button className={cx('loading')}>
+                            <img src={images.loading} alt="Loading" />
+                        </button>
+                    </div>
+                </Tooltip>
                 <div className={cx('actions')}></div>
             </div>
         </header>

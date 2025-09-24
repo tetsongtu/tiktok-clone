@@ -17,21 +17,28 @@ const cx = classNames.bind(styles);
 interface TooltipProps {
     children: React.ReactElement;
     visible?: boolean;
-    content: string;
+    content?: string;
     showArrow?: boolean;
+    render?: (attrs: React.HTMLAttributes<HTMLDivElement>) => React.ReactNode;
 }
 
-function Tooltip({ children, visible = true, content, showArrow = true }: TooltipProps) {
-    const triggerRef = useRef<HTMLElement>(null);
-    const TooltipRef = useRef<HTMLDivElement>(null);
-    const ArrowRef = useRef<HTMLDivElement>(null);
+function Tooltip({
+    children,
+    visible = true,
+    content,
+    showArrow = true,
+    render,
+}: TooltipProps) {
+    const triggerRef = useRef<HTMLDivElement>(null);
+    const tooltipRef = useRef<HTMLDivElement>(null);
+    const arrowRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!visible) return;
 
         const trigger = triggerRef.current;
-        const tooltip = TooltipRef.current;
-        const arrowEl = ArrowRef.current;
+        const tooltip = tooltipRef.current;
+        const arrowEl = arrowRef.current;
 
         if (!trigger || !tooltip) return;
 
@@ -54,12 +61,15 @@ function Tooltip({ children, visible = true, content, showArrow = true }: Toolti
     return (
         <div className={cx('wrapper')}>
             {React.cloneElement(children, { ref: triggerRef })}
-            {visible && (
-                <div ref={TooltipRef} className={cx('content')}>
-                    {content}
-                    {showArrow && <div ref={ArrowRef} className={cx('arrow')} />}
-                </div>
-            )}
+            {visible &&
+                (render ? (
+                    render({ ref: tooltipRef })
+                ) : (
+                    <div ref={tooltipRef} className={cx('content')}>
+                        {content}
+                        {showArrow && <div ref={arrowRef} className={cx('arrow')} />}
+                    </div>
+                ))}
         </div>
     );
 }
