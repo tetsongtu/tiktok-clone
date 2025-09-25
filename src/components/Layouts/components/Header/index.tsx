@@ -1,10 +1,11 @@
-import styles from './Header.module.scss';
-import classNames from 'classnames/bind';
-import images from '~/assets/images';
-
-import { Wrapper as PopperWrapper } from '~/components/Popper';
-import { Tooltip } from '~/components/Tooltip';
 import { useEffect, useState } from 'react';
+import classNames from 'classnames/bind';
+
+import Button from '~/components/Button';
+import { Tooltip } from '~/components/Tooltip';
+import { Wrapper as PopperWrapper } from '~/components/Popper';
+import images from '~/assets/images';
+import styles from './Header.module.scss';
 import AccountItem from '~/components/AccountItem';
 
 const cx = classNames.bind(styles);
@@ -27,8 +28,8 @@ function Header() {
 
                 <Tooltip
                     visible={searchResult.length > 0}
-                    render={(attrs) => (
-                        <div className={cx('search-result')} {...attrs}>
+                    render={() => (
+                        <div className={cx('search-result')}>
                             <PopperWrapper>
                                 <h4 className={cx('search-title')}>Accounts</h4>
                                 <AccountItem />
@@ -39,7 +40,7 @@ function Header() {
                     <div className={cx('search')}>
                         <input type="text" placeholder="Search" spellcheck={false} />
 
-                        <Tooltip content="Tim kiem">
+                        <Tooltip content="Search">
                             <button className={cx('search-btn')}>
                                 <img src={images.search} alt="Search" />
                             </button>
@@ -53,7 +54,10 @@ function Header() {
                         </button>
                     </div>
                 </Tooltip>
-                <div className={cx('actions')}></div>
+                <div className={cx('actions')}>
+                    <Button text>Log in</Button>
+                    <Button rounded>Sign up</Button>
+                </div>
             </div>
         </header>
     );

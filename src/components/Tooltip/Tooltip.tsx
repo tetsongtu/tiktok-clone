@@ -14,21 +14,13 @@ import {
 
 const cx = classNames.bind(styles);
 
-interface TooltipProps {
-    children: React.ReactElement;
-    visible?: boolean;
-    content?: string;
-    showArrow?: boolean;
-    render?: (attrs: React.HTMLAttributes<HTMLDivElement>) => React.ReactNode;
-}
-
 function Tooltip({
     children,
     visible = true,
-    content,
+    content = '',
     showArrow = true,
-    render,
-}: TooltipProps) {
+    render = null,
+}: any) {
     const triggerRef = useRef<HTMLDivElement>(null);
     const tooltipRef = useRef<HTMLDivElement>(null);
     const arrowRef = useRef<HTMLDivElement>(null);
@@ -43,8 +35,11 @@ function Tooltip({
         if (!trigger || !tooltip) return;
 
         const updatePosition = () => {
-            const middleware = [shift({ padding: 5 }), offset(6)];
-            if (showArrow && arrowEl) middleware.push(arrow({ element: arrowEl }));
+            const middleware = [
+                shift({ padding: 5 }),
+                offset(6),
+                arrow({ element: arrowEl! }),
+            ];
 
             computePosition(trigger, tooltip, {
                 middleware,
@@ -58,18 +53,21 @@ function Tooltip({
 
         trigger.addEventListener('mouseenter', updatePosition);
     }, [showArrow, visible]);
+
+    // UI tooltip node
+    const tooltipNode = render ? (
+        render()
+    ) : (
+        <div ref={tooltipRef} className={cx('content')}>
+            {content}
+            {showArrow && <div ref={arrowRef} className={cx('arrow')} />}
+        </div>
+    );
+
     return (
         <div className={cx('wrapper')}>
             {React.cloneElement(children, { ref: triggerRef })}
-            {visible &&
-                (render ? (
-                    render({ ref: tooltipRef })
-                ) : (
-                    <div ref={tooltipRef} className={cx('content')}>
-                        {content}
-                        {showArrow && <div ref={arrowRef} className={cx('arrow')} />}
-                    </div>
-                ))}
+            {visible && tooltipNode}
         </div>
     );
 }

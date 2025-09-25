@@ -46,6 +46,8 @@
     }
 
     button {
+        background: transparent;
+
         position: absolute;
         width: var(--search-btn-size);
         height: var(--search-btn-size);
@@ -85,4 +87,8 @@
         cursor: pointer;
         background: rgba(22, 24, 35, 0.06);
     }
+}
+
+.custom-login {
+    color: var(--primary);
 }
