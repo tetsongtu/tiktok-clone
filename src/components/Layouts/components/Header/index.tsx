@@ -16,7 +16,7 @@ function Header() {
     useEffect(() => {
         setTimeout(() => {
             setSearchResult([1, 2, 3]);
-        }, 1000);
+        }, 3000);
     }, []);
 
     return (
@@ -27,7 +27,6 @@ function Header() {
                 </div>
 
                 <Tooltip
-                    visible={searchResult.length > 0}
                     render={() => (
                         <div className={cx('search-result')}>
                             <PopperWrapper>
@@ -54,10 +53,23 @@ function Header() {
                         </button>
                     </div>
                 </Tooltip>
-                <div className={cx('actions')}>
-                    <Button text>Log in</Button>
-                    <Button rounded>Sign up</Button>
-                </div>
+            </div>
+            <div className={cx('actions')}>
+                <Button outline>Upload</Button>
+                <Button primary>Load in</Button>
+                <Tooltip
+                    visible
+                    render={() => (
+                        <div className={cx('menu-items')}>
+                            <PopperWrapper>
+                                <h4 className={cx('search-title')}>Accounts</h4>
+                                <AccountItem />
+                            </PopperWrapper>
+                        </div>
+                    )}
+                >
+                    <button className={cx('more-btn')}>⋮</button>
+                </Tooltip>
             </div>
         </header>
     );
