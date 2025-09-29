@@ -87,7 +87,17 @@ function Tooltip({ children, visible, content, render }: any) {
         <div className={cx('wrapper')} {...hoverProps}>
             {React.cloneElement(children, { ref: triggerRef })}
 
-            {isTooltipVisible && render && render()}
+            {isTooltipVisible && render && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        right: '0',
+                        padding: '16px',
+                    }}
+                >
+                    {render()}
+                </div>
+            )}
 
             {content && (
                 <div ref={tooltipRef} className={cx('content')}>

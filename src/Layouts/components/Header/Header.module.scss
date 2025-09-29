@@ -20,7 +20,9 @@
 .actions {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    position: fixed;
+    right: 0;
+    padding-right: 16px;
     height: var(--default-layout-height);
 }
 
