@@ -1,6 +1,6 @@
 import Header from '../components/Header';
 
-function HeaderOnly({ children }: { children: any }) {
+function HeaderOnly({ children }: any) {
     return (
         <div>
             <Header />

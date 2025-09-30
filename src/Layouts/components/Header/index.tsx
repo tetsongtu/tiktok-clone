@@ -7,8 +7,25 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import images from '~/assets/images';
 import styles from './Header.module.scss';
 import AccountItem from '~/components/AccountItem';
+import Menu from '~/components/Popper/Menu';
 
 const cx = classNames.bind(styles);
+
+const MENU_ITEMS = [
+    {
+        icon: '',
+        title: 'Language',
+    },
+    {
+        icon: '',
+        title: 'Feedback and help',
+        to: '/feedback',
+    },
+    {
+        icon: '',
+        title: 'Keyboard shortcuts',
+    },
+];
 
 function Header() {
     const [searchResult, setSearchResult] = useState<any>([]);
@@ -27,6 +44,7 @@ function Header() {
                 </div>
 
                 <Tooltip
+                    interactive
                     render={() => (
                         <div className={cx('search-result')}>
                             <PopperWrapper>
@@ -57,19 +75,9 @@ function Header() {
             <div className={cx('actions')}>
                 <Button outline>Upload</Button>
                 <Button primary>Load in</Button>
-                <Tooltip
-                    visible
-                    render={() => (
-                        <div className={cx('menu-items')}>
-                            <PopperWrapper>
-                                <h4 className={cx('search-title')}>Accounts</h4>
-                                <AccountItem />
-                            </PopperWrapper>
-                        </div>
-                    )}
-                >
+                <Menu items={MENU_ITEMS}>
                     <button className={cx('more-btn')}>⋮</button>
-                </Tooltip>
+                </Menu>
             </div>
         </header>
     );

@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 
 const cx = classNames.bind(styles);
 
-function DefaultLayout({ children }: { children: any }) {
+function DefaultLayout({ children }: any) {
     return (
         <div className={cx('wrapper')}>
             <Header />

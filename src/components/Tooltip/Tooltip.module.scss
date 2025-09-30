@@ -1,11 +1,15 @@
-.wrapper {
-    &:hover .content {
-        display: block;
-    }
+.wrapper.interactive {
+    user-select: none;
+}
+
+.render-content {
+    position: absolute;
+    left: 0;
+    padding: 16px;
+    z-index: -1000;
 }
 
 .content {
-    display: none;
     position: absolute;
     color: white;
     font-weight: bold;

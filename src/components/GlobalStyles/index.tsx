@@ -1,6 +1,6 @@
 import './GlobalStyles.scss';
 
-function GlobalStyles({ children }: { children: any }) {
+function GlobalStyles({ children }: any) {
     return <>{children}</>;
 }
 
