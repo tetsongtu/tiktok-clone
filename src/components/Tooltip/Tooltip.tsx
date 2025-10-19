@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import classNames from 'classnames/bind';
-import styles from './Tooltip.module.scss';
+import { useEffect, useRef, useState } from 'react';
+import classNames from 'classnames';
+import './Tooltip.scss';
 
 import {
     computePosition,
@@ -10,8 +10,6 @@ import {
     type Placement,
     type MiddlewareData,
 } from '@floating-ui/dom';
-
-const cx = classNames.bind(styles);
 
 /**
  * Utility: Apply arrow styles based on placement
@@ -23,7 +21,10 @@ function applyArrowStyles(
 ) {
     const { x, y } = middlewareData.arrow || {};
     const staticSide: Record<string, string> = {
+        top: 'bottom',
+        right: 'left',
         bottom: 'top',
+        left: 'right',
     };
 
     Object.assign(arrowEl.style, {
@@ -70,18 +71,19 @@ function Tooltip({
             arrow({ element: arrowEl }),
         ];
 
-        computePosition(trigger, tooltip, { middleware }).then(
-            ({ x, y, placement, middlewareData }) => {
-                Object.assign(tooltip.style, {
-                    left: `${x}px`,
-                    top: `${y}px`,
-                });
+        computePosition(trigger, tooltip, {
+            placement: 'bottom',
+            middleware,
+        }).then(({ x, y, placement, middlewareData }) => {
+            Object.assign(tooltip.style, {
+                left: `${x}px`,
+                top: `${y}px`,
+            });
 
-                if (middlewareData.arrow) {
-                    applyArrowStyles(arrowEl, placement, middlewareData);
-                }
-            },
-        );
+            if (middlewareData.arrow) {
+                applyArrowStyles(arrowEl, placement, middlewareData);
+            }
+        });
     };
 
     // Positioning
@@ -110,16 +112,22 @@ function Tooltip({
     };
 
     const renderContent = content ? (
-        <div ref={tooltipRef} className={cx('content')}>
+        <div ref={tooltipRef} className="tooltip-content">
             {content}
-            <div ref={arrowRef} className={cx('arrow')} />
+            <div ref={arrowRef} className="tooltip-arrow" />
         </div>
     ) : render ? (
-        <div className={cx('render-content')}>{render()}</div>
+        <div className="render-content">{render()}</div>
     ) : null;
 
     return (
-        <div ref={wrapperRef} className={cx('wrapper', { interactive })} {...hoverProps}>
+        <div
+            ref={wrapperRef}
+            className={classNames('tooltip-wrapper', {
+                'tooltip-interactive': interactive,
+            })}
+            {...hoverProps}
+        >
             {children}
             {isTooltipVisible && renderContent}
         </div>

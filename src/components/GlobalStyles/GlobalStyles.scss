@@ -39,3 +39,15 @@ a[href] {
     color: var(--text-color);
     text-decoration: none;
 }
+
+body {
+    .tooltip-arrow {
+        background: #333;
+    }
+
+    .tooltip-content {
+        padding: 8px 9px;
+        border-radius: 8px;
+        background: #333;
+    }
+}
