@@ -14,7 +14,22 @@ const cx = classNames.bind(styles);
 const MENU_ITEMS = [
     {
         icon: '',
-        title: 'Language',
+        title: 'English',
+        children: {
+            title: 'Language',
+            data: [
+                {
+                    type: 'language',
+                    code: 'en',
+                    title: 'English',
+                },
+                {
+                    type: 'language',
+                    code: 'vi',
+                    title: 'Tiếng Việt',
+                },
+            ],
+        },
     },
     {
         icon: '',
@@ -35,6 +50,15 @@ function Header() {
             setSearchResult([1, 2, 3]);
         }, 3000);
     }, []);
+
+    const handleMenuChange = (menuItem: any) => {
+        switch (menuItem.type) {
+            case 'language':
+                break;
+            default:
+                break;
+        }
+    };
 
     return (
         <header className={cx('wrapper')}>
@@ -75,7 +99,7 @@ function Header() {
             <div className={cx('actions')}>
                 <Button outline>Upload</Button>
                 <Button primary>Load in</Button>
-                <Menu items={MENU_ITEMS}>
+                <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
                     <button className={cx('more-btn')}>⋮</button>
                 </Menu>
             </div>
