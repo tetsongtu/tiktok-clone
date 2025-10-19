@@ -41,6 +41,7 @@ function Tooltip({
     render,
     interactive,
     delay = [0, 0],
+    offset: offsetValue = 6,
     onHide,
 }: any) {
     // State
@@ -67,7 +68,14 @@ function Tooltip({
 
         const middleware = [
             shift({ padding: 5 }),
-            offset(6),
+            offset(
+                Array.isArray(offsetValue)
+                    ? {
+                          mainAxis: offsetValue[0],
+                          crossAxis: offsetValue[1],
+                      }
+                    : offsetValue,
+            ),
             arrow({ element: arrowEl }),
         ];
 
@@ -111,14 +119,12 @@ function Tooltip({
         onMouseLeave: () => createTimeoutHandler(false, delay[1], hideTimeout),
     };
 
-    const renderContent = content ? (
-        <div ref={tooltipRef} className="tooltip-content">
-            {content}
-            <div ref={arrowRef} className="tooltip-arrow" />
+    const renderContent = (
+        <div ref={tooltipRef} className={content ? 'tooltip-content' : 'render-content'}>
+            {content || render()}
+            <div ref={arrowRef} className={content && 'tooltip-arrow'} />
         </div>
-    ) : render ? (
-        <div className="render-content">{render()}</div>
-    ) : null;
+    );
 
     return (
         <div

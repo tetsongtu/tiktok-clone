@@ -37,6 +37,7 @@ function Menu({ children, items = [], onChange = defaultFn }: any) {
         <Tooltip
             interactive
             delay={[0, 700]}
+            offset={[12, 8]}
             render={() => (
                 <div className={cx('menu-list')}>
                     <PopperWrapper className={cx('menu-popper')}>

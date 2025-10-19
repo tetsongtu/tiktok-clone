@@ -44,6 +44,7 @@ const MENU_ITEMS = [
 
 function Header() {
     const [searchResult, setSearchResult] = useState<any>([]);
+    const currentUser = true;
 
     useEffect(() => {
         setTimeout(() => {
@@ -60,7 +61,30 @@ function Header() {
         }
     };
 
-    const currentUser = true;
+    const userMenu = [
+        {
+            icon: '',
+            title: 'View profile',
+            to: '/@hoaa',
+        },
+        {
+            icon: '',
+            title: 'Get coins',
+            to: '/coin',
+        },
+        {
+            icon: '',
+            title: 'Settings',
+            to: '/settings',
+        },
+        ...MENU_ITEMS,
+        {
+            icon: '',
+            title: 'Log out',
+            to: '/logout',
+            separate: true,
+        },
+    ];
 
     return (
         <header className={cx('wrapper')}>
@@ -112,7 +136,10 @@ function Header() {
                         <Button primary>Load in</Button>
                     </>
                 )}
-                <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
+                <Menu
+                    items={currentUser ? userMenu : MENU_ITEMS}
+                    onChange={handleMenuChange}
+                >
                     {currentUser ? (
                         <img
                             src="https://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/3df143b41360fcf147aca1bb5ff62475~tplv-tiktokx-cropcenter:100:100.jpeg?dr=14579&refresh_token=2988bc40&x-expires=1761037200&x-signature=9XuQ909zvFyth1tdS8n8fgoNvpo%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=sg1"
