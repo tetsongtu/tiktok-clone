@@ -40,6 +40,7 @@ function Tooltip({
     render,
     interactive,
     delay = [0, 0],
+    onHide,
 }: any) {
     // State
     const [showTooltip, setShowTooltip] = useState(false);
@@ -49,16 +50,19 @@ function Tooltip({
     const hideTimeout = useRef<any>(null);
 
     // Refs
-    const triggerRef = useRef<HTMLDivElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
     const tooltipRef = useRef<HTMLDivElement>(null);
     const arrowRef = useRef<HTMLDivElement>(null);
 
     const updatePosition = () => {
-        const trigger = triggerRef.current;
+        const wrapper = wrapperRef.current;
         const tooltip = tooltipRef.current;
         const arrowEl = arrowRef.current;
 
-        if (!trigger || !tooltip || !arrowEl) return;
+        if (!wrapper || !tooltip || !arrowEl) return;
+
+        const trigger = wrapper.children[0] as HTMLElement;
+        if (!trigger) return;
 
         const middleware = [
             shift({ padding: 5 }),
@@ -82,20 +86,21 @@ function Tooltip({
 
     // Positioning
     useEffect(() => {
-        const trigger = triggerRef.current;
-        if (!trigger) return;
+        const wrapper = wrapperRef.current;
+        if (!wrapper) return;
 
-        trigger.addEventListener('mouseenter', updatePosition);
+        wrapper.addEventListener('mouseenter', updatePosition);
     }, []);
 
     const createTimeoutHandler = (show: boolean, delayTime: number, timeoutRef: any) => {
-        if (delayTime > 0) {
-            timeoutRef.current = setTimeout(() => {
-                setShowTooltip(show);
-            }, delayTime);
-        } else {
+        clearTimeout(timeoutRef.current);
+
+        const action = () => {
             setShowTooltip(show);
-        }
+            if (!show) onHide?.();
+        };
+
+        delayTime > 0 ? (timeoutRef.current = setTimeout(action, delayTime)) : action();
     };
 
     // Hover control (if visible not controlled externally)
@@ -114,9 +119,8 @@ function Tooltip({
     ) : null;
 
     return (
-        <div className={cx('wrapper', { interactive })} {...hoverProps}>
-            {React.cloneElement(children, { ref: triggerRef })}
-
+        <div ref={wrapperRef} className={cx('wrapper', { interactive })} {...hoverProps}>
+            {children}
             {isTooltipVisible && renderContent}
         </div>
     );
