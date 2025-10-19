@@ -115,7 +115,10 @@ function Tooltip({
 
     // Hover control (if visible not controlled externally)
     const hoverProps = visible ?? {
-        onMouseEnter: () => createTimeoutHandler(true, delay[0], showTimeout),
+        onMouseEnter: () => {
+            clearTimeout(hideTimeout.current);
+            createTimeoutHandler(true, delay[0], showTimeout);
+        },
         onMouseLeave: () => createTimeoutHandler(false, delay[1], hideTimeout),
     };
 
