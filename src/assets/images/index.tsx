@@ -3,11 +3,12 @@ const files = {
     search: './search.svg',
     clear: './clear.svg',
     loading: './loading.svg',
+    noImage: './no-image.png',
 };
 
 const images = Object.fromEntries(
     Object.entries(files).map(([key, path]) => {
-        const file = import.meta.glob('./*.svg', {
+        const file = import.meta.glob('./*.(svg|png)', {
             query: '?url',
             import: 'default',
             eager: true,

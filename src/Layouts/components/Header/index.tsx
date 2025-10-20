@@ -8,6 +8,8 @@ import images from '~/assets/images';
 import styles from './Header.module.scss';
 import AccountItem from '~/components/AccountItem';
 import Menu from '~/components/Popper/Menu';
+import { UploadIcon, SearchIcon } from '~/components/Icons';
+import Image from '~/components/Image';
 
 const cx = classNames.bind(styles);
 
@@ -109,7 +111,7 @@ function Header() {
 
                         <Tooltip content="Search">
                             <button className={cx('search-btn')}>
-                                <img src={images.search} alt="Search" />
+                                <SearchIcon />
                             </button>
                         </Tooltip>
 
@@ -127,7 +129,7 @@ function Header() {
                 {currentUser ? (
                     <>
                         <Tooltip content="Upload video">
-                            <Button className={cx('action-btn')}>Upload</Button>
+                            <UploadIcon />
                         </Tooltip>
                     </>
                 ) : (
@@ -141,10 +143,11 @@ function Header() {
                     onChange={handleMenuChange}
                 >
                     {currentUser ? (
-                        <img
-                            src="https://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/3df143b41360fcf147aca1bb5ff62475~tplv-tiktokx-cropcenter:100:100.jpeg?dr=14579&refresh_token=2988bc40&x-expires=1761037200&x-signature=9XuQ909zvFyth1tdS8n8fgoNvpo%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=sg1"
+                        <Image
+                            src="ttps://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/3df143b41360fcf147aca1bb5ff62475~tplv-tiktokx-cropcenter:100:100.jpeg?dr=14579&refresh_token=2988bc40&x-expires=1761037200&x-signature=9XuQ909zvFyth1tdS8n8fgoNvpo%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=sg1"
                             className={cx('user-avatar')}
                             alt="User"
+                            fallback="https://yt3.ggpht.com/Pa8wyxqTOkhu5DW_RvkiQIS7Bsa7OW7gSen-2WpaQsC2EqUAkgubAg1_QPc951pzpN2F2Q4_TA=s88-c-k-c0x00ffffff-no-rj"
                         />
                     ) : (
                         <button className={cx('more-btn')}>⋮</button>
