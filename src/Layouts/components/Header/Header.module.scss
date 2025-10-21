@@ -26,82 +26,7 @@
     height: var(--default-layout-height);
 }
 
-.search,
-.search-result {
-    width: 208px;
-}
-
-.search {
-    position: relative;
-    display: flex;
-    height: var(--search-btn-size);
-    padding-left: var(--search-padding-x);
-    border: 1.5px solid transparent;
-    border-radius: var(--search-border-radius);
-    background: rgba(22, 24, 35, 0.06);
-
-    input {
-        flex: 1;
-        height: 100%;
-        padding: 0 12px 0 calc(12px + var(--search-btn-size));
-        font-size: 1.6rem;
-        color: var(--black);
-        caret-color: var(--primary);
-        background: transparent;
-    }
-
-    input:not(:placeholder-shown) ~ .search-btn {
-        opacity: 1;
-    }
-
-    button {
-        background: transparent;
-
-        position: absolute;
-        width: var(--search-btn-size);
-        height: var(--search-btn-size);
-    }
-
-    &::after {
-        content: '';
-        position: absolute;
-        top: var(--search-top-spacer);
-        left: var(--search-btn-size);
-        width: 1px;
-        height: calc(100% - var(--search-top-spacer) * 2);
-        background: rgba(22, 24, 35, 0.12);
-    }
-
-    &:focus-within {
-        border-color: rgba(22, 24, 35, 0.2);
-    }
-}
-
-.search-title {
-    padding: 5px 12px;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: rgba(22, 24, 35, 0.5);
-}
-
-.clear,
-.loading {
-    right: var(--search-padding-x);
-}
-
-.search-btn {
-    left: var(--search-padding-x);
-    opacity: 0.5;
-    &:hover {
-        cursor: pointer;
-        background: rgba(22, 24, 35, 0.06);
-    }
-}
-
-.custom-login {
-    color: var(--primary);
-}
-
+//Actions
 .more-btn {
     font-size: 2rem;
     padding: 4px 8px;
@@ -110,9 +35,27 @@
 }
 
 .action-btn {
+    position: relative;
+    display: flex;
     font-size: 2.2rem;
     color: #161823;
+    background-color: transparent;
     padding: 4px 8px;
+    cursor: pointer;
+}
+
+.badge {
+    position: absolute;
+    top: -3px;
+    right: 0px;
+    padding: 0px 6px;
+    height: 2rem;
+    line-height: 2rem;
+    border-radius: 10px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--white);
+    background-color: var(--primary);
 }
 
 .user-avatar {

@@ -43,6 +43,7 @@ function Tooltip({
     delay = [0, 0],
     offset: offsetValue = 6,
     onHide,
+    onClickOutside,
 }: any) {
     // State
     const [showTooltip, setShowTooltip] = useState(false);
@@ -102,6 +103,24 @@ function Tooltip({
         wrapper.addEventListener('mouseenter', updatePosition);
     }, []);
 
+    // Click outside
+    useEffect(() => {
+        if (!isTooltipVisible || !onClickOutside) return;
+
+        const handleClickOutside = (e: MouseEvent) => {
+            const clicked = e.target as Node;
+            const wrapper = wrapperRef.current;
+            const tooltip = tooltipRef.current;
+
+            if (tooltip?.contains(clicked) || wrapper?.contains(clicked)) return;
+            onClickOutside();
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isTooltipVisible, onClickOutside]);
+
+    // Timeout
     const createTimeoutHandler = (show: boolean, delayTime: number, timeoutRef: any) => {
         clearTimeout(timeoutRef.current);
 
@@ -113,7 +132,7 @@ function Tooltip({
         delayTime > 0 ? (timeoutRef.current = setTimeout(action, delayTime)) : action();
     };
 
-    // Hover control (if visible not controlled externally)
+    // Hover
     const hoverProps = visible ?? {
         onMouseEnter: () => {
             clearTimeout(hideTimeout.current);

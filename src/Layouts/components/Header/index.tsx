@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
+import { Link } from 'react-router-dom';
 
 import Button from '~/components/Button';
 import { Tooltip } from '~/components/Tooltip';
-import { Wrapper as PopperWrapper } from '~/components/Popper';
 import images from '~/assets/images';
 import styles from './Header.module.scss';
-import AccountItem from '~/components/AccountItem';
 import Menu from '~/components/Popper/Menu';
-import { UploadIcon, SearchIcon } from '~/components/Icons';
+import { UploadIcon, MessageIcon, InboxIcon } from '~/components/Icons';
 import Image from '~/components/Image';
+import Search from '../Search';
 
 const cx = classNames.bind(styles);
 
@@ -45,14 +44,7 @@ const MENU_ITEMS = [
 ];
 
 function Header() {
-    const [searchResult, setSearchResult] = useState<any>([]);
     const currentUser = true;
-
-    useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([1, 2, 3]);
-        }, 3000);
-    }, []);
 
     const handleMenuChange = (menuItem: any) => {
         switch (menuItem.type) {
@@ -91,45 +83,30 @@ function Header() {
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <div className={cx('logo')}>
+                <Link to="" className={cx('logo')}>
                     <img src={images.logo} alt="TikTok" />
-                </div>
-
-                <Tooltip
-                    interactive
-                    render={() => (
-                        <div className={cx('search-result')}>
-                            <PopperWrapper>
-                                <h4 className={cx('search-title')}>Accounts</h4>
-                                <AccountItem />
-                            </PopperWrapper>
-                        </div>
-                    )}
-                >
-                    <div className={cx('search')}>
-                        <input type="text" placeholder="Search" spellcheck={false} />
-
-                        <Tooltip content="Search">
-                            <button className={cx('search-btn')}>
-                                <SearchIcon />
-                            </button>
-                        </Tooltip>
-
-                        <button className={cx('clear')}>
-                            <img src={images.clear} alt="Clear" />
-                        </button>
-                        <button className={cx('loading')}>
-                            <img src={images.loading} alt="Loading" />
-                        </button>
-                    </div>
-                </Tooltip>
+                </Link>
+                <Search />
             </div>
 
             <div className={cx('actions')}>
                 {currentUser ? (
                     <>
                         <Tooltip content="Upload video">
-                            <UploadIcon />
+                            <button className={cx('action-btn')}>
+                                <UploadIcon />
+                            </button>
+                        </Tooltip>
+                        <Tooltip content="Messages">
+                            <button className={cx('action-btn')}>
+                                <MessageIcon />
+                            </button>
+                        </Tooltip>
+                        <Tooltip content="Inbox">
+                            <button className={cx('action-btn')}>
+                                <InboxIcon />
+                                <span className={cx('badge')}>12</span>
+                            </button>
                         </Tooltip>
                     </>
                 ) : (
