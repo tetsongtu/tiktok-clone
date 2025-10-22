@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.7.4",
+    "@floating-ui/react": "^0.27.16",
     "classnames": "^2.5.1",
     "normalize.css": "^8.0.1",
     "preact": "^10.27.2",

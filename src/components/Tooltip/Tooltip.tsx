@@ -1,162 +1,138 @@
 import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import './Tooltip.scss';
-
 import {
-    computePosition,
-    shift,
+    useFloating,
+    autoUpdate,
     offset,
+    shift,
     arrow,
+    useHover,
+    useFocus,
+    useDismiss,
+    useRole,
+    useInteractions,
     type Placement,
-    type MiddlewareData,
-} from '@floating-ui/dom';
+} from '@floating-ui/react';
 
-/**
- * Utility: Apply arrow styles based on placement
- */
-function applyArrowStyles(
-    arrowEl: HTMLDivElement,
-    placement: Placement,
-    middlewareData: MiddlewareData,
-) {
-    const { x, y } = middlewareData.arrow || {};
-    const staticSide: Record<string, string> = {
-        top: 'bottom',
-        right: 'left',
-        bottom: 'top',
-        left: 'right',
-    };
-
-    Object.assign(arrowEl.style, {
-        left: x != null ? `${x}px` : '',
-        top: y != null ? `${y}px` : '',
-        [staticSide[placement.split('-')[0]]]: '-4px',
-    });
+interface TooltipProps {
+    children: React.ReactNode;
+    visible?: boolean;
+    content?: React.ReactNode;
+    render?: () => React.ReactNode;
+    interactive?: boolean;
+    delay?: number | { open?: number; close?: number };
+    offset?: number;
+    placement?: Placement;
+    onHide?: () => void;
+    onClickOutside?: () => void;
 }
+
+const STATIC_SIDE: Record<string, string> = {
+    top: 'bottom',
+    right: 'left',
+    bottom: 'top',
+    left: 'right',
+};
 
 function Tooltip({
     children,
     visible,
     content,
     render,
-    interactive,
-    delay = [0, 0],
+    interactive = false,
+    delay = 0,
     offset: offsetValue = 6,
+    placement = 'bottom',
     onHide,
     onClickOutside,
-}: any) {
-    // State
-    const [showTooltip, setShowTooltip] = useState(false);
-    const isTooltipVisible = visible ?? showTooltip;
-
-    const showTimeout = useRef<any>(null);
-    const hideTimeout = useRef<any>(null);
-
-    // Refs
-    const wrapperRef = useRef<HTMLDivElement>(null);
-    const tooltipRef = useRef<HTMLDivElement>(null);
+}: TooltipProps) {
+    const [isOpen, setIsOpen] = useState(false);
     const arrowRef = useRef<HTMLDivElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
 
-    const updatePosition = () => {
-        const wrapper = wrapperRef.current;
-        const tooltip = tooltipRef.current;
-        const arrowEl = arrowRef.current;
+    const isControlled = visible !== undefined;
+    const isTooltipVisible = visible ?? isOpen;
+    const arrowSide = placement.split('-')[0];
 
-        if (!wrapper || !tooltip || !arrowEl) return;
+    const { x, y, strategy, refs, context, middlewareData } = useFloating({
+        open: isTooltipVisible,
+        onOpenChange: (open) => {
+            !isControlled && setIsOpen(open);
+            !open && onHide?.();
+        },
+        placement,
+        whileElementsMounted: autoUpdate,
+        middleware: [offset(offsetValue), shift(), arrow({ element: arrowRef })],
+    });
 
-        const trigger = wrapper.children[0] as HTMLElement;
-        if (!trigger) return;
-
-        const middleware = [
-            shift({ padding: 5 }),
-            offset(
-                Array.isArray(offsetValue)
-                    ? {
-                          mainAxis: offsetValue[0],
-                          crossAxis: offsetValue[1],
-                      }
-                    : offsetValue,
-            ),
-            arrow({ element: arrowEl }),
-        ];
-
-        computePosition(trigger, tooltip, {
-            placement: 'bottom',
-            middleware,
-        }).then(({ x, y, placement, middlewareData }) => {
-            Object.assign(tooltip.style, {
-                left: `${x}px`,
-                top: `${y}px`,
-            });
-
-            if (middlewareData.arrow) {
-                applyArrowStyles(arrowEl, placement, middlewareData);
-            }
-        });
-    };
-
-    // Positioning
+    // Set reference từ wrapper
     useEffect(() => {
-        const wrapper = wrapperRef.current;
-        if (!wrapper) return;
+        const firstChild = wrapperRef.current?.firstElementChild;
+        firstChild && refs.setReference(firstChild as HTMLElement);
+    }, [refs.setReference]);
 
-        wrapper.addEventListener('mouseenter', updatePosition);
-    }, []);
+    const { getReferenceProps, getFloatingProps } = useInteractions([
+        useHover(context, { delay, enabled: !isControlled }),
+        useFocus(context, { enabled: !isControlled }),
+        useDismiss(context),
+        useRole(context, { role: 'tooltip' }),
+    ]);
 
-    // Click outside
+    // Xử lý click outside
     useEffect(() => {
         if (!isTooltipVisible || !onClickOutside) return;
 
-        const handleClickOutside = (e: MouseEvent) => {
-            const clicked = e.target as Node;
-            const wrapper = wrapperRef.current;
-            const tooltip = tooltipRef.current;
+        const handleClick = (e: MouseEvent) => {
+            const target = e.target as Node;
+            const isInsideTooltip = refs.floating.current?.contains(target);
+            const isInsideWrapper = wrapperRef.current?.contains(target);
 
-            if (tooltip?.contains(clicked) || wrapper?.contains(clicked)) return;
-            onClickOutside();
+            if (!isInsideTooltip && !isInsideWrapper) {
+                onClickOutside();
+            }
         };
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
+        document.addEventListener('mousedown', handleClick);
+        return () => document.removeEventListener('mousedown', handleClick);
     }, [isTooltipVisible, onClickOutside]);
 
-    // Timeout
-    const createTimeoutHandler = (show: boolean, delayTime: number, timeoutRef: any) => {
-        clearTimeout(timeoutRef.current);
-
-        const action = () => {
-            setShowTooltip(show);
-            if (!show) onHide?.();
-        };
-
-        delayTime > 0 ? (timeoutRef.current = setTimeout(action, delayTime)) : action();
-    };
-
-    // Hover
-    const hoverProps = visible ?? {
-        onMouseEnter: () => {
-            clearTimeout(hideTimeout.current);
-            createTimeoutHandler(true, delay[0], showTimeout);
-        },
-        onMouseLeave: () => createTimeoutHandler(false, delay[1], hideTimeout),
-    };
+    const { x: arrowX, y: arrowY } = middlewareData.arrow || {};
 
     const renderContent = (
-        <div ref={tooltipRef} className={content ? 'tooltip-content' : 'render-content'}>
-            {content || render()}
-            <div ref={arrowRef} className={content && 'tooltip-arrow'} />
+        <div
+            ref={refs.setFloating}
+            className={content ? 'tooltip-content' : 'render-content'}
+            style={{
+                position: strategy,
+                top: y ?? 0,
+                left: x ?? 0,
+            }}
+            {...getFloatingProps()}
+        >
+            {content || render?.()}
+            <div
+                ref={arrowRef}
+                className={content ? 'tooltip-arrow' : ''}
+                style={{
+                    left: arrowX != null ? `${arrowX}px` : '',
+                    top: arrowY != null ? `${arrowY}px` : '',
+                    [STATIC_SIDE[arrowSide]]: '-4px',
+                    position: 'absolute',
+                }}
+            />
         </div>
     );
-
     return (
         <div
             ref={wrapperRef}
             className={classNames('tooltip-wrapper', {
                 'tooltip-interactive': interactive,
             })}
-            {...hoverProps}
+            {...(!isControlled ? getReferenceProps() : {})}
         >
             {children}
+
             {isTooltipVisible && renderContent}
         </div>
     );
