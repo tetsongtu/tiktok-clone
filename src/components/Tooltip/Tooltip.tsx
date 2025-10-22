@@ -3,14 +3,10 @@ import classNames from 'classnames';
 import './Tooltip.scss';
 import {
     useFloating,
-    autoUpdate,
     offset,
     shift,
     arrow,
     useHover,
-    useFocus,
-    useDismiss,
-    useRole,
     useInteractions,
     type Placement,
 } from '@floating-ui/react';
@@ -21,8 +17,8 @@ interface TooltipProps {
     content?: React.ReactNode;
     render?: () => React.ReactNode;
     interactive?: boolean;
-    delay?: number | { open?: number; close?: number };
-    offset?: number;
+    delay?: number | [number, number];
+    offset?: number | [number, number];
     placement?: Placement;
     onHide?: () => void;
     onClickOutside?: () => void;
@@ -55,41 +51,49 @@ function Tooltip({
     const isTooltipVisible = visible ?? isOpen;
     const arrowSide = placement.split('-')[0];
 
-    const { x, y, strategy, refs, context, middlewareData } = useFloating({
+    const { x, y, refs, context, middlewareData } = useFloating({
         open: isTooltipVisible,
         onOpenChange: (open) => {
             !isControlled && setIsOpen(open);
             !open && onHide?.();
         },
         placement,
-        whileElementsMounted: autoUpdate,
-        middleware: [offset(offsetValue), shift(), arrow({ element: arrowRef })],
+        middleware: [
+            offset(
+                Array.isArray(offsetValue)
+                    ? { mainAxis: offsetValue[0], crossAxis: offsetValue[1] }
+                    : offsetValue,
+            ),
+            shift(),
+            arrow({ element: arrowRef }),
+        ],
     });
 
     // Set reference từ wrapper
     useEffect(() => {
         const firstChild = wrapperRef.current?.firstElementChild;
         firstChild && refs.setReference(firstChild as HTMLElement);
-    }, [refs.setReference]);
+    }, []);
 
-    const { getReferenceProps, getFloatingProps } = useInteractions([
-        useHover(context, { delay, enabled: !isControlled }),
-        useFocus(context, { enabled: !isControlled }),
-        useDismiss(context),
-        useRole(context, { role: 'tooltip' }),
+    const hoverConfig = Array.isArray(delay)
+        ? { delay: { open: delay[0], close: delay[1] } }
+        : { delay };
+
+    const { getReferenceProps } = useInteractions([
+        useHover(context, { ...hoverConfig, enabled: !isControlled }),
     ]);
 
     // Xử lý click outside
     useEffect(() => {
-        if (!isTooltipVisible || !onClickOutside) return;
-
         const handleClick = (e: MouseEvent) => {
+            if (!isTooltipVisible) return;
+
             const target = e.target as Node;
             const isInsideTooltip = refs.floating.current?.contains(target);
             const isInsideWrapper = wrapperRef.current?.contains(target);
 
             if (!isInsideTooltip && !isInsideWrapper) {
-                onClickOutside();
+                onClickOutside?.();
             }
         };
 
@@ -104,11 +108,9 @@ function Tooltip({
             ref={refs.setFloating}
             className={content ? 'tooltip-content' : 'render-content'}
             style={{
-                position: strategy,
                 top: y ?? 0,
                 left: x ?? 0,
             }}
-            {...getFloatingProps()}
         >
             {content || render?.()}
             <div
@@ -118,7 +120,6 @@ function Tooltip({
                     left: arrowX != null ? `${arrowX}px` : '',
                     top: arrowY != null ? `${arrowY}px` : '',
                     [STATIC_SIDE[arrowSide]]: '-4px',
-                    position: 'absolute',
                 }}
             />
         </div>
