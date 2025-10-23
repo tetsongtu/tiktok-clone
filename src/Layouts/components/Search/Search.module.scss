@@ -61,6 +61,16 @@
     right: var(--search-padding-x);
 }
 
+.loading {
+    animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .search-btn {
     left: var(--search-padding-x);
     opacity: 0.5;

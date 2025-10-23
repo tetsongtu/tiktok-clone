@@ -19,7 +19,11 @@ function Search() {
     const inputRef = useRef<any>(null);
 
     useEffect(() => {
-        if (!searchValue.trim()) return;
+        if (!searchValue.trim()) {
+            setSearchResult([]);
+            return;
+        }
+
         setLoading(true);
         fetch(
             `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
