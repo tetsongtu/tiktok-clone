@@ -6,7 +6,17 @@ import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function AccountItem({ data }: any) {
+type AccountItemProps = {
+    data: {
+        id: number;
+        nickname: string;
+        avatar: string;
+        full_name: string;
+        tick?: boolean;
+    };
+};
+
+function AccountItem({ data }: AccountItemProps) {
     return (
         <Link to={`/@${data.nickname}`} className={cx('wrapper')}>
             <Image className={cx('avatar')} src={data.avatar} alt={data.full_name} />
@@ -21,4 +31,5 @@ function AccountItem({ data }: any) {
     );
 }
 
+export type Account = AccountItemProps['data'];
 export default AccountItem;

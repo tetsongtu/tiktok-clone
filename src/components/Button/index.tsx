@@ -4,23 +4,41 @@ import styles from './Button.module.scss';
 
 const cx = classNames.bind(styles);
 
+interface ButtonProps {
+    to?: string;
+    href?: string;
+    primary?: boolean;
+    outline?: boolean;
+    text?: boolean;
+    rounded?: boolean;
+    disabled?: boolean;
+    small?: boolean;
+    large?: boolean;
+    children?: React.ReactNode;
+    className?: string;
+    leftIcon?: string;
+    rightIcon?: string;
+    onClick?: () => void;
+    [key: string]: any;
+}
+
 function Button({
-    to = '',
-    href = '',
-    primary = false,
-    outline = false,
-    text = false,
-    rounded = false,
-    disabled = false,
-    small = false,
-    large = false,
+    to,
+    href,
+    primary,
+    outline,
+    text,
+    rounded,
+    disabled,
+    small,
+    large,
     children,
     className,
     leftIcon,
     rightIcon,
     onClick,
     ...passProps
-}: any) {
+}: ButtonProps) {
     let Comp: React.ElementType = 'button';
     const props: any = {
         onClick,
@@ -43,8 +61,7 @@ function Button({
         Comp = 'a';
     }
 
-    const classes = cx('wrapper', {
-        [className]: className,
+    const classes = cx('wrapper', className, {
         primary,
         outline,
         text,

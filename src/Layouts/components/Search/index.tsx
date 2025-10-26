@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 
 import * as searchServices from '~/services/searchService';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
-import AccountItem from '~/components/AccountItem';
+import AccountItem, { type Account } from '~/components/AccountItem';
 import { Tooltip } from '~/components/Tooltip';
 import { SearchIcon } from '~/components/Icons';
 import { useDebounce } from '~/hooks';
@@ -14,7 +14,7 @@ const cx = classNames.bind(styles);
 
 function Search() {
     const [searchValue, setSearchValue] = useState('');
-    const [searchResult, setSearchResult] = useState<any>([]);
+    const [searchResult, setSearchResult] = useState<Account[]>([]);
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false);
 
@@ -71,7 +71,7 @@ function Search() {
                 <div className={cx('search-result')}>
                     <PopperWrapper>
                         <h4 className={cx('search-title')}>Accounts</h4>
-                        {searchResult.map((result: any) => (
+                        {searchResult.map((result: Account) => (
                             <AccountItem key={result.id} data={result} />
                         ))}
                     </PopperWrapper>
