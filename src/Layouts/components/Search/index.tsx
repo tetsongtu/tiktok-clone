@@ -51,6 +51,18 @@ function Search() {
         setShowResult(false);
     };
 
+    const handleChange = (e: any) => {
+        const searchValue = e.target.value;
+
+        if (searchValue.startsWith(' ')) {
+            setSearchValue('');
+            setSearchResult([]);
+            return;
+        }
+
+        setSearchValue(searchValue);
+    };
+
     return (
         <Tooltip
             interactive
@@ -69,7 +81,10 @@ function Search() {
         >
             <div className={cx('search')}>
                 <Tooltip content="Search nội dung dài để test">
-                    <button className={cx('search-btn')}>
+                    <button
+                        className={cx('search-btn')}
+                        onMouseDown={(e) => e.preventDefault()}
+                    >
                         <SearchIcon />
                     </button>
                 </Tooltip>
@@ -79,7 +94,7 @@ function Search() {
                     value={searchValue}
                     placeholder="Search"
                     spellcheck={false}
-                    onChange={(e: any) => setSearchValue(e.target.value)}
+                    onChange={handleChange}
                     onFocus={() => setShowResult(true)}
                 />
 
