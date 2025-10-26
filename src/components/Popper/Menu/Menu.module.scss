@@ -1,4 +1,5 @@
 .menu-list {
+    height: 100%;
     width: 224px;
 
     .menu-item {
@@ -8,6 +9,11 @@
 
 .menu-popper {
     padding-bottom: 8px;
+}
+
+.menu-body {
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 // Menu items
@@ -30,6 +36,7 @@
 // Header
 .header {
     position: relative;
+    flex-shrink: 0;
     height: 50px;
     margin-top: -8px;
 }

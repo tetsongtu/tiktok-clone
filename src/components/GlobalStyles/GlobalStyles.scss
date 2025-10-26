@@ -30,6 +30,11 @@ body {
     color: var(--text-color);
 }
 
+// Scrollbar
+::-webkit-scrollbar {
+    width: 0;
+}
+
 button,
 input,
 [tabindex] {
