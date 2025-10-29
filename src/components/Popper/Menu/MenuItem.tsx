@@ -4,7 +4,7 @@ import styles from './Menu.module.scss';
 
 const cx = classNames.bind(styles);
 
-function MenuItem({ data, onClick }: any) {
+function MenuItem({ data, onClick }: { data: Record<string, any>; onClick: () => void }) {
     const classes = cx('menu-item', {
         separate: data.separate,
     });

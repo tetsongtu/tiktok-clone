@@ -6,14 +6,14 @@ import Button from '~/components/Button';
 import { Tooltip } from '~/components/Tooltip';
 import images from '~/assets/images';
 import styles from './Header.module.scss';
-import Menu from '~/components/Popper/Menu';
+import Menu, { type MenuItemData } from '~/components/Popper/Menu';
 import { UploadIcon, MessageIcon, InboxIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import Search from '../Search';
 
 const cx = classNames.bind(styles);
 
-const MENU_ITEMS = [
+const MENU_ITEMS: MenuItemData[] = [
     {
         icon: '',
         title: 'English',
@@ -47,7 +47,7 @@ const MENU_ITEMS = [
 function Header() {
     const currentUser = true;
 
-    const handleMenuChange = (menuItem: any) => {
+    const handleMenuChange = (menuItem: MenuItemData) => {
         switch (menuItem.type) {
             case 'language':
                 break;

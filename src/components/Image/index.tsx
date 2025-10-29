@@ -5,13 +5,20 @@ import styles from './Image.module.scss';
 
 const cx = classNames.bind(styles);
 
+interface ImageProps {
+    src: string;
+    alt?: string;
+    className?: string;
+    fallback?: string;
+}
+
 function Image({
     src,
     alt,
     className,
     fallback: customFallback = images.noImage,
     ...props
-}: any) {
+}: ImageProps) {
     const [fallback, setFallback] = useState('');
 
     const handleError = () => {

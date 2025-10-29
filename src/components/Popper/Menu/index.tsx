@@ -11,20 +11,40 @@ const cx = classNames.bind(styles);
 
 const defaultFn = () => {};
 
-function Menu({ children, items = [], onChange = defaultFn }: any) {
-    const [history, setHistory] = useState([{ data: items }]);
+interface MenuProps {
+    children: React.ReactNode;
+    items: MenuItemData[];
+    onChange?: (item: MenuItemData) => void;
+}
+
+interface MenuLevel {
+    title?: string;
+    data: MenuItemData[];
+}
+
+export interface MenuItemData {
+    icon?: React.ReactNode;
+    title: string;
+    to?: string;
+    type?: string;
+    code?: string;
+    separate?: boolean;
+    children?: MenuLevel;
+}
+
+function Menu({ children, items = [], onChange = defaultFn }: MenuProps) {
+    const [history, setHistory] = useState<MenuLevel[]>([{ data: items }]);
     const currentMenu = history[history.length - 1];
 
     const renderItems = () => {
-        return currentMenu.data.map((item: any, index: number) => {
-            const isParent = !!item.children;
+        return currentMenu.data.map((item: MenuItemData, index: number) => {
             return (
                 <MenuItem
                     key={index}
                     data={item}
                     onClick={() => {
-                        if (isParent) {
-                            setHistory((prev) => [...prev, item.children]);
+                        if (item.children) {
+                            setHistory((prev) => [...prev, item.children as MenuLevel]);
                         } else {
                             onChange(item);
                         }
@@ -43,7 +63,7 @@ function Menu({ children, items = [], onChange = defaultFn }: any) {
                     <PopperWrapper className={cx('menu-popper')}>
                         {history.length > 1 && (
                             <Header
-                                title="Language"
+                                title={currentMenu.title}
                                 onBack={() => {
                                     setHistory((prev) => prev.slice(0, prev.length - 1));
                                 }}
