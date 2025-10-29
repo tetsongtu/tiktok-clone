@@ -14,8 +14,10 @@
 
     input {
         flex: 1;
+        position: absolute;
+        left: 40px;
         height: 100%;
-        padding: 0 12px 0 calc(12px + var(--search-btn-size));
+        width: 67%;
         font-size: 1.6rem;
         color: var(--black);
         caret-color: var(--primary);

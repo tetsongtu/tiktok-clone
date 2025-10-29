@@ -53,6 +53,29 @@ function Menu({ children, items = [], onChange = defaultFn }: MenuProps) {
             );
         });
     };
+
+    const handleBack = () => {
+        setHistory((prev) => prev.slice(0, prev.length - 1));
+    };
+
+    const renderResult = () => {
+        return (
+            <div className={cx('menu-list')}>
+                <PopperWrapper className={cx('menu-popper')}>
+                    {history.length > 1 && (
+                        <Header title={currentMenu.title} onBack={handleBack} />
+                    )}
+                    <div className={cx('menu-body')}>{renderItems()}</div>
+                </PopperWrapper>
+            </div>
+        );
+    };
+
+    // Reset to first page
+    const handleReset = () => {
+        setHistory((prev) => prev.slice(0, 1));
+    };
+
     return (
         <Tooltip
             visible
@@ -60,22 +83,8 @@ function Menu({ children, items = [], onChange = defaultFn }: MenuProps) {
             delay={[0, 700]}
             offset={[12, -200]}
             placement="bottom-end"
-            render={() => (
-                <div className={cx('menu-list')}>
-                    <PopperWrapper className={cx('menu-popper')}>
-                        {history.length > 1 && (
-                            <Header
-                                title={currentMenu.title}
-                                onBack={() => {
-                                    setHistory((prev) => prev.slice(0, prev.length - 1));
-                                }}
-                            />
-                        )}
-                        <div className={cx('menu-body')}>{renderItems()}</div>
-                    </PopperWrapper>
-                </div>
-            )}
-            onHide={() => setHistory((prev) => prev.slice(0, 1))}
+            render={renderResult}
+            onHide={handleReset}
         >
             {children}
         </Tooltip>
