@@ -1,13 +1,13 @@
 .search,
 .search-result {
     width: 208px;
+    top: 10px;
 }
 
 .search {
     position: relative;
     display: flex;
-    height: var(--search-btn-size);
-    padding-left: var(--search-padding-x);
+    height: 40px;
     border: 1.5px solid transparent;
     border-radius: var(--search-border-radius);
     background: rgba(22, 24, 35, 0.06);
@@ -33,14 +33,15 @@
 
         position: absolute;
         width: var(--search-btn-size);
-        height: var(--search-btn-size);
+        height: 100%;
+        line-height: 100%;
     }
 
     &::after {
         content: '';
         position: absolute;
         top: var(--search-top-spacer);
-        left: var(--search-btn-size);
+        left: calc(var(--search-btn-size) + var(--search-padding-x));
         width: 1px;
         height: calc(100% - var(--search-top-spacer) * 2);
         background: rgba(22, 24, 35, 0.12);
@@ -79,6 +80,10 @@
     &:hover {
         cursor: pointer;
         background: rgba(22, 24, 35, 0.06);
+    }
+
+    svg {
+        width: 22px;
     }
 }
 
