@@ -60,7 +60,7 @@ function Menu({ children, items = [], onChange = defaultFn }: MenuProps) {
 
     const renderResult = () => {
         return (
-            <div className={cx('menu-list')} tabIndex={-1}>
+            <div className={cx('menu-list')}>
                 <PopperWrapper className={cx('menu-popper')}>
                     {history.length > 1 && (
                         <Header title={currentMenu.title} onBack={handleBack} />

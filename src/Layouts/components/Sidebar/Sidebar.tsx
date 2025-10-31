@@ -1,4 +1,6 @@
+import { useState, useEffect, useCallback } from 'react';
 import classNames from 'classnames/bind';
+
 import styles from './Sidebar.module.scss';
 import Menu, { MenuItem } from './Menu';
 import {
@@ -9,36 +11,66 @@ import {
     UserGroupActiveIcon,
     LiveActiveIcon,
 } from '~/components/Icons';
-import config from '~/config';
 import SuggestedAccounts from '~/components/SuggestedAccounts';
+import * as userServices from '~/services/userService';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
+const INIT_PAGE = 1;
+const PER_PAGE = 5;
+
+const MENU_ITEM = [
+    {
+        title: 'For You',
+        to: config.routes.home,
+        icon: <HomeIcon />,
+        actionIcon: <HomeActiveIcon />,
+    },
+    {
+        title: 'Following',
+        to: config.routes.following,
+        icon: <UserGroupIcon />,
+        actionIcon: <UserGroupActiveIcon />,
+    },
+    {
+        title: 'LIVE',
+        to: config.routes.live,
+        icon: <LiveIcon />,
+        actionIcon: <LiveActiveIcon />,
+    },
+];
+
 function Sidebar() {
+    const [page, setPage] = useState(INIT_PAGE);
+    const [suggestedUsers, setSuggestedUsers] = useState<any[]>([]);
+
+    useEffect(() => {
+        userServices
+            .getSuggested({ page: page, perPage: PER_PAGE })
+            .then((data) => {
+                setSuggestedUsers((prev) => [...prev, ...data]);
+            })
+            .catch(console.error);
+    }, [page]);
+
+    const handleSeeAll = useCallback(() => {
+        setPage((prev) => prev + 1);
+    }, []);
+
     return (
         <aside className={cx('wrapper')}>
             <Menu>
-                <MenuItem
-                    title="For You"
-                    to={config.routes.home}
-                    icon={<HomeIcon />}
-                    actionIcon={<HomeActiveIcon />}
-                />
-                <MenuItem
-                    title="Following"
-                    to={config.routes.following}
-                    icon={<UserGroupIcon />}
-                    actionIcon={<UserGroupActiveIcon />}
-                />
-                <MenuItem
-                    title="LIVE"
-                    to={config.routes.live}
-                    icon={<LiveIcon />}
-                    actionIcon={<LiveActiveIcon />}
-                />
+                {MENU_ITEM.map((item) => (
+                    <MenuItem key={item.title} {...item} />
+                ))}
             </Menu>
-            <SuggestedAccounts label="Suggested accounts" />
-            {/* <SuggestedAccounts label="Following" /> */}
+            <SuggestedAccounts
+                label="Suggested accounts"
+                data={suggestedUsers}
+                onSeeAll={handleSeeAll}
+            />
+            <SuggestedAccounts label="Following" />
         </aside>
     );
 }

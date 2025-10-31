@@ -1,17 +1,19 @@
 import classNames from 'classnames/bind';
 import styles from './SuggestedAccounts.module.scss';
+
+import Image from '~/components/Image';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { Tooltip } from '~/components/Tooltip';
 import AccountPreview from './AccountPreview';
 
 const cx = classNames.bind(styles);
 
-function AccountItem() {
+function AccountItem({ data }: { data: Record<string, any> }) {
     const renderReview = () => {
         return (
             <PopperWrapper>
                 <div className={cx('preview')}>
-                    <AccountPreview />
+                    <AccountPreview data={data} />
                 </div>
             </PopperWrapper>
         );
@@ -19,7 +21,6 @@ function AccountItem() {
 
     return (
         <Tooltip
-            visible
             interactive
             offset={[-20, -20]}
             delay={[800, 0]}
@@ -27,16 +28,12 @@ function AccountItem() {
             render={renderReview}
         >
             <div className={cx('account-item')}>
-                <img
-                    className={cx('avatar')}
-                    src="https://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/3df143b41360fcf147aca1bb5ff62475~tplv-tiktokx-cropcenter:100:100.jpeg?dr=14579&refresh_token=2988bc40&x-expires=1761037200&x-signature=9XuQ909zvFyth1tdS8n8fgoNvpo%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=sg1"
-                    alt=""
-                />
+                <Image className={cx('avatar')} src={data.avatar} alt={data.nickname} />
                 <div className={cx('item-info')}>
                     <p className={cx('nickname')}>
-                        <strong>quocnguyenphu</strong>
+                        <strong>{data.nickname}</strong>
                     </p>
-                    <p className={cx('name')}>Nguyễn Quốc Khánh</p>
+                    <p className={cx('name')}>{data.first_name + ' ' + data.last_name}</p>
                 </div>
             </div>
         </Tooltip>
