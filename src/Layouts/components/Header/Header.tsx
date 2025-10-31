@@ -1,5 +1,7 @@
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
 import config from '~/config';
 import Button from '~/components/Button';
@@ -45,7 +47,7 @@ const MENU_ITEMS: MenuItemData[] = [
 ];
 
 function Header() {
-    const currentUser = true;
+    const currentUser = false;
 
     const handleMenuChange = (menuItem: MenuItemData) => {
         switch (menuItem.type) {
@@ -113,7 +115,9 @@ function Header() {
                     </>
                 ) : (
                     <>
-                        <Button outline>Upload</Button>
+                        <Button outline leftIcon={<AiOutlinePlus />}>
+                            Upload
+                        </Button>
                         <Button primary>Load in</Button>
                     </>
                 )}
@@ -129,7 +133,9 @@ function Header() {
                             fallback="https://yt3.ggpht.com/Pa8wyxqTOkhu5DW_RvkiQIS7Bsa7OW7gSen-2WpaQsC2EqUAkgubAg1_QPc951pzpN2F2Q4_TA=s88-c-k-c0x00ffffff-no-rj"
                         />
                     ) : (
-                        <button className={cx('more-btn')}>⋮</button>
+                        <button className={cx('more-btn')}>
+                            <BsThreeDotsVertical size={25} />
+                        </button>
                     )}
                 </Menu>
             </div>

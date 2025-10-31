@@ -16,8 +16,8 @@ interface ButtonProps {
     large?: boolean;
     children?: React.ReactNode;
     className?: string;
-    leftIcon?: string;
-    rightIcon?: string;
+    leftIcon?: React.ReactNode;
+    rightIcon?: React.ReactNode;
     onClick?: () => void;
     [key: string]: any;
 }
@@ -73,9 +73,9 @@ function Button({
 
     return (
         <Comp className={classes} {...props}>
-            {leftIcon && <img src={leftIcon} className={cx('icon')} />}
+            {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
             <span className={cx('title')}>{children}</span>
-            {rightIcon && <img src={rightIcon} className={cx('icon')} />}
+            {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
         </Comp>
     );
 }

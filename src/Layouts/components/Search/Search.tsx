@@ -1,11 +1,11 @@
 import classNames from 'classnames/bind';
 import { useEffect, useState, useRef } from 'react';
+import { BiSearch } from 'react-icons/bi';
 
 import * as searchServices from '~/services/searchService';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem, { type Account } from '~/components/AccountItem';
 import { Tooltip } from '~/components/Tooltip';
-import { SearchIcon } from '~/components/Icons';
 import { useDebounce } from '~/hooks';
 import styles from './Search.module.scss';
 import images from '~/assets/images';
@@ -80,15 +80,6 @@ function Search() {
             onClickOutside={handleHideResult}
         >
             <div className={cx('search')}>
-                <Tooltip content="Search nội dung dài để test">
-                    <button
-                        className={cx('search-btn')}
-                        onMouseDown={(e) => e.preventDefault()}
-                    >
-                        <SearchIcon />
-                    </button>
-                </Tooltip>
-
                 <input
                     ref={inputRef}
                     value={searchValue}
@@ -97,6 +88,15 @@ function Search() {
                     onChange={handleChange}
                     onFocus={() => setShowResult(true)}
                 />
+
+                <Tooltip content="Search nội dung dài để test">
+                    <button
+                        className={cx('search-btn')}
+                        onMouseDown={(e) => e.preventDefault()}
+                    >
+                        <BiSearch color="#A1A2A7" size={22} />
+                    </button>
+                </Tooltip>
 
                 {!!searchValue && !loading && (
                     <button className={cx('clear')} onClick={handleClear}>
