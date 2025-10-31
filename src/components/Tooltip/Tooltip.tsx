@@ -18,7 +18,7 @@ interface TooltipProps {
     render?: () => React.ReactNode;
     interactive?: boolean;
     delay?: number | [number, number];
-    offset?: number;
+    offset?: number | [number, number];
     placement?: Placement;
     onHide?: () => void;
     onClickOutside?: () => void;
@@ -58,7 +58,13 @@ function Tooltip({
             !open && onHide?.();
         },
         placement,
-        middleware: [offset(offsetValue), shift(), arrow({ element: arrowRef })],
+        middleware: [
+            Array.isArray(offsetValue)
+                ? offset({ mainAxis: offsetValue[1], crossAxis: offsetValue[0] })
+                : offset(offsetValue),
+            shift(),
+            arrow({ element: arrowRef }),
+        ],
     });
 
     // Set reference từ wrapper

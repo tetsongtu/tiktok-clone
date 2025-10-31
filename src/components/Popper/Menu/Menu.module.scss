@@ -5,6 +5,10 @@
     .menu-item {
         margin-left: 0;
     }
+
+    :focus {
+        outline: none;
+    }
 }
 
 .menu-popper {
