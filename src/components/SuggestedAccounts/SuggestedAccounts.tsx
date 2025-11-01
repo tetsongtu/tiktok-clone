@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './SuggestedAccounts.module.scss';
@@ -20,7 +19,7 @@ function SuggestedAccounts({
             <p className={cx('label')}>{label}</p>
 
             {data.map((account) => (
-                <AccountItem key={account.id} data={account} />
+                <AccountItem key={account.id} user={account} />
             ))}
             <p className={cx('more-btn')} onClick={onSeeAll}>
                 See all
@@ -29,4 +28,4 @@ function SuggestedAccounts({
     );
 }
 
-export default memo(SuggestedAccounts);
+export default SuggestedAccounts;

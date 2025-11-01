@@ -94,7 +94,7 @@ function Search() {
                         className={cx('search-btn')}
                         onMouseDown={(e) => e.preventDefault()}
                     >
-                        <BiSearch color="#A1A2A7" size={22} />
+                        <BiSearch color="#A1A2A7" size={24} />
                     </button>
                 </Tooltip>
 

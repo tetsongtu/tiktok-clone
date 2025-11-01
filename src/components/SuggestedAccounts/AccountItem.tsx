@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './SuggestedAccounts.module.scss';
+import type { MenuItemFollowTypes } from '~/types';
 
 import Image from '~/components/Image';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
@@ -8,12 +9,12 @@ import AccountPreview from './AccountPreview';
 
 const cx = classNames.bind(styles);
 
-function AccountItem({ data }: { data: Record<string, any> }) {
+function AccountItem({ user }: MenuItemFollowTypes) {
     const renderReview = () => {
         return (
             <PopperWrapper>
                 <div className={cx('preview')}>
-                    <AccountPreview data={data} />
+                    <AccountPreview user={user} />
                 </div>
             </PopperWrapper>
         );
@@ -28,12 +29,14 @@ function AccountItem({ data }: { data: Record<string, any> }) {
             render={renderReview}
         >
             <div className={cx('account-item')}>
-                <Image className={cx('avatar')} src={data.avatar} alt={data.nickname} />
+                <Image className={cx('avatar')} src={user?.avatar} alt={user?.nickname} />
                 <div className={cx('item-info')}>
                     <p className={cx('nickname')}>
-                        <strong>{data.nickname}</strong>
+                        <strong>{user?.nickname}</strong>
                     </p>
-                    <p className={cx('name')}>{data.first_name + ' ' + data.last_name}</p>
+                    <p className={cx('name')}>
+                        {user?.first_name + ' ' + user?.last_name}
+                    </p>
                 </div>
             </div>
         </Tooltip>

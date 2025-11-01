@@ -11,6 +11,11 @@
     display: flex;
     align-items: center;
     padding: 8px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #e3e3e4;
+    }
 }
 
 .avatar {
