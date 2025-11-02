@@ -1,4 +1,30 @@
+import type { JSX } from 'preact/jsx-runtime';
+
+// ActionButton Props
+export interface ActionButtonProps {
+    icon: JSX.Element;
+    count: number;
+    onClick: () => void;
+    disabled?: boolean;
+    isActive?: boolean;
+    isLoading?: boolean;
+}
+
 // 📸 POST TYPES (Home)
+export interface Like {
+    id: string;
+    user_id: string;
+    post_id: string;
+}
+
+export interface Comment {
+    id: string;
+    user_id: string;
+    post_id: string;
+    text: string;
+    created_at: string;
+}
+
 export interface PostData {
     id: string;
     user_id: string;
@@ -13,6 +39,10 @@ export interface PostData {
 }
 
 export interface PostProps {
+    post: PostData;
+}
+
+export interface PostLikeProps {
     post: PostData;
 }
 
