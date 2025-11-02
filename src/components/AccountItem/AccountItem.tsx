@@ -19,7 +19,12 @@ type AccountItemProps = {
 function AccountItem({ data }: AccountItemProps) {
     return (
         <Link to={`/@${data.nickname}`} className={cx('wrapper')}>
-            <Image className={cx('avatar')} src={data.avatar} alt={data.full_name} />
+            <Image
+                rounded
+                className={cx('avatar')}
+                src={data.avatar}
+                alt={data.full_name}
+            />
             <div className={cx('info')}>
                 <h4 className={cx('name')}>
                     <span>{data.full_name}</span>

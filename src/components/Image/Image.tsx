@@ -9,6 +9,7 @@ interface ImageProps {
     src: string;
     alt?: string;
     className?: string;
+    rounded?: boolean;
     fallback?: string;
 }
 
@@ -16,6 +17,7 @@ function Image({
     src,
     alt,
     className,
+    rounded,
     fallback: customFallback = images.noImage,
     ...props
 }: ImageProps) {
@@ -25,9 +27,11 @@ function Image({
         setFallback(customFallback);
     };
 
+    const classes = cx(styles.wrapper, className, { rounded });
+
     return (
         <img
-            className={cx(styles.wrapper, className)}
+            className={classes}
             src={fallback || src}
             alt={alt}
             {...props}
