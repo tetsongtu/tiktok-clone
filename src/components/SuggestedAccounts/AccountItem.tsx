@@ -29,7 +29,12 @@ function AccountItem({ user }: UserProps) {
             render={renderReview}
         >
             <div className={cx('account-item')}>
-                <Image className={cx('avatar')} src={user?.avatar} alt={user?.nickname} />
+                <Image
+                    rounded
+                    className={cx('avatar')}
+                    src={user?.avatar}
+                    alt={user?.nickname}
+                />
                 <div className={cx('item-info')}>
                     <p className={cx('nickname')}>
                         <strong>{user?.nickname}</strong>
