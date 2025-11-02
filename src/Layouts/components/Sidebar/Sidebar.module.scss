@@ -1,4 +1,14 @@
 .wrapper {
-    width: 356px;
+    width: 10%;
     padding: 7px 0px;
+    @media (min-width: 1024px) {
+        width: 356px;
+    }
+}
+
+.footer {
+    display: none;
+    @media (min-width: 1024px) {
+        display: block;
+    }
 }

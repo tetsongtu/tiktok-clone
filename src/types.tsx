@@ -1,3 +1,21 @@
+// 📸 POST TYPES (Home)
+export interface PostData {
+    id: string;
+    user_id: string;
+    video_url: string;
+    text: string;
+    create_at: string;
+    profile: {
+        user_id: string;
+        name: string;
+        img: string;
+    };
+}
+
+export interface PostProps {
+    post: PostData;
+}
+
 // 👤 USER TYPES (Sidebar Follow)
 export interface UserData {
     id: string;

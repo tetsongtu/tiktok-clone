@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { AiOutlineHome, AiFillHome } from 'react-icons/ai';
 import { BsCameraVideo, BsCameraVideoFill } from 'react-icons/bs';
@@ -40,11 +40,17 @@ function Sidebar() {
     const [page, setPage] = useState(INIT_PAGE);
     const [suggestedUsers, setSuggestedUsers] = useState<any[]>([]);
 
+    const fetchedRef = useRef(false);
     useEffect(() => {
+        if (fetchedRef.current && page === INIT_PAGE) return;
+        fetchedRef.current = true;
+
         userServices
             .getSuggested({ page: page, perPage: PER_PAGE })
             .then((data) => {
-                setSuggestedUsers((prev) => [...prev, ...data]);
+                setSuggestedUsers((prev) =>
+                    page === INIT_PAGE ? data : [...prev, ...data],
+                );
             })
             .catch(console.error);
     }, [page]);
@@ -66,6 +72,24 @@ function Sidebar() {
                 onSeeAll={handleSeeAll}
             />
             <SuggestedAccounts label="Following" />
+            <div className={cx('footer')}>
+                <div style={{ borderTop: '1px solid #ccc' }}>
+                    <p>Following accounts</p>
+                    <p>Accounts you follow will appear here</p>
+                </div>
+                <div
+                    style={{
+                        borderTop: '1px solid #ccc',
+                        color: 'gray',
+                        padding: '0 1rem',
+                    }}
+                >
+                    <p>Company</p>
+                    <p>Program</p>
+                    <p>Terms & Policies</p>
+                    <p>© 2025 TikTok</p>
+                </div>
+            </div>
         </aside>
     );
 }

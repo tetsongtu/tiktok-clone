@@ -2,19 +2,29 @@
     border-top: 1px solid #e3e3e4;
 }
 
+.label,
+.item-info,
+.more-btn {
+    display: none;
+    @media (min-width: 1024px) {
+        display: block;
+    }
+}
+
 .label {
     padding: 8px;
     font-size: 1.4em;
 }
 
 .account-item {
+    border-radius: 4px;
     display: flex;
     align-items: center;
     padding: 8px;
     cursor: pointer;
 
     &:hover {
-        background-color: #e3e3e4;
+        background: rgba(22, 24, 35, 0.03);
     }
 }
 
@@ -23,6 +33,10 @@
     height: 32px;
     border-radius: 50%;
     object-fit: cover;
+    margin: 0 auto;
+    @media (min-width: 1024px) {
+        margin: 0;
+    }
 }
 
 .item-info {
