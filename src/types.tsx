@@ -1,4 +1,5 @@
-export interface RandomUsers {
+// 👤 USER TYPES (Sidebar Follow)
+export interface UserData {
     id: string;
     nickname: string;
     first_name: string;
@@ -8,11 +9,12 @@ export interface RandomUsers {
     likes_count: number;
 }
 
-export interface MenuItemFollowTypes {
-    user: RandomUsers;
+export interface UserProps {
+    user: UserData;
 }
 
-export interface MenuItemsTypes {
+// 🧭 MENU TYPES (Sidebar Menu)
+export interface MenuItemProps {
     title: string;
     to: string;
     icon: React.ReactNode;

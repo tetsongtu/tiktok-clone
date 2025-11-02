@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './SuggestedAccounts.module.scss';
-import type { MenuItemFollowTypes } from '~/types';
+import type { UserProps } from '~/types';
 
 import Image from '~/components/Image';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
@@ -9,7 +9,7 @@ import AccountPreview from './AccountPreview';
 
 const cx = classNames.bind(styles);
 
-function AccountItem({ user }: MenuItemFollowTypes) {
+function AccountItem({ user }: UserProps) {
     const renderReview = () => {
         return (
             <PopperWrapper>

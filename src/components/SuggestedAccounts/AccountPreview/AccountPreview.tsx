@@ -1,10 +1,10 @@
 import classNames from 'classnames/bind';
 import styles from './AccountPreview.module.scss';
 import Button from '~/components/Button';
-import type { MenuItemFollowTypes } from '~/types';
+import type { UserProps } from '~/types';
 const cx = classNames.bind(styles);
 
-function AccountPreview({ user }: MenuItemFollowTypes) {
+function AccountPreview({ user }: UserProps) {
     return (
         <div className={cx('wrapper')}>
             <header className={cx('header')}>
