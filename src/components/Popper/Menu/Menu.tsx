@@ -6,31 +6,11 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import MenuItem from './MenuItem';
 import Header from './Header';
 import styles from './Menu.module.scss';
+import type { MenuProps, MenuItemData, MenuLevel } from '~/types/UserMenu';
 
 const cx = classNames.bind(styles);
 
 const defaultFn = () => {};
-
-interface MenuProps {
-    children: React.ReactNode;
-    items: MenuItemData[];
-    onChange?: (item: MenuItemData) => void;
-}
-
-interface MenuLevel {
-    title?: string;
-    data: MenuItemData[];
-}
-
-export interface MenuItemData {
-    icon?: React.ReactNode;
-    title: string;
-    to?: string;
-    type?: string;
-    code?: string;
-    separate?: boolean;
-    children?: MenuLevel;
-}
 
 function Menu({ children, items = [], onChange = defaultFn }: MenuProps) {
     const [history, setHistory] = useState<MenuLevel[]>([{ data: items }]);

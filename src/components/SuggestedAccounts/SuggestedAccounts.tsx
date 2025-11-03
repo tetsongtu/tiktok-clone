@@ -5,15 +5,13 @@ import AccountItem from './AccountItem';
 
 const cx = classNames.bind(styles);
 
-function SuggestedAccounts({
-    label,
-    data = [],
-    onSeeAll,
-}: {
+interface SuggestedAccountsProps {
     label: string;
-    data?: Array<any>;
+    data?: any[];
     onSeeAll?: () => void;
-}) {
+}
+
+function SuggestedAccounts({ label, data = [], onSeeAll }: SuggestedAccountsProps) {
     return (
         <div className={cx('wrapper')}>
             <p className={cx('label')}>{label}</p>

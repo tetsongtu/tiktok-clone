@@ -1,40 +1,16 @@
 import { useRef, useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
-import { AiOutlineHome, AiFillHome } from 'react-icons/ai';
-import { BsCameraVideo, BsCameraVideoFill } from 'react-icons/bs';
-import { RiGroupLine, RiGroupFill } from 'react-icons/ri';
 
 import styles from './Sidebar.module.scss';
 import Menu, { MenuItem } from './Menu';
 import SuggestedAccounts from '~/components/SuggestedAccounts';
 import * as userServices from '~/services/userService';
-import config from '~/config';
+import { SIDEBAR_MENU } from './SiderbarMenu';
 
 const cx = classNames.bind(styles);
 
 const INIT_PAGE = 1;
 const PER_PAGE = 5;
-
-const MENU_ITEM = [
-    {
-        title: 'For You',
-        to: config.routes.home,
-        icon: <AiOutlineHome />,
-        actionIcon: <AiFillHome />,
-    },
-    {
-        title: 'Following',
-        to: config.routes.following,
-        icon: <RiGroupLine />,
-        actionIcon: <RiGroupFill />,
-    },
-    {
-        title: 'LIVE',
-        to: config.routes.live,
-        icon: <BsCameraVideo />,
-        actionIcon: <BsCameraVideoFill />,
-    },
-];
 
 function Sidebar() {
     const [page, setPage] = useState(INIT_PAGE);
@@ -62,7 +38,7 @@ function Sidebar() {
     return (
         <aside className={cx('wrapper')}>
             <Menu>
-                {MENU_ITEM.map((item) => (
+                {SIDEBAR_MENU.map((item) => (
                     <MenuItem key={item.title} {...item} />
                 ))}
             </Menu>

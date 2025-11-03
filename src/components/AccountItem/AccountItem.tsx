@@ -3,18 +3,9 @@ import styles from './AccountItem.module.scss';
 import images from '~/assets/images';
 import Image from '~/components/Image';
 import { Link } from 'react-router-dom';
+import type { AccountItemProps } from '~/types/AccountTypes';
 
 const cx = classNames.bind(styles);
-
-type AccountItemProps = {
-    data: {
-        id: number;
-        nickname: string;
-        avatar: string;
-        full_name: string;
-        tick?: boolean;
-    };
-};
 
 function AccountItem({ data }: AccountItemProps) {
     return (
@@ -36,5 +27,4 @@ function AccountItem({ data }: AccountItemProps) {
     );
 }
 
-export type Account = AccountItemProps['data'];
 export default AccountItem;
