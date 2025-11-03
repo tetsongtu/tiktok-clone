@@ -4,7 +4,7 @@ import { type PostProps } from '~/types';
 import { AiFillHeart } from 'react-icons/ai';
 import { ImMusic } from 'react-icons/im';
 
-import Button from '~/components/Button';
+import Button from '~/components/Buttons/Button';
 import PostMainLikes from './PostMainLikes';
 
 function PostMain({ post }: PostProps) {

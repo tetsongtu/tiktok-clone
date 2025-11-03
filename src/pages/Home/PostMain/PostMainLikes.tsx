@@ -2,7 +2,7 @@ import { AiFillHeart } from 'react-icons/ai';
 import type { PostLikeProps, Like, Comment } from '~/types';
 import { useState } from 'preact/hooks';
 import { FaCommentDots, FaShare } from 'react-icons/fa6';
-import ActionButton from '~/components/ActionButton';
+import ActionButton from '~/components/Buttons/ActionButton';
 
 export function PostMainLikes({ post }: PostLikeProps) {
     const [hasClickedLike, setHasClickedLike] = useState(false);

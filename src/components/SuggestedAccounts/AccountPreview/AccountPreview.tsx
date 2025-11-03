@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './AccountPreview.module.scss';
-import Button from '~/components/Button';
+import Button from '~/components/Buttons/Button';
 import type { UserProps } from '~/types';
 const cx = classNames.bind(styles);
 

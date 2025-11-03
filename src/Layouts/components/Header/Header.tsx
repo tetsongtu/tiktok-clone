@@ -4,14 +4,14 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
 import config from '~/config';
-import Button from '~/components/Button';
-import { Tooltip } from '~/components/Tooltip';
 import images from '~/assets/images';
 import styles from './Header.module.scss';
 import Menu, { type MenuItemData } from '~/components/Popper/Menu';
 import { UploadIcon, MessageIcon, InboxIcon } from '~/components/Icons';
 import Image from '~/components/Image';
-import Search from '../Search';
+import Search from '~/Layouts/components/Search';
+import Button from '~/components/Buttons/Button';
+import HeaderButton from '~/components/Buttons/HeaderButton';
 
 const cx = classNames.bind(styles);
 
@@ -96,22 +96,9 @@ function Header() {
             <div className={cx('actions')}>
                 {currentUser ? (
                     <>
-                        <Tooltip content="Upload video">
-                            <button className={cx('action-btn')}>
-                                <UploadIcon />
-                            </button>
-                        </Tooltip>
-                        <Tooltip content="Messages">
-                            <button className={cx('action-btn')}>
-                                <MessageIcon />
-                            </button>
-                        </Tooltip>
-                        <Tooltip content="Inbox">
-                            <button className={cx('action-btn')}>
-                                <InboxIcon />
-                                <span className={cx('badge')}>12</span>
-                            </button>
-                        </Tooltip>
+                        <HeaderButton icon={<UploadIcon />} tooltip="Upload video" />
+                        <HeaderButton icon={<MessageIcon />} tooltip="Messages" />
+                        <HeaderButton icon={<InboxIcon />} tooltip="Inbox" badge={12} />
                     </>
                 ) : (
                     <>
