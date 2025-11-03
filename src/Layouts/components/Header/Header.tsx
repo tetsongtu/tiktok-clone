@@ -6,12 +6,13 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import config from '~/config';
 import images from '~/assets/images';
 import styles from './Header.module.scss';
-import Menu, { type MenuItemData } from '~/components/Popper/Menu';
+import Menu from '~/components/Popper/Menu';
+import type { MenuItemData } from '~/types';
 import { UploadIcon, MessageIcon, InboxIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import Search from '~/Layouts/components/Search';
 import Button from '~/components/Buttons/Button';
-import HeaderButton from '~/components/Buttons/HeaderButton';
+import LinkButton from '~/components/Buttons/LinkButton';
 
 const cx = classNames.bind(styles);
 
@@ -96,9 +97,13 @@ function Header() {
             <div className={cx('actions')}>
                 {currentUser ? (
                     <>
-                        <HeaderButton icon={<UploadIcon />} tooltip="Upload video" />
-                        <HeaderButton icon={<MessageIcon />} tooltip="Messages" />
-                        <HeaderButton icon={<InboxIcon />} tooltip="Inbox" badge={12} />
+                        <LinkButton
+                            to={config.routes.upload}
+                            icon={<UploadIcon />}
+                            tooltip="Upload video"
+                        />
+                        <LinkButton icon={<MessageIcon />} tooltip="Messages" />
+                        <LinkButton icon={<InboxIcon />} tooltip="Inbox" badge={12} />
                     </>
                 ) : (
                     <>

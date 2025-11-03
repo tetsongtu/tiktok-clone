@@ -1,5 +1,6 @@
 import { BiLoaderCircle } from 'react-icons/bi';
 import type { ActionButtonProps } from '~/types';
+import BaseButton from '~/components/Buttons/BaseButton';
 
 export function ActionButton({
     icon,
@@ -11,7 +12,7 @@ export function ActionButton({
 }: ActionButtonProps) {
     const buttonStyle = {
         background: 'none',
-        cursor: disabled ? 'not-allowed' : 'pointer',
+        cursor: disabled ? 'default' : 'pointer',
         padding: '0.5rem',
     };
 
@@ -26,12 +27,12 @@ export function ActionButton({
     };
 
     return (
-        <button disabled={disabled} onClick={onClick} style={buttonStyle}>
+        <BaseButton disabled={disabled} onClick={onClick} style={buttonStyle}>
             <div style={iconContainerStyle}>
                 {isLoading ? <BiLoaderCircle size={20} /> : icon}
             </div>
             <span style={{ fontSize: '0.875rem', fontWeight: '500' }}>{count}</span>
-        </button>
+        </BaseButton>
     );
 }
 
