@@ -1,6 +1,7 @@
 import { BiLoaderCircle } from 'react-icons/bi';
 import type { ActionButtonProps } from '~/types';
 import BaseButton from '~/components/Buttons/BaseButton';
+import classNames from 'classnames';
 
 export function ActionButton({
     icon,
@@ -10,28 +11,24 @@ export function ActionButton({
     isActive = false,
     isLoading = false,
 }: ActionButtonProps) {
-    const buttonStyle = {
-        background: 'none',
-        cursor: disabled ? 'default' : 'pointer',
-        padding: '0.5rem',
-    };
-
-    const iconContainerStyle = {
-        borderRadius: '50%',
-        padding: '0.5rem',
-        backgroundColor: isActive ? '#ffebee' : '#e5e7eb',
-        display: 'grid',
-        placeItems: 'center',
-        width: '40px',
-        height: '40px',
-    };
-
     return (
-        <BaseButton disabled={disabled} onClick={onClick} style={buttonStyle}>
-            <div style={iconContainerStyle}>
-                {isLoading ? <BiLoaderCircle size={20} /> : icon}
+        <BaseButton
+            onClick={onClick}
+            disabled={disabled}
+            className={classNames(
+                'flex flex-col items-center gap-1 p-2 bg-transparent',
+                disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
+            )}
+        >
+            <div
+                className={classNames(
+                    'grid place-items-center w-12 h-12 rounded-full',
+                    isActive ? 'bg-red-100' : 'bg-gray-200',
+                )}
+            >
+                {isLoading ? <BiLoaderCircle size={20} className="animate-spin" /> : icon}
             </div>
-            <span style={{ fontSize: '0.875rem', fontWeight: '500' }}>{count}</span>
+            <span className="text-sm font-medium">{count}</span>
         </BaseButton>
     );
 }

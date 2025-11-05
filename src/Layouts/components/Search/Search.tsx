@@ -4,7 +4,8 @@ import { BiSearch } from 'react-icons/bi';
 
 import * as searchServices from '~/services/searchService';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
-import AccountItem, { type Account } from '~/components/AccountItem';
+import AccountItem from '~/components/AccountItem';
+import { type Account } from '~/types';
 import { Tooltip } from '~/components/Tooltip';
 import { useDebounce } from '~/hooks';
 import styles from './Search.module.scss';
@@ -94,7 +95,7 @@ function Search() {
                         className={cx('search-btn')}
                         onMouseDown={(e) => e.preventDefault()}
                     >
-                        <BiSearch color="#A1A2A7" size={24} />
+                        <BiSearch className="relative left-2" color="#A1A2A7" size={24} />
                     </button>
                 </Tooltip>
 
