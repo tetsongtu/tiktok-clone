@@ -1,18 +1,14 @@
 import classNames from 'classnames/bind';
-
 import BaseButton from '~/components/Buttons/BaseButton';
-import styles from './Button.module.scss';
+import styles from './Button.module.css';
 
 const cx = classNames.bind(styles);
 
 interface ButtonProps {
-    primary?: boolean;
-    outline?: boolean;
-    text?: boolean;
+    variant?: 'primary' | 'outline';
+    size?: 'small' | 'large';
     rounded?: boolean;
     disabled?: boolean;
-    small?: boolean;
-    large?: boolean;
     children?: React.ReactNode;
     className?: string;
     leftIcon?: React.ReactNode;
@@ -22,34 +18,32 @@ interface ButtonProps {
 }
 
 function Button({
-    primary,
-    outline,
-    text,
+    variant,
+    size,
     rounded,
     disabled,
-    small,
-    large,
     children,
     className,
     leftIcon,
     rightIcon,
     ...props
 }: ButtonProps) {
-    const classes = cx('wrapper', className, {
-        primary,
-        outline,
-        text,
-        disabled,
-        small,
-        large,
-        rounded,
-    });
+    const classes = cx(
+        'btn',
+        `btn--${variant}`,
+        size && `btn--${size}`,
+        {
+            'btn--rounded': rounded,
+            'btn--disabled': disabled,
+        },
+        className,
+    );
 
     return (
         <BaseButton className={classes} disabled={disabled} {...props}>
-            {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
-            <span className={cx('title')}>{children}</span>
-            {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
+            {leftIcon && <span className={cx('btn__icon')}>{leftIcon}</span>}
+            <span className={cx('btn__title')}>{children}</span>
+            {rightIcon && <span className={cx('btn__icon')}>{rightIcon}</span>}
         </BaseButton>
     );
 }

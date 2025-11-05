@@ -57,12 +57,7 @@ function PostMain({ post }: PostProps) {
                     <Link to={`/profile/${post?.profile?.user_id}`}>
                         <strong>{post?.profile?.name}</strong>
                     </Link>
-                    <Button
-                        outline
-                        style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}
-                    >
-                        Follow
-                    </Button>
+                    <Button variant="outline">Follow</Button>
                 </div>
                 <p>{post?.text}</p>
                 <p style={{ color: 'gray' }}>#fun #cool #SuperAwesome</p>

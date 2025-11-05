@@ -107,10 +107,10 @@ function Header() {
                     </>
                 ) : (
                     <>
-                        <Button outline leftIcon={<AiOutlinePlus />}>
+                        <Button variant="outline" leftIcon={<AiOutlinePlus />}>
                             Upload
                         </Button>
-                        <Button primary>Load in</Button>
+                        <Button variant="primary">Load in</Button>
                     </>
                 )}
                 <Menu

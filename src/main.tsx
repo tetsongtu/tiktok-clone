@@ -1,12 +1,8 @@
-import { render } from 'preact';
-import App from './app';
-import GlobalStyles from './components/GlobalStyles';
+import './GlobalStyles.scss';
 import './index.css';
 
+import { render } from 'preact';
+import App from './app';
+
 const root = document.getElementById('app')!;
-render(
-    <GlobalStyles>
-        <App />
-    </GlobalStyles>,
-    root,
-);
+render(<App />, root);
