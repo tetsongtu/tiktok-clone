@@ -28,22 +28,16 @@ function Button({
     rightIcon,
     ...props
 }: ButtonProps) {
-    const classes = cx(
-        'btn',
-        `btn--${variant}`,
-        size && `btn--${size}`,
-        {
-            'btn--rounded': rounded,
-            'btn--disabled': disabled,
-        },
-        className,
-    );
+    const classes = cx('btn', className, variant, size, {
+        rounded,
+        disabled,
+    });
 
     return (
         <BaseButton className={classes} disabled={disabled} {...props}>
-            {leftIcon && <span className={cx('btn__icon')}>{leftIcon}</span>}
-            <span className={cx('btn__title')}>{children}</span>
-            {rightIcon && <span className={cx('btn__icon')}>{rightIcon}</span>}
+            {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
+            <span className={cx('title')}>{children}</span>
+            {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
         </BaseButton>
     );
 }

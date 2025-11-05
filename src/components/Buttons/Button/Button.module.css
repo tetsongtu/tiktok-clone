@@ -3,58 +3,57 @@
 .btn {
     @apply inline-flex items-center justify-center font-semibold select-none rounded min-w-[100px] px-4 py-3 bg-white border border-transparent;
     font-family: var(--font-family);
-}
 
-.btn--disabled {
-    @apply pointer-events-none opacity-60;
+    & + & {
+        @apply ml-2;
+    }
+
+    &.disabled {
+        @apply pointer-events-none opacity-60;
+    }
 }
 
 /* Icons */
-.btn__icon {
+.icon {
     @apply inline-block w-6 text-center;
 }
 
-/* Spacing */
-.btn__icon + .btn__title,
-.btn__title + .btn__icon {
-    margin-left: 8px;
-}
-
-.btn + .btn {
-    margin: 8px;
+.icon + .title,
+.title + .icon {
+    @apply ml-2;
 }
 
 /* Variants */
-.btn--primary {
+.primary {
     @apply text-white bg-[var(--primary)] border border-[var(--primary)];
+
+    &:hover {
+        @apply bg-[#e0274b] border-[var(--primary)];
+    }
 }
 
-.btn--primary:hover {
-    @apply bg-[#e0274b] border-[var(--primary)];
-}
-
-.btn--outline {
+.outline {
     @apply text-[var(--primary)] bg-white border border-[var(--primary)];
-}
 
-.btn--outline:hover {
-    @apply bg-[rgba(254,44,85,0.06)] border-current;
+    &:hover {
+        @apply bg-[rgba(254,44,85,0.06)] border-current;
+    }
 }
 
 /* Rounded */
-.btn--rounded {
+.rounded {
     @apply rounded-full shadow-sm border-[rgba(22,24,35,0.12)];
-}
 
-.btn--rounded:hover {
-    @apply border-[rgba(22,24,35,0.2)] bg-[rgba(22,24,35,0.03)];
+    &:hover {
+        @apply border-[rgba(22,24,35,0.2)] bg-[rgba(22,24,35,0.03)];
+    }
 }
 
 /* Sizes */
-.btn--small {
+.small {
     @apply min-w-[88px] px-4 py-1;
 }
 
-.btn--large {
+.large {
     @apply min-w-[140px] px-4 py-3;
 }
