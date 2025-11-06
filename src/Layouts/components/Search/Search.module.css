@@ -1,0 +1,34 @@
+.search,
+.search-result {
+    @apply w-[208px];
+}
+
+.search {
+    @apply relative top-[16px] z-30 h-[40px];
+}
+
+.search-title {
+    padding: 5px 12px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: rgba(22, 24, 35, 0.5);
+}
+
+.clear,
+.loading {
+    right: var(--search-padding-x);
+}
+
+.loading {
+    animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.custom-login {
+    color: var(--primary);
+}

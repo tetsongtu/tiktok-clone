@@ -1,7 +1,4 @@
-import classNames from 'classnames/bind';
-import styles from './Popper.module.scss';
-
-const cx = classNames.bind(styles);
+import classNames from 'classnames';
 
 function Wrapper({
     children,
@@ -10,7 +7,9 @@ function Wrapper({
     children: React.ReactNode;
     className?: string;
 }) {
-    return <div className={cx('wrapper', className)}>{children}</div>;
+    const classes =
+        'flex flex-col absolute w-full z-20 left-0 border border-gray-300 rounded-lg bg-white shadow-md';
+    return <div className={classNames(classes, className)}>{children}</div>;
 }
 
 export default Wrapper;
