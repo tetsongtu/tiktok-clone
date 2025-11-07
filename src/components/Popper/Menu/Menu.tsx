@@ -58,7 +58,6 @@ function Menu({ children, items = [], onChange = defaultFn }: MenuProps) {
 
     return (
         <Tooltip
-            interactive
             delay={[0, 700]}
             offset={-10}
             placement="bottom-end"

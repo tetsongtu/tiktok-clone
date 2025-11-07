@@ -61,23 +61,25 @@ function Search() {
         setSearchValue(searchValue);
     };
 
+    const renderAccounts = () => {
+        return (
+            <PopperWrapper className="min-w-[208px]">
+                <h4 className="px-3 py-[5px] text-[1.4rem] font-semibold text-[rgba(22,24,35,0.5)]">
+                    Accounts
+                </h4>
+                {searchResult.map((result: Account) => (
+                    <AccountItem key={result.id} data={result} />
+                ))}
+            </PopperWrapper>
+        );
+    };
+
     const hasText = searchValue.trim().length > 0;
 
     return (
         <Tooltip
             visible={showResult && searchResult.length > 0}
-            render={() => (
-                <div className="w-[208px]">
-                    <PopperWrapper>
-                        <h4 className="px-3 py-[5px] text-[1.4rem] font-semibold text-[rgba(22,24,35,0.5)]">
-                            Accounts
-                        </h4>
-                        {searchResult.map((result: Account) => (
-                            <AccountItem key={result.id} data={result} />
-                        ))}
-                    </PopperWrapper>
-                </div>
-            )}
+            render={renderAccounts}
             onClickOutside={handleHideResult}
         >
             <div className="relative top-[16px] w-[208px] h-[40px] flex items-center justify-between gap-2 hidden md:flex bg-[#F1F1F2] p-1 rounded-full">

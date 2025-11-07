@@ -12,17 +12,14 @@ const cx = classNames.bind(styles);
 function AccountItem({ user }: UserProps) {
     const renderReview = () => {
         return (
-            <PopperWrapper>
-                <div className={cx('preview')}>
-                    <AccountPreview user={user} />
-                </div>
+            <PopperWrapper className="min-w-[308px]">
+                <AccountPreview user={user} />
             </PopperWrapper>
         );
     };
 
     return (
         <Tooltip
-            interactive
             offset={[-20, -20]}
             delay={[800, 0]}
             placement="bottom"
@@ -30,8 +27,7 @@ function AccountItem({ user }: UserProps) {
         >
             <div className={cx('account-item')}>
                 <Image
-                    rounded
-                    className={cx('avatar')}
+                    className={cx('avatar', 'rounded-full object-cover')}
                     src={user?.avatar}
                     alt={user?.nickname}
                 />

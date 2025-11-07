@@ -1,31 +1,5 @@
-.wrapper {
-    position: absolute;
-}
-
-.wrapper.interactive {
-    user-select: none;
-}
-
 .render-content {
     position: absolute;
     left: 0;
     padding: 16px;
-}
-
-.tooltip-content {
-    position: absolute;
-    color: white;
-    font-weight: bold;
-    background: var(--black);
-    padding: 5px;
-    border-radius: 4px;
-    font-size: 90%;
-}
-
-.tooltip-arrow {
-    position: absolute;
-    background: var(--black);
-    width: 8px;
-    height: 8px;
-    transform: rotate(45deg);
 }

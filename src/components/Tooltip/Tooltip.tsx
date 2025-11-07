@@ -16,12 +16,12 @@ interface TooltipProps {
     visible?: boolean;
     content?: React.ReactNode;
     render?: () => React.ReactNode;
-    interactive?: boolean;
     delay?: number | [number, number];
     offset?: number | [number, number];
     placement?: Placement;
     onHide?: () => void;
     onClickOutside?: () => void;
+    className?: string;
 }
 
 const STATIC_SIDE: Record<string, string> = {
@@ -36,21 +36,23 @@ function Tooltip({
     visible,
     content,
     render,
-    interactive = false,
     delay = 0,
     offset: offsetValue = 6,
     placement = 'bottom',
     onHide,
     onClickOutside,
+    className,
 }: TooltipProps) {
     const [isOpen, setIsOpen] = useState(false);
     const arrowRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
+    // Constants
     const isControlled = visible !== undefined;
     const isTooltipVisible = visible ?? isOpen;
     const arrowSide = placement.split('-')[0];
 
+    // Floating UI configuration
     const { x, y, refs, context, middlewareData } = useFloating({
         open: isTooltipVisible,
         onOpenChange: (open) => {
@@ -73,6 +75,7 @@ function Tooltip({
         firstChild && refs.setReference(firstChild as HTMLElement);
     }, []);
 
+    // Hover configuration
     const hoverConfig = Array.isArray(delay)
         ? { delay: { open: delay[0], close: delay[1] } }
         : { delay };
@@ -104,7 +107,12 @@ function Tooltip({
     const renderContent = (
         <div
             ref={refs.setFloating}
-            className={content ? 'tooltip-content' : 'render-content'}
+            className={classNames(
+                'absolute z-50',
+                content
+                    ? 'text-white font-bold bg-black px-2 py-1 rounded text-[1.4rem] select-none'
+                    : 'absolute left-0 p-5',
+            )}
             style={{
                 top: y ?? 0,
                 left: x ?? 0,
@@ -113,7 +121,7 @@ function Tooltip({
             {content || render?.()}
             <div
                 ref={arrowRef}
-                className={content ? 'tooltip-arrow' : ''}
+                className={content ? 'absolute w-2 h-2 bg-black transform rotate-45' : ''}
                 style={{
                     left: arrowX != null ? `${arrowX}px` : '',
                     top: arrowY != null ? `${arrowY}px` : '',
@@ -122,12 +130,11 @@ function Tooltip({
             />
         </div>
     );
+
     return (
         <div
             ref={wrapperRef}
-            className={classNames('tooltip-wrapper', {
-                'tooltip-interactive': interactive,
-            })}
+            className={classNames('wrapper', className)}
             {...(!isControlled ? getReferenceProps() : {})}
         >
             {children}
