@@ -59,7 +59,6 @@ function Menu({ children, items = [], onChange = defaultFn }: MenuProps) {
     return (
         <Tooltip
             delay={[0, 700]}
-            offset={-10}
             placement="bottom-end"
             render={renderResult}
             onHide={handleReset}

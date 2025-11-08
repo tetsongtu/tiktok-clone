@@ -10,6 +10,7 @@ import {
     useInteractions,
     type Placement,
 } from '@floating-ui/react';
+import Arrow from './Arrow';
 
 interface TooltipProps {
     children: React.ReactNode;
@@ -23,13 +24,6 @@ interface TooltipProps {
     onClickOutside?: () => void;
     className?: string;
 }
-
-const STATIC_SIDE: Record<string, string> = {
-    top: 'bottom',
-    right: 'left',
-    bottom: 'top',
-    left: 'right',
-};
 
 function Tooltip({
     children,
@@ -49,12 +43,11 @@ function Tooltip({
 
     // Constants
     const isControlled = visible !== undefined;
-    const isTooltipVisible = visible ?? isOpen;
-    const arrowSide = placement.split('-')[0];
+    const showTooltip = visible ?? isOpen;
 
     // Floating UI configuration
     const { x, y, refs, context, middlewareData } = useFloating({
-        open: isTooltipVisible,
+        open: showTooltip,
         onOpenChange: (open) => {
             !isControlled && setIsOpen(open);
             !open && onHide?.();
@@ -86,47 +79,40 @@ function Tooltip({
 
     // Xử lý click outside
     useEffect(() => {
+        if (!showTooltip) return;
+
         const handleClick = (e: MouseEvent) => {
-            if (!isTooltipVisible) return;
-
             const target = e.target as Node;
-            const isInsideTooltip = refs.floating.current?.contains(target);
-            const isInsideWrapper = wrapperRef.current?.contains(target);
+            const isInside =
+                refs.floating.current?.contains(target) ||
+                wrapperRef.current?.contains(target);
 
-            if (!isInsideTooltip && !isInsideWrapper) {
-                onClickOutside?.();
-            }
+            if (!isInside) onClickOutside?.();
         };
 
         document.addEventListener('mousedown', handleClick);
         return () => document.removeEventListener('mousedown', handleClick);
-    }, [isTooltipVisible, onClickOutside]);
+    }, [showTooltip, onClickOutside]);
 
     const { x: arrowX, y: arrowY } = middlewareData.arrow || {};
+
+    const contentClass =
+        'text-white font-bold bg-black px-2 py-1 rounded text-[1.4rem] select-none';
+    const renderClass = '';
 
     const renderContent = (
         <div
             ref={refs.setFloating}
-            className={classNames(
-                'absolute z-50',
-                content
-                    ? 'text-white font-bold bg-black px-2 py-1 rounded text-[1.4rem] select-none'
-                    : 'absolute left-0 p-5',
-            )}
-            style={{
-                top: y ?? 0,
-                left: x ?? 0,
-            }}
+            style={{ position: 'absolute', top: y ?? 0, left: x ?? 0 }}
+            className={content ? contentClass : renderClass}
         >
             {content || render?.()}
-            <div
-                ref={arrowRef}
-                className={content ? 'absolute w-2 h-2 bg-black transform rotate-45' : ''}
-                style={{
-                    left: arrowX != null ? `${arrowX}px` : '',
-                    top: arrowY != null ? `${arrowY}px` : '',
-                    [STATIC_SIDE[arrowSide]]: '-4px',
-                }}
+            <Arrow
+                arrowRef={arrowRef}
+                placement={placement}
+                arrowX={arrowX}
+                arrowY={arrowY}
+                hasContent={!!content}
             />
         </div>
     );
@@ -139,7 +125,7 @@ function Tooltip({
         >
             {children}
 
-            {isTooltipVisible && renderContent}
+            {showTooltip && renderContent}
         </div>
     );
 }
