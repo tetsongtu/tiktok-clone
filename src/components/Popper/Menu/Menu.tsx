@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 
-import { Tooltip } from '../../Tooltip';
+import Tooltip from '~/components/Tooltip';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import MenuItem from './MenuItem';
 import Header from './Header';

@@ -21,7 +21,7 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
                 lg:px-2.5 px-0 
                 ${pathname == '/' ? 'max-w-[1140px]' : ''}`}
                 >
-                    <div>{children}</div>
+                    <div className="flex-1">{children}</div>
                 </div>
             </div>
         </div>

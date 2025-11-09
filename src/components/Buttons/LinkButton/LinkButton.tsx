@@ -2,7 +2,7 @@
 import classNames from 'classnames/bind';
 import React from 'react';
 
-import { Tooltip } from '~/components/Tooltip';
+import Tooltip from '~/components/Tooltip';
 import BaseButton from '~/components/Buttons/BaseButton';
 import styles from './LinkButton.module.scss';
 

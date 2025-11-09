@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 
 import images from '~/assets/images';
-import PostMain from './PostMain';
+import PostMain from '~/Layouts/components/PostMain';
 import styles from './Home.module.scss';
 
 const cx = classNames.bind(styles);

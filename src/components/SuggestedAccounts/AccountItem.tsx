@@ -4,7 +4,7 @@ import type { UserProps } from '~/types';
 
 import Image from '~/components/Image';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
-import { Tooltip } from '~/components/Tooltip';
+import Tooltip from '~/components/Tooltip';
 import AccountPreview from './AccountPreview';
 
 const cx = classNames.bind(styles);
