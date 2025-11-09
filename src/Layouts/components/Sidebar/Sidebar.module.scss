@@ -1,4 +1,5 @@
 .wrapper {
+    position: fixed;
     width: 10%;
     padding: 7px 0px;
     @media (min-width: 1024px) {
@@ -7,6 +8,7 @@
 }
 
 .footer {
+    font-size: 14px;
     display: none;
     @media (min-width: 1024px) {
         display: block;

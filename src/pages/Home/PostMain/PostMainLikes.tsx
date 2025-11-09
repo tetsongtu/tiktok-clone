@@ -23,25 +23,9 @@ export function PostMainLikes({ post }: PostLikeProps) {
     };
 
     return (
-        <div
-            style={{
-                position: 'relative',
-                marginRight: '75px',
-            }}
-            id={`post-likes-${post?.id}`}
-        >
-            <div
-                style={{
-                    position: 'absolute',
-                    bottom: '0',
-                    paddingLeft: '8rem',
-                }}
-            >
-                <div
-                    style={{
-                        paddingBottom: '1rem',
-                    }}
-                >
+        <div className="relative" id={`post-likes-${post?.id}`}>
+            <div className="absolute bottom-0 pl-[1rem]">
+                <div className="pb-1">
                     {/* Like Button */}
                     <ActionButton
                         icon={

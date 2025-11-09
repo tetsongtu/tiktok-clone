@@ -23,74 +23,29 @@ function PostMain({ post }: PostProps) {
         }
     }, []);
     return (
-        <div
-            style={{
-                display: 'flex',
-                padding: '24px 0px',
-                borderBottom: '1px solid #ccc',
-            }}
-        >
+        <div className="w-[480px] p-6 border-b border-gray-200">
             <img
                 src={post?.profile?.img}
-                style={{
-                    cursor: 'pointer',
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '50%',
-                }}
+                className="cursor-pointer w-10 h-10 rounded-full"
             />
-            <div
-                style={{
-                    width: '100%',
-                    paddingLeft: '12px',
-                    paddingRight: '16px',
-                }}
-            >
-                <div
-                    style={{
-                        display: 'flex',
-                        textAlign: 'center',
-                        justifyContent: 'space-between',
-                        paddingBottom: '0.125rem',
-                    }}
-                >
+            <div className="w-full pl-3 pr-4">
+                <div className="flex justify-between items-center mb-1">
                     <Link to={`/profile/${post?.profile?.user_id}`}>
                         <strong>{post?.profile?.name}</strong>
                     </Link>
                     <Button variant="outline">Follow</Button>
                 </div>
                 <p>{post?.text}</p>
-                <p style={{ color: 'gray' }}>#fun #cool #SuperAwesome</p>
-                <p
-                    style={{
-                        fontWeight: '700',
-                        display: 'flex',
-                        alignItems: 'center',
-                    }}
-                >
+                <p className="text-gray-500">#fun #cool #SuperAwesome</p>
+                <p className="font-bold flex items-center">
                     <ImMusic size={20} />
-                    <span style={{ margin: '0 .5rem' }}>original sound - AWESOME</span>
+                    <span className="mx-1">original sound - AWESOME</span>
                     <AiFillHeart size={20} />
                 </p>
-                <div style={{ display: 'flex', marginTop: '0.625rem' }}>
-                    <div
-                        style={{
-                            position: 'relative',
-                            minHeight: '480px',
-                            maxHeight: '580px',
-                            maxWidth: '260px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            cursor: 'pointer',
-                        }}
-                    >
+                <div className="flex mt-1">
+                    <div className="relative min-h-[480px] max-h-[750px] max-w-[750px] flex items-center cursor-pointer">
                         <video
-                            style={{
-                                borderRadius: '1rem',
-                                objectFit: 'cover',
-                                margin: 'auto 0',
-                                height: '100%',
-                            }}
+                            className="rounded-lg w-full h-full object-cover margin-auto"
                             id={`video-${post?.id}`}
                             loop
                             controls

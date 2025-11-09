@@ -42,11 +42,11 @@ function Sidebar() {
                     <MenuItem key={item.title} {...item} />
                 ))}
             </Menu>
-            <SuggestedAccounts
+            {/* <SuggestedAccounts
                 label="Suggested accounts"
                 data={suggestedUsers}
                 onSeeAll={handleSeeAll}
-            />
+            /> */}
             <SuggestedAccounts label="Following" />
             <div className={cx('footer')}>
                 <div style={{ borderTop: '1px solid #ccc' }}>

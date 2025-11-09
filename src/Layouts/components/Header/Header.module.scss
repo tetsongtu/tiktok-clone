@@ -13,16 +13,6 @@
     height: var(--default-layout-height);
 }
 
-.inner {
-    width: 15rem;
-    height: 100%;
-
-    .logo img {
-        height: 42px;
-        margin-left: 8px;
-    }
-}
-
 .actions {
     display: flex;
     align-items: center;

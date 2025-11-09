@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
@@ -49,6 +49,7 @@ const MENU_ITEMS: MenuItemData[] = [
 
 function Header() {
     const currentUser = true;
+    const pathname = useLocation().pathname;
 
     const handleMenuChange = (menuItem: MenuItemData) => {
         switch (menuItem.type) {
@@ -85,12 +86,11 @@ function Header() {
     ];
 
     return (
-        <header className={cx('wrapper')}>
-            <div className={cx('inner')}>
-                <Link to={config.routes.home} className={cx('logo')}>
-                    <img src={images.logo} alt="TikTok" />
+        <header className="fixed z-50 flex w-full h-[100px]">
+            <div className="p-[20px] px-[16px] mx-auto h-full">
+                <Link to={config.routes.home}>
+                    <Image className="h-[42px] px-[8px]" src={images.logo} alt="TikTok" />
                 </Link>
-
                 <Search />
             </div>
 
