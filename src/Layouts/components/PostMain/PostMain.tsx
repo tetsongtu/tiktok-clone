@@ -6,6 +6,7 @@ import { ImMusic } from 'react-icons/im';
 
 import Button from '~/components/Buttons/Button';
 import PostMainLikes from './PostMainLikes';
+import Image from '~/components/Image';
 
 function PostMain({ post }: PostProps) {
     useEffect(() => {
@@ -23,13 +24,13 @@ function PostMain({ post }: PostProps) {
         }
     }, []);
     return (
-        <div className="w-[480px] p-6 border-b border-gray-200">
-            <img
+        <div className="flex border-b py-6 px-10 border-gray-200">
+            <Image
                 src={post?.profile?.img}
-                className="cursor-pointer w-10 h-10 rounded-full"
+                className="cursor-pointer min-w-18 h-18 rounded-full object-cover"
             />
-            <div className="w-full pl-3 pr-4">
-                <div className="flex justify-between items-center mb-1">
+            <div className="pl-3 w-full px-4">
+                <div className="flex items-center justify-between">
                     <Link to={`/profile/${post?.profile?.user_id}`}>
                         <strong>{post?.profile?.name}</strong>
                     </Link>
@@ -42,10 +43,11 @@ function PostMain({ post }: PostProps) {
                     <span className="mx-1">original sound - AWESOME</span>
                     <AiFillHeart size={20} />
                 </p>
-                <div className="flex mt-1">
+
+                <div className="flex mt-2.5 justify-center">
                     <div className="relative min-h-[480px] max-h-[750px] max-w-[750px] flex items-center cursor-pointer">
                         <video
-                            className="rounded-lg w-full h-full object-cover margin-auto"
+                            className="rounded-lg object-cover mx-auto h-full"
                             id={`video-${post?.id}`}
                             loop
                             controls

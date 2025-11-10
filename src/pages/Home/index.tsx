@@ -1,13 +1,9 @@
-import classNames from 'classnames/bind';
-
 import images from '~/assets/images';
 import PostMain from '~/Layouts/components/PostMain';
-import styles from './Home.module.scss';
 
-const cx = classNames.bind(styles);
 function Home() {
     return (
-        <div className={(cx('container'), 'flex flex-col items-center')}>
+        <div className="relative left-[50%] translate-x-[-50%] mt-[80px] w-[calc(100%-90px)] max-w-[690px] ml-auto">
             <PostMain
                 post={{
                     id: '1',
