@@ -82,7 +82,7 @@ function Search() {
             render={renderAccounts}
             onClickOutside={handleHideResult}
         >
-            <div className="relative top-[16px] w-[208px] h-[40px] flex items-center justify-between gap-2 hidden md:flex bg-[#F1F1F2] p-1 rounded-full">
+            <div className="top-[16px] w-[208px] h-[40px] flex items-center justify-between gap-2 hidden md:flex bg-[#F1F1F2] p-1 rounded-full">
                 <Tooltip content="Search nội dung dài để test">
                     <button
                         className={classNames(

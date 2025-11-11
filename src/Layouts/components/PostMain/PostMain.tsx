@@ -40,7 +40,7 @@ function PostMain({ post }: PostProps) {
                 <p className="text-gray-500">#fun #cool #SuperAwesome</p>
                 <p className="font-bold flex items-center">
                     <ImMusic size={20} />
-                    <span className="mx-1">original sound - AWESOME</span>
+                    <span className="px-1">original sound - AWESOME</span>
                     <AiFillHeart size={20} />
                 </p>
 

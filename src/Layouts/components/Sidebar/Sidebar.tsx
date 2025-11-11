@@ -6,6 +6,7 @@ import Menu, { MenuItem } from './Menu';
 import SuggestedAccounts from '~/components/SuggestedAccounts';
 import * as userServices from '~/services/userService';
 import { SIDEBAR_MENU } from './SiderbarMenu';
+import Search from '~/Layouts/components/Search';
 
 const cx = classNames.bind(styles);
 
@@ -38,9 +39,12 @@ function Sidebar() {
     return (
         <aside className={cx('wrapper')}>
             <Menu>
-                {SIDEBAR_MENU.map((item) => (
-                    <MenuItem key={item.title} {...item} />
-                ))}
+                <Search />
+                <div className="py-[12px]">
+                    {SIDEBAR_MENU.map((item) => (
+                        <MenuItem key={item.title} {...item} />
+                    ))}
+                </div>
             </Menu>
             {/* <SuggestedAccounts
                 label="Suggested accounts"

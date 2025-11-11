@@ -87,11 +87,10 @@ function Header() {
 
     return (
         <header className="fixed z-50 flex w-full h-[100px]">
-            <div className="p-[20px] px-[16px] mx-auto h-full">
+            <div className="py-[20px] mx-auto h-full">
                 <Link to={config.routes.home}>
                     <Image className="h-[42px] px-[8px]" src={images.logo} alt="TikTok" />
                 </Link>
-                <Search />
             </div>
 
             <div className={cx('actions')}>
