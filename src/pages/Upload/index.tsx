@@ -46,13 +46,13 @@ function Upload() {
     const [fileDisplay, setFileDisplay] = useState(false);
 
     return (
-        <div className="w-full bg-white shadow-lg rounded-md py-6 md:px-10 px-4">
+        <div className="w-full mt-[80px] mb-[40px] bg-white shadow-lg rounded-md py-6 md:px-10 px-4">
             <header className="mb-8">
                 <h1 className="text-[23px] font-semibold">Upload video</h1>
                 <h2 className="text-gray-400 mt-1">Post a video to your account</h2>
             </header>
 
-            <div className="mt-8 md:flex gap-6">
+            <div className="mt-8 md:flex items-center gap-6">
                 {!fileDisplay ? <UploadArea /> : <div></div>}
             </div>
         </div>

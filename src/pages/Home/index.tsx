@@ -3,7 +3,7 @@ import PostMain from '~/Layouts/components/PostMain';
 
 function Home() {
     return (
-        <div className="relative left-[50%] translate-x-[-50%] mt-[80px] w-[calc(100%-90px)] max-w-[690px] ml-auto">
+        <div className="mt-[80px] max-w-[690px] mx-auto">
             <PostMain
                 post={{
                     id: '1',
