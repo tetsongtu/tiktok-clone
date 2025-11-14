@@ -6,9 +6,9 @@ import ActionButton from '~/components/Buttons/ActionButton';
 
 export function PostMainLikes({ post }: PostLikeProps) {
     const [hasClickedLike, setHasClickedLike] = useState(false);
-    const [userLiked, setUserLiked] = useState(false);
-    const [comments, setComments] = useState<Comment[]>([]);
-    const [likes, setLikes] = useState<Like[]>([]);
+    const [userLiked] = useState(false);
+    const [comments] = useState<Comment[]>([]);
+    const [likes] = useState<Like[]>([]);
 
     const likeOrUnlike = () => {
         console.log('likeOrUnlike');

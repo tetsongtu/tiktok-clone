@@ -10,7 +10,6 @@ import Menu from '~/components/Popper/Menu';
 import type { MenuItemData } from '~/types';
 import { UploadIcon, MessageIcon, InboxIcon } from '~/components/Icons';
 import Image from '~/components/Image';
-import Search from '~/Layouts/components/Search';
 import Button from '~/components/Buttons/Button';
 import LinkButton from '~/components/Buttons/LinkButton';
 
@@ -49,7 +48,6 @@ const MENU_ITEMS: MenuItemData[] = [
 
 function Header() {
     const currentUser = true;
-    const pathname = useLocation().pathname;
 
     const handleMenuChange = (menuItem: MenuItemData) => {
         switch (menuItem.type) {
