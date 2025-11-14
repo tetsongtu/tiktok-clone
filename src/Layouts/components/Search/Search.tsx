@@ -9,6 +9,10 @@ import { type Account } from '~/types';
 import Tooltip from '~/components/Tooltip';
 import { useDebounce } from '~/hooks';
 import images from '~/assets/images';
+import LinkButton from '~/components/Buttons/LinkButton';
+import BaseButton from '~/components/Buttons';
+
+const DEBOUNCE_TIME = 500;
 
 function Search() {
     const [searchValue, setSearchValue] = useState('');
@@ -16,33 +20,36 @@ function Search() {
     const [showResult, setShowResult] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const debouncedValue = useDebounce(searchValue, 500);
+    const debouncedValue = useDebounce(searchValue, DEBOUNCE_TIME);
 
     const inputRef = useRef<any>(null);
 
     useEffect(() => {
-        if (!debouncedValue.trim()) {
-            setSearchResult([]);
-            return;
-        }
+        const searchAccounts = async () => {
+            if (!debouncedValue.trim()) {
+                setSearchResult([]);
+                return;
+            }
 
-        const fetchApi = async () => {
             setLoading(true);
-
-            const result = await searchServices.search(debouncedValue);
-
-            setSearchResult(result);
-
-            setLoading(false);
+            try {
+                const result = await searchServices.search(debouncedValue);
+                setSearchResult(result);
+            } catch (error) {
+                console.error('Search error:', error);
+                setSearchResult([]);
+            } finally {
+                setLoading(false);
+            }
         };
 
-        fetchApi();
+        searchAccounts();
     }, [debouncedValue]);
 
     const handleClear = () => {
         setSearchValue('');
         setSearchResult([]);
-        inputRef.current.focus();
+        inputRef.current?.focus();
     };
 
     const handleHideResult = () => {
@@ -75,24 +82,24 @@ function Search() {
     };
 
     const hasText = searchValue.trim().length > 0;
+    const showClear = hasText && !loading;
+    const showTooltip = showResult && searchResult.length > 0;
 
     return (
         <Tooltip
-            visible={showResult && searchResult.length > 0}
+            visible={showTooltip}
             render={renderAccounts}
             onClickOutside={handleHideResult}
         >
             <div className="top-[16px] w-[208px] h-[40px] flex items-center justify-between gap-2 hidden md:flex bg-[#F1F1F2] p-1 rounded-full">
-                <Tooltip content="Search nội dung dài để test">
-                    <button
-                        className={classNames(
-                            'px-3 py-2 border-r border-r-gray-300 h-[30px]',
-                            hasText ? 'text-[rgba(22,24,35,0.75)]' : 'opacity-50',
-                        )}
-                    >
-                        <BiSearch size={22} />
-                    </button>
-                </Tooltip>
+                <LinkButton
+                    className={classNames(
+                        'h-full border-r border-r-gray-300',
+                        hasText ? 'text-[rgba(22,24,35,0.75)]' : 'opacity-50',
+                    )}
+                    icon={<BiSearch size={22} />}
+                    tooltip="Search nội dung dài để test"
+                />
                 <input
                     ref={inputRef}
                     value={searchValue}
@@ -100,18 +107,18 @@ function Search() {
                     spellcheck={false}
                     onChange={handleChange}
                     onFocus={() => setShowResult(true)}
-                    className="absolute left-18 w-[63%] p-1 bg-transparent placeholder:text-[#838383] text-[1.4rem] focus:outline-none focus:caret-[var(--primary)]"
+                    className="w-full p-1 bg-transparent placeholder:text-[#838383] text-[1.4rem] focus:outline-none focus:caret-[var(--primary)]"
                 />
-                {!!searchValue && !loading && (
-                    <button className="px-3" onClick={handleClear}>
+                {showClear && (
+                    <BaseButton className="mr-3" onClick={handleClear}>
                         <img src={images.clear} alt="Clear" className="h-8" />
-                    </button>
+                    </BaseButton>
                 )}
 
                 {loading && (
-                    <button className="px-3 animate-spin">
+                    <BaseButton className="mr-3 animate-spin">
                         <img src={images.loading} alt="Loading" className="h-8" />
-                    </button>
+                    </BaseButton>
                 )}
             </div>
         </Tooltip>

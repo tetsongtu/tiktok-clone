@@ -14,12 +14,13 @@ interface LinkButtonProps {
     badge?: number;
     to?: string;
     onClick?: () => void;
+    className?: string;
 }
 
-function LinkButton({ icon, tooltip, badge, ...props }: LinkButtonProps) {
+function LinkButton({ icon, tooltip, badge, className, ...props }: LinkButtonProps) {
     return (
         <Tooltip content={tooltip}>
-            <BaseButton {...props} className={cx('action-btn')}>
+            <BaseButton {...props} className={cx('action-btn', className)}>
                 {icon}
                 {badge !== undefined && <span className={cx('badge')}>{badge}</span>}
             </BaseButton>
