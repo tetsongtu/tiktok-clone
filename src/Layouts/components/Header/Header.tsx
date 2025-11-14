@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 

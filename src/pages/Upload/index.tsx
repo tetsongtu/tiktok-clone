@@ -43,7 +43,7 @@ const UploadArea = () => (
 );
 
 function Upload() {
-    const [fileDisplay, setFileDisplay] = useState(false);
+    const [fileDisplay] = useState(false);
 
     return (
         <div className="w-full mt-[80px] mb-[40px] bg-white shadow-lg rounded-md py-6 md:px-10 px-4">
