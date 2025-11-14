@@ -10,9 +10,9 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
     const pathname = useLocation().pathname;
 
     return (
-        <div className={cx('wrapper', 'px-[16px]')}>
+        <div className={cx('wrapper')}>
             <Header />
-            <div className={cx('container')}>
+            <div className={cx('container', 'px-[16px]')}>
                 <Sidebar />
                 <div
                     className={`

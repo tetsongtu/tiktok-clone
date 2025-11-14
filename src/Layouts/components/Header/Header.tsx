@@ -86,14 +86,14 @@ function Header() {
     ];
 
     return (
-        <header className="fixed z-50 flex w-full h-[100px]">
-            <div className="py-[20px] mx-auto h-full">
+        <header className="fixed flex justify-between z-50 w-full h-[100px] py-[20px] px-[16px]">
+            <div className="h-full">
                 <Link to={config.routes.home}>
                     <Image className="h-[42px] px-[8px]" src={images.logo} alt="TikTok" />
                 </Link>
             </div>
 
-            <div className={cx('actions')}>
+            <div className={cx('flex justify-end items-center')}>
                 {currentUser ? (
                     <>
                         <LinkButton

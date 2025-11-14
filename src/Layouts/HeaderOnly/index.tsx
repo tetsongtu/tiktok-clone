@@ -2,11 +2,9 @@ import Header from '~/Layouts/components/Header';
 
 function HeaderOnly({ children }: { children: React.ReactNode }) {
     return (
-        <div className="bg-[#F8F8F8] h-[100vh]">
+        <div className="bg-[#F8F8F8] h-screen">
             <Header />
-            <div className="relative left-[50%] -translate-x-[50%] w-full px-2 max-w-[1140px] pt-[70px]">
-                {children}
-            </div>
+            <div className="w-full max-w-[1140px] mx-auto px-2 pt-[70px]">{children}</div>
         </div>
     );
 }
