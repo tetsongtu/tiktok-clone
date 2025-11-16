@@ -34,12 +34,6 @@ button {
     cursor: pointer;
 }
 
-input,
-[tabindex] {
-    outline: none;
-    border: none;
-}
-
 a {
     color: var(--text-color);
     text-decoration: none;
