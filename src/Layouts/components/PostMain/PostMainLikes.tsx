@@ -1,44 +1,44 @@
-import { AiFillHeart } from 'react-icons/ai';
-import type { PostLikeProps, Like, Comment } from '~/types';
+import { HeartIcon, ChatCircleIcon, ShareIcon } from '@phosphor-icons/react';
+import type { PostLikeProps } from '~/types';
 import { useState } from 'preact/hooks';
-import { FaCommentDots, FaShare } from 'react-icons/fa6';
 import ActionButton from '~/components/Buttons/ActionButton';
 
 export function PostMainLikes({ post }: PostLikeProps) {
     const [hasClickedLike, setHasClickedLike] = useState(false);
     const [userLiked] = useState(false);
-    const [comments] = useState<Comment[]>([]);
-    const [likes] = useState<Like[]>([]);
 
-    const likeOrUnlike = () => {
+    // Sử dụng trực tiếp từ post data
+    const comments = post.comments || [];
+    const likes = post.likes || [];
+
+    const handleLike = () => {
         console.log('likeOrUnlike');
+        setHasClickedLike(true);
     };
 
-    const openComments = () => {
+    const handleOpenComments = () => {
         console.log('open comments');
     };
 
-    const sharePost = () => {
+    const handleShare = () => {
         console.log('share post');
     };
 
     return (
-        <div className="relative" id={`post-likes-${post?.id}`}>
-            <div className="absolute bottom-0 pl-[1rem]">
-                <div className="pb-1">
+        <div className="relative" id={`post-likes-${post.id}`}>
+            <div className="absolute bottom-0 pl-4">
+                <div className="pb-1 flex flex-col gap-1">
                     {/* Like Button */}
                     <ActionButton
                         icon={
-                            <AiFillHeart
+                            <HeartIcon
                                 color={userLiked ? '#ff2626' : '#374151'}
                                 size={20}
+                                weight="fill"
                             />
                         }
-                        count={likes?.length}
-                        onClick={() => {
-                            likeOrUnlike();
-                            setHasClickedLike(true);
-                        }}
+                        count={likes.length}
+                        onClick={handleLike}
                         disabled={hasClickedLike}
                         isActive={userLiked}
                         isLoading={hasClickedLike}
@@ -46,16 +46,16 @@ export function PostMainLikes({ post }: PostLikeProps) {
 
                     {/* Comment Button */}
                     <ActionButton
-                        icon={<FaCommentDots color="#374151" size={18} />}
-                        count={comments?.length}
-                        onClick={openComments}
+                        icon={<ChatCircleIcon color="#374151" size={20} weight="fill" />}
+                        count={comments.length}
+                        onClick={handleOpenComments}
                     />
 
                     {/* Share Button */}
                     <ActionButton
-                        icon={<FaShare color="#374151" size={18} />}
-                        count={55}
-                        onClick={sharePost}
+                        icon={<ShareIcon color="#374151" size={20} weight="fill" />}
+                        count={post.shares || 0}
+                        onClick={handleShare}
                     />
                 </div>
             </div>

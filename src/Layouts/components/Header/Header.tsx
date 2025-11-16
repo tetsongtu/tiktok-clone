@@ -1,14 +1,18 @@
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { BsThreeDotsVertical } from 'react-icons/bs';
+import {
+    PlusIcon,
+    DotsThreeVerticalIcon,
+    ArrowUpIcon,
+    ChatIcon,
+    EnvelopeIcon,
+} from '@phosphor-icons/react';
 
 import config from '~/config';
 import images from '~/assets/images';
 import styles from './Header.module.scss';
 import Menu from '~/components/Popper/Menu';
 import type { MenuItemData } from '~/types';
-import { UploadIcon, MessageIcon, InboxIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import Button from '~/components/Buttons/Button';
 import LinkButton from '~/components/Buttons/LinkButton';
@@ -96,15 +100,19 @@ function Header() {
                     <>
                         <LinkButton
                             to={config.routes.upload}
-                            icon={<UploadIcon />}
+                            icon={<ArrowUpIcon size={25} />}
                             tooltip="Upload video"
                         />
-                        <LinkButton icon={<MessageIcon />} tooltip="Messages" />
-                        <LinkButton icon={<InboxIcon />} tooltip="Inbox" badge={12} />
+                        <LinkButton icon={<ChatIcon size={25} />} tooltip="Messages" />
+                        <LinkButton
+                            icon={<EnvelopeIcon size={25} />}
+                            tooltip="Inbox"
+                            badge={12}
+                        />
                     </>
                 ) : (
                     <>
-                        <Button variant="outline" leftIcon={<AiOutlinePlus />}>
+                        <Button variant="outline" leftIcon={<PlusIcon />}>
                             Upload
                         </Button>
                         <Button variant="primary">Load in</Button>
@@ -123,7 +131,7 @@ function Header() {
                         />
                     ) : (
                         <button className={cx('more-btn')}>
-                            <BsThreeDotsVertical size={25} />
+                            <DotsThreeVerticalIcon size={25} weight="bold" />
                         </button>
                     )}
                 </Menu>

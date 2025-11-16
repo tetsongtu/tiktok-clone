@@ -19,12 +19,7 @@ function AccountItem({ user }: UserProps) {
     };
 
     return (
-        <Tooltip
-            offset={[-20, -20]}
-            delay={[0, 700]}
-            placement="bottom"
-            render={renderReview}
-        >
+        <Tooltip offset={[-20, -20]} delay={500} placement="bottom" render={renderReview}>
             <div className={cx('account-item')}>
                 <Image
                     className={cx('avatar', 'rounded-full object-cover')}

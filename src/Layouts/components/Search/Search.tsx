@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useEffect, useState, useRef } from 'react';
-import { BiSearch } from 'react-icons/bi';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 
 import * as searchServices from '~/services/searchService';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
@@ -97,7 +97,7 @@ function Search() {
                         'h-full border-r border-r-gray-300',
                         hasText ? 'text-[rgba(22,24,35,0.75)]' : 'opacity-50',
                     )}
-                    icon={<BiSearch size={22} />}
+                    icon={<MagnifyingGlassIcon size={22} />}
                     tooltip="Search nội dung dài để test"
                 />
                 <input

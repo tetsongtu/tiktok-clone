@@ -24,6 +24,9 @@ export interface PostData {
         name: string;
         img: string;
     };
+    likes?: Like[];
+    comments?: Comment[];
+    shares?: number;
 }
 
 export interface PostProps {

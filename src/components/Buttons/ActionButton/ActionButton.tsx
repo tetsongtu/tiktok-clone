@@ -1,4 +1,4 @@
-import { BiLoaderCircle } from 'react-icons/bi';
+import { SpinnerGapIcon } from '@phosphor-icons/react';
 import type { ActionButtonProps } from '~/types';
 import BaseButton from '~/components/Buttons/BaseButton';
 import classNames from 'classnames';
@@ -26,7 +26,7 @@ export function ActionButton({
                     isActive ? 'bg-red-100' : 'bg-gray-200',
                 )}
             >
-                {isLoading ? <BiLoaderCircle size={20} className="animate-spin" /> : icon}
+                {isLoading ? <SpinnerGapIcon size={20} className="animate-spin" /> : icon}
             </div>
             <span className="text-sm font-medium">{count}</span>
         </BaseButton>

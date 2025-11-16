@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
-import { BiCloudUpload, BiLoaderCircle } from 'react-icons/bi';
-import { PiKnifeLight } from 'react-icons/pi';
+import {
+    CheckCircleIcon,
+    CloudArrowUpIcon,
+    SpinnerGapIcon,
+    KnifeIcon,
+} from '@phosphor-icons/react';
 import Button from '~/components/Buttons/Button';
 import type { UploadError } from '~/types/UploadError';
 
@@ -37,7 +40,7 @@ function Upload() {
     };
 
     return (
-        <div className="h-[720px] mt-[70px] bg-white shadow-lg rounded-md py-6 md:px-10 px-4">
+        <div className="h-[720px] bg-white shadow-lg rounded-md py-6 md:px-10 px-4">
             <div className="pb-8">
                 <h1 className="text-[23px] font-semibold">Upload video</h1>
                 <h2 className="text-gray-400 mt-1">Post a video to your account</h2>
@@ -55,7 +58,7 @@ function Upload() {
                             rounded-lg hover:bg-gray-100 cursor-pointer
                         "
                     >
-                        <BiCloudUpload size="40" color="#b3b3b1" />
+                        <CloudArrowUpIcon size="40" color="#b3b3b1" />
                         <p className="mt-4 text-[17px]">Select video to upload</p>
                         <p className="mt-1.5 text-gray-500 text-[13px]">
                             Or drag and drop a file
@@ -93,7 +96,7 @@ function Upload() {
                         {isUploading ? (
                             <div className="absolute flex items-center justify-center z-20 bg-black h-full w-full rounded-xl bg-opacity-50">
                                 <div className="mx-auto flex items-center justify-center gap-1">
-                                    <BiLoaderCircle
+                                    <SpinnerGapIcon
                                         className="animate-spin"
                                         size="30"
                                         color="#F12B56"
@@ -117,7 +120,7 @@ function Upload() {
                             className="absolute -bottom-12 flex justify-center gap-32 z-50 rounded-xl border w-full p-2 border-gray-300"
                         >
                             <div className="flex items-center truncate">
-                                <AiOutlineCheckCircle
+                                <CheckCircleIcon
                                     className="min-w-[16px]"
                                     size="16"
                                     color="#F12B56"
@@ -136,7 +139,7 @@ function Upload() {
                 <div className="mt-4 mb-6">
                     <div className="flex bg-[#F8F8F8] py-4 px-6">
                         <div>
-                            <PiKnifeLight className="mr-4" size="20" />
+                            <KnifeIcon className="mr-4" size="20" />
                         </div>
                         <div>
                             <div className="text-semibold text-[15px] mb-1.5">
@@ -184,7 +187,7 @@ function Upload() {
                             onClick={createNewPost}
                         >
                             {isUploading ? (
-                                <BiLoaderCircle
+                                <SpinnerGapIcon
                                     className="animate-spin"
                                     size="25"
                                     color="#fff"
