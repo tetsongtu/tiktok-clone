@@ -51,7 +51,7 @@ const MENU_ITEMS: MenuItemData[] = [
 ];
 
 function Header() {
-    const currentUser = true;
+    const currentUser = false;
 
     const handleMenuChange = (menuItem: MenuItemData) => {
         switch (menuItem.type) {
@@ -119,6 +119,7 @@ function Header() {
                     </>
                 )}
                 <Menu
+                    key={currentUser ? 'user' : 'guest'}
                     items={currentUser ? userMenu : MENU_ITEMS}
                     onChange={handleMenuChange}
                 >
