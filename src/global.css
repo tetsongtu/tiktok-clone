@@ -1,3 +1,5 @@
+@import 'tailwindcss';
+
 :root {
     --primary: #fe2c55;
     --black: #000;
@@ -25,7 +27,7 @@ body {
     margin: 0;
 }
 
-// Scrollbar
+/* Scrollbar */
 ::-webkit-scrollbar {
     width: 0;
 }

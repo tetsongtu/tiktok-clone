@@ -37,13 +37,13 @@ function Upload() {
     };
 
     return (
-        <div className="mt-[80px] mb-[40px] bg-white shadow-lg rounded-md py-6 md:px-10 px-4">
+        <div className="h-[720px] mt-[70px] bg-white shadow-lg rounded-md py-6 md:px-10 px-4">
             <div className="pb-8">
                 <h1 className="text-[23px] font-semibold">Upload video</h1>
                 <h2 className="text-gray-400 mt-1">Post a video to your account</h2>
             </div>
 
-            <div className="mt-8 md:flex gap-6">
+            <div className=" mt-8 md:flex gap-6">
                 {!fileDisplay ? (
                     <label
                         htmlFor="fileInput"

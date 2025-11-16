@@ -2,16 +2,15 @@ import classNames from 'classnames/bind';
 import styles from './AccountPreview.module.scss';
 import Button from '~/components/Buttons/Button';
 import type { UserProps } from '~/types';
+import Image from '~/components/Image';
 const cx = classNames.bind(styles);
 
 function AccountPreview({ user }: UserProps) {
     return (
         <div className={cx('wrapper')}>
             <header className={cx('header')}>
-                <img className={cx('avatar')} src={user.avatar} alt={user.nickname} />
-                <Button className={cx('follow-btn')} primary>
-                    Follow
-                </Button>
+                <Image className={cx('avatar')} src={user.avatar} alt={user.nickname} />
+                <Button variant="primary">Follow</Button>
             </header>
             <section>
                 <p className={cx('nickname')}>

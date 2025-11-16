@@ -37,10 +37,10 @@ function Sidebar() {
     };
 
     return (
-        <aside className={cx('wrapper')}>
+        <aside className={cx('wrapper', 'mt-[71px]')}>
             <Menu>
                 <Search />
-                <div className="py-[12px]">
+                <div className="my-[12px]">
                     {SIDEBAR_MENU.map((item) => (
                         <MenuItem key={item.title} {...item} />
                     ))}

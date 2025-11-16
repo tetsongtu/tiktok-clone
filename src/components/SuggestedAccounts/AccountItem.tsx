@@ -21,7 +21,7 @@ function AccountItem({ user }: UserProps) {
     return (
         <Tooltip
             offset={[-20, -20]}
-            delay={[800, 0]}
+            delay={[0, 700]}
             placement="bottom"
             render={renderReview}
         >
