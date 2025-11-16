@@ -17,4 +17,5 @@ export interface MenuItemData {
     code?: string;
     separate?: boolean;
     children?: MenuLevel;
+    onClick?: () => void;
 }

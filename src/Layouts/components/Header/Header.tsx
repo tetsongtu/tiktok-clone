@@ -7,6 +7,7 @@ import {
     ChatIcon,
     EnvelopeIcon,
 } from '@phosphor-icons/react';
+import { useState } from 'react'; // Thêm import useState
 
 import config from '~/config';
 import images from '~/assets/images';
@@ -52,10 +53,10 @@ const MENU_ITEMS: MenuItemData[] = [
 ];
 
 function Header() {
-    // State & Data
-    const currentUser = false; // This would typically come from context or props
+    // State & Data - Thay đổi thành state
+    const [currentUser, setCurrentUser] = useState(false);
 
-    // User menu with conditional items
+    // User menu với logout handler
     const userMenu: MenuItemData[] = [
         {
             icon: '',
@@ -76,8 +77,9 @@ function Header() {
         {
             icon: '',
             title: 'Log out',
-            to: '/logout',
+            to: '#', // Thêm # để tránh chuyển trang
             separate: true,
+            onClick: () => setCurrentUser(false), // Thêm handler logout
         },
     ];
 
@@ -88,8 +90,17 @@ function Header() {
                 // Handle language change
                 break;
             default:
+                // Xử lý logout từ menu item
+                if (menuItem.title === 'Log out') {
+                    setCurrentUser(false);
+                }
                 break;
         }
+    };
+
+    // Login handler
+    const handleLogin = () => {
+        setCurrentUser(true);
     };
 
     // UI Components
@@ -118,7 +129,11 @@ function Header() {
             <Button to={config.routes.upload} variant="outline" leftIcon={<PlusIcon />}>
                 Upload
             </Button>
-            <Button variant="primary">Log in</Button>
+            <Button variant="primary" onClick={handleLogin}>
+                {' '}
+                {/* Thêm onClick */}
+                Log in
+            </Button>
         </>
     );
 
@@ -149,7 +164,9 @@ function Header() {
                     items={currentUser ? userMenu : MENU_ITEMS}
                     onChange={handleMenuChange}
                 >
-                    {currentUser ? renderUserAvatar() : renderMenuButton()}
+                    <div className="mr-10">
+                        {currentUser ? renderUserAvatar() : renderMenuButton()}
+                    </div>
                 </Menu>
             </div>
         </header>

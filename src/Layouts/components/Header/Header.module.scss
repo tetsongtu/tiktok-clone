@@ -15,10 +15,16 @@
 
 //Actions
 .more-btn {
+    display: flex;
     font-size: 2rem;
-    padding: 4px 8px;
-    background-color: transparent;
+    margin-left: 4px;
+    border-radius: 50%;
     cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: #e5e7eb;
+    }
 }
 
 .user-avatar {
