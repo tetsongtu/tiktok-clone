@@ -13,7 +13,8 @@ interface SuggestedAccountsProps {
 
 function SuggestedAccounts({ label, data = [], onSeeAll }: SuggestedAccountsProps) {
     return (
-        <div className={cx('wrapper')}>
+        <>
+            <div className="border-t border-[#ccc] w-[85%]"></div>
             <p className={cx('label')}>{label}</p>
 
             {data.map((account) => (
@@ -22,7 +23,7 @@ function SuggestedAccounts({ label, data = [], onSeeAll }: SuggestedAccountsProp
             <p className={cx('more-btn')} onClick={onSeeAll}>
                 See all
             </p>
-        </div>
+        </>
     );
 }
 

@@ -37,7 +37,7 @@ function Sidebar() {
     };
 
     return (
-        <aside className={cx('wrapper', 'mt-[71px]')}>
+        <aside className={cx('wrapper', 'mt-[71px] w-[100%] lg:w-[256px]')}>
             <Menu>
                 <Search />
                 <div className="my-[12px]">
@@ -53,17 +53,11 @@ function Sidebar() {
             />
             <SuggestedAccounts label="Following" />
             <div className={cx('footer')}>
-                <div style={{ borderTop: '1px solid #ccc' }}>
+                <div className="text-[13px] font-semibold opacity-72 border-t border-[#ccc] w-[85%]">
                     <p>Following accounts</p>
                     <p>Accounts you follow will appear here</p>
                 </div>
-                <div
-                    style={{
-                        borderTop: '1px solid #ccc',
-                        color: 'gray',
-                        padding: '0 1rem',
-                    }}
-                >
+                <div className="text-[13px] font-semibold opacity-50 border-t border-[#ccc] w-[85%]">
                     <p>Company</p>
                     <p>Program</p>
                     <p>Terms & Policies</p>

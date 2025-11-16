@@ -1,9 +1,8 @@
 .wrapper {
     position: fixed;
-    width: 10%;
-    padding: 7px 0px;
+    padding-top: 7px;
     @media (min-width: 1024px) {
-        width: 356px;
+        width: 256px;
     }
 }
 
