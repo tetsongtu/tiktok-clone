@@ -5,7 +5,7 @@ import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 import * as searchServices from '~/services/searchService';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
-import { type Account } from '~/types';
+import type { UserData } from '~/types/SiderbarMenu';
 import Tooltip from '~/components/Tooltip';
 import { useDebounce } from '~/hooks';
 import images from '~/assets/images';
@@ -16,7 +16,7 @@ const DEBOUNCE_TIME = 500;
 
 function Search() {
     const [searchValue, setSearchValue] = useState('');
-    const [searchResult, setSearchResult] = useState<Account[]>([]);
+    const [searchResult, setSearchResult] = useState<UserData[]>([]);
     const [showResult, setShowResult] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -74,7 +74,7 @@ function Search() {
                 <h4 className="px-3 py-[5px] text-[1.4rem] font-semibold text-[rgba(22,24,35,0.5)]">
                     Accounts
                 </h4>
-                {searchResult.map((result: Account) => (
+                {searchResult.map((result: UserData) => (
                     <AccountItem key={result.id} data={result} />
                 ))}
             </PopperWrapper>

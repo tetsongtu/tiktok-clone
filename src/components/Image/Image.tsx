@@ -17,6 +17,7 @@ function Image({
     src,
     alt,
     className,
+    rounded,
     fallback: customFallback = images.noImage,
     ...props
 }: ImageProps) {
@@ -26,7 +27,7 @@ function Image({
         setFallback(customFallback);
     };
 
-    const classes = cx(styles.wrapper, className);
+    const classes = cx('wrapper', className, { rounded });
 
     return (
         <img

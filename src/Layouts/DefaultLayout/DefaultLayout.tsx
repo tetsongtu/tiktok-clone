@@ -7,7 +7,7 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
             <Header />
             <div className="flex px-[16px] w-full h-full">
                 <Sidebar />
-                <div className="flex-1 max-w-[690px] mx-auto">{children}</div>
+                <div className="z-50 flex-1 max-w-[690px] mx-auto">{children}</div>
             </div>
         </div>
     );

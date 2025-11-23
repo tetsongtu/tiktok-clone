@@ -8,6 +8,10 @@ import {
 import Button from '~/components/Buttons/Button';
 import type { UploadError } from '~/types/UploadError';
 
+// Upload
+// FileUploadArea, VideoPreview
+// CaptionAndEdit, UploadButtons
+
 function Upload() {
     const [fileDisplay, setFileDisplay] = useState('');
     const [caption, setCaption] = useState('');

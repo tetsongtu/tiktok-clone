@@ -24,28 +24,9 @@
     }
 }
 
-.avatar {
-    width: 32px;
-    height: 32px;
-    margin: 0 auto;
-    @media (min-width: 1024px) {
-        margin: 0;
-    }
-}
-
 .item-info {
     flex: 1;
     margin-left: 12px;
-}
-
-.nickname {
-    font-size: 1.6em;
-    color: #161823;
-}
-
-.name {
-    font-size: 1em;
-    opacity: #161823bf;
 }
 
 .more-btn {

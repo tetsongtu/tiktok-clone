@@ -1,27 +1,26 @@
-import classNames from 'classnames/bind';
-import styles from './AccountItem.module.css';
-import images from '~/assets/images';
 import { Link } from 'react-router-dom';
-import type { AccountItemProps } from '~/types/AccountTypes';
+import { CheckCircleIcon } from '@phosphor-icons/react';
+
+import type { UserProps } from '~/types/SiderbarMenu';
 import Image from '~/components/Image';
 
-const cx = classNames.bind(styles);
+// info avatar name check username
 
-function AccountItem({ data }: AccountItemProps) {
+const wrapper = `flex items-center cursor-pointer hover:bg-[var(--primary)] p-1 px-2 hover:text-white`;
+
+function AccountItem({ user }: UserProps) {
     return (
-        <Link to={`/@${data.nickname}`} className={cx('wrapper')}>
-            <Image
-                src={data.avatar}
-                alt={data.full_name}
-                className="w-13 h-13 object-cover rounded-full"
-            />
+        <Link to={`/@${user.nickname}`} className={wrapper}>
+            <Image rounded src={user.avatar} alt={user.full_name} className="w-13 h-13" />
 
-            <div className={cx('info')}>
-                <h4 className={cx('name')}>
-                    <span>{data.full_name}</span>
-                    {data.tick && <Image className={cx('check')} src={images.search} />}
+            <div className="truncate px-3">
+                <h4 className="text-2xl flex items-center">
+                    <span>{user.full_name}</span>
+                    {user.tick && (
+                        <CheckCircleIcon weight="fill" className="ml-1 text-green-500" />
+                    )}
                 </h4>
-                <span className={cx('username')}>{data.nickname}</span>
+                <span className="text-2xl text-gray-400">{user.nickname}</span>
             </div>
         </Link>
     );

@@ -7,7 +7,6 @@ import {
     ChatIcon,
     EnvelopeIcon,
 } from '@phosphor-icons/react';
-import { useState } from 'react'; // Thêm import useState
 
 import config from '~/config';
 import images from '~/assets/images';
@@ -17,6 +16,7 @@ import type { MenuItemData } from '~/types';
 import Image from '~/components/Image';
 import Button from '~/components/Buttons/Button';
 import LinkButton from '~/components/Buttons/LinkButton';
+import useCurrentUser from '~/hooks/useCurrentUser';
 
 const cx = classNames.bind(styles);
 
@@ -54,7 +54,7 @@ const MENU_ITEMS: MenuItemData[] = [
 
 function Header() {
     // State & Data - Thay đổi thành state
-    const [currentUser, setCurrentUser] = useState(false);
+    const { currentUser, setCurrentUser } = useCurrentUser();
 
     // User menu với logout handler
     const userMenu: MenuItemData[] = [
@@ -130,8 +130,6 @@ function Header() {
                 Upload
             </Button>
             <Button variant="primary" onClick={handleLogin}>
-                {' '}
-                {/* Thêm onClick */}
                 Log in
             </Button>
         </>
