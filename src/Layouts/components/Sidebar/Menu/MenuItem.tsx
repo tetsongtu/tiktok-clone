@@ -10,7 +10,7 @@ function MenuItem({ title, to, icon, actionIcon }: MenuItemProps) {
         <NavLink className={(nav) => cx('menu-item', { active: nav.isActive })} to={to}>
             <span className={cx('icon')}>{icon}</span>
             <span className={cx('action-icon')}>{actionIcon}</span>
-            <span className={cx('title')}>{title}</span>
+            <span className={cx('title', 'hidden lg:flex')}>{title}</span>
         </NavLink>
     );
 }

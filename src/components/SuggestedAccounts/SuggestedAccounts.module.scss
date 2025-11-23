@@ -1,5 +1,4 @@
 .label,
-.item-info,
 .more-btn {
     display: none;
     @media (min-width: 1024px) {
@@ -22,11 +21,6 @@
     &:hover {
         background: rgba(22, 24, 35, 0.03);
     }
-}
-
-.item-info {
-    flex: 1;
-    margin-left: 12px;
 }
 
 .more-btn {

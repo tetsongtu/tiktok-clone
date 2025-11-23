@@ -75,7 +75,7 @@ function Search() {
                     Accounts
                 </h4>
                 {searchResult.map((result: UserData) => (
-                    <AccountItem key={result.id} data={result} />
+                    <AccountItem key={result.id} user={result} />
                 ))}
             </PopperWrapper>
         );
@@ -91,7 +91,7 @@ function Search() {
             render={renderAccounts}
             onClickOutside={handleHideResult}
         >
-            <div className="top-[16px] w-[208px] h-[40px] flex items-center justify-between gap-2 hidden md:flex bg-[#F1F1F2] p-1 rounded-full">
+            <div className="top-[16px] w-[208px] h-[40px] flex items-center justify-between gap-2 hidden lg:flex bg-[#F1F1F2] p-1 rounded-full">
                 <LinkButton
                     className={classNames(
                         'h-full border-r border-r-gray-300',

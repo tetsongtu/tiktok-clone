@@ -151,7 +151,13 @@ function Header() {
     );
 
     return (
-        <header className="fixed flex justify-between z-50 w-full h-[100px] py-[20px] px-[16px]">
+        <header
+            className="
+        fixed flex justify-between z-50
+        w-full h-[100px] py-[20px] px-[16px]
+        hidden lg:flex
+        "
+        >
             {renderLogo()}
 
             <div className={cx('flex justify-end items-center')}>

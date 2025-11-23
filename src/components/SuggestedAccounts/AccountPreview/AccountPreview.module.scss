@@ -1,30 +1,8 @@
-.wrapper {
-    width: 320px;
-    padding: 20px;
-}
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
 .body {
     margin-top: 12px;
     color: #161823;
 }
 
-.nickname {
-    font-size: 1.8rem;
-}
-.name {
-    font-size: 1.4rem;
-}
 .analytics {
     margin-top: 10px;
     font-size: 1.8rem;
@@ -32,8 +10,4 @@
 
 .value ~ .value {
     margin-left: 20px;
-}
-
-.label {
-    color: #161823bf;
 }
