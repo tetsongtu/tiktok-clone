@@ -14,7 +14,7 @@ interface SuggestedAccountsProps {
 function SuggestedAccounts({ label, data = [], onSeeAll }: SuggestedAccountsProps) {
     return (
         <>
-            <div className="border-t border-[#ccc] w-[40px] lg:w-[85%]"></div>
+            <div className="border-t border-[#ccc] w-[50px] lg:w-[85%]"></div>
             <p className={cx('label')}>{label}</p>
 
             {data.map((account) => (

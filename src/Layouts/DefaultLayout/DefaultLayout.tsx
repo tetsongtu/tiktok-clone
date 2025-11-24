@@ -5,9 +5,9 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
     return (
         <div className="flex">
             <Header />
-            <div className="flex px-[2px] md:px-[16px] w-full h-full">
+            <div className="z-30 flex w-full px-[2px] lg:px-2.5">
                 <Sidebar />
-                <div className="z-50 flex-1 max-w-[690px] mx-auto">{children}</div>
+                <div className="flex mx-auto">{children}</div>
             </div>
         </div>
     );

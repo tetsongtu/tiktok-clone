@@ -28,82 +28,47 @@ const MENU_ITEMS: MenuItemData[] = [
         children: {
             title: 'Language',
             data: [
-                {
-                    type: 'language',
-                    code: 'en',
-                    title: 'English',
-                },
-                {
-                    type: 'language',
-                    code: 'vi',
-                    title: 'Tiếng Việt',
-                },
+                { type: 'language', code: 'en', title: 'English' },
+                { type: 'language', code: 'vi', title: 'Tiếng Việt' },
             ],
         },
     },
-    {
-        icon: '',
-        title: 'Feedback and help',
-        to: '/feedback',
-    },
-    {
-        icon: '',
-        title: 'Keyboard shortcuts',
-    },
+    { icon: '', title: 'Feedback and help', to: '/feedback' },
+    { icon: '', title: 'Keyboard shortcuts' },
 ];
 
 function Header() {
-    // State & Data - Thay đổi thành state
     const { currentUser, setCurrentUser } = useCurrentUser();
 
-    // User menu với logout handler
     const userMenu: MenuItemData[] = [
+        { icon: '', title: 'View profile', to: '/@hoaa' },
+        { icon: '', title: 'Get coins', to: '/coin' },
+        { icon: '', title: 'Settings', to: '/settings' },
+        ...MENU_ITEMS,
         {
             icon: '',
-            title: 'View profile',
-            to: '/@hoaa',
-        },
-        {
-            icon: '',
-            title: 'Get coins',
-            to: '/coin',
-        },
-        {
-            icon: '',
-            title: 'Settings',
-            to: '/settings',
+            title: 'Log out',
+            to: '#',
+            separate: true,
+            onClick: () => setCurrentUser(false),
         },
         ...MENU_ITEMS,
         {
             icon: '',
             title: 'Log out',
-            to: '#', // Thêm # để tránh chuyển trang
+            to: '#',
             separate: true,
-            onClick: () => setCurrentUser(false), // Thêm handler logout
+            onClick: () => setCurrentUser(false),
         },
     ];
 
-    // Event Handlers
     const handleMenuChange = (menuItem: MenuItemData) => {
-        switch (menuItem.type) {
-            case 'language':
-                // Handle language change
-                break;
-            default:
-                // Xử lý logout từ menu item
-                if (menuItem.title === 'Log out') {
-                    setCurrentUser(false);
-                }
-                break;
-        }
+        if (menuItem.type === 'language') return;
+        if (menuItem.title === 'Log out') setCurrentUser(false);
     };
 
-    // Login handler
-    const handleLogin = () => {
-        setCurrentUser(true);
-    };
+    const handleLogin = () => setCurrentUser(true);
 
-    // UI Components
     const renderLogo = () => (
         <div className="h-full">
             <Link to={config.routes.home}>
@@ -153,9 +118,8 @@ function Header() {
     return (
         <header
             className="
-        fixed flex justify-between z-50
-        w-full h-[100px] py-[20px] px-[16px]
-        hidden lg:flex
+        fixed w-full h-[100px] py-[20px] px-[16px]
+        hidden lg:flex justify-between
         "
         >
             {renderLogo()}

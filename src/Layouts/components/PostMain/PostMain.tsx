@@ -1,5 +1,5 @@
 import { useEffect } from 'preact/hooks';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { HeartIcon, MusicNotesIcon } from '@phosphor-icons/react';
 
 import { type PostProps } from '~/types';
@@ -8,8 +8,6 @@ import PostMainLikes from './PostMainLikes';
 import Image from '~/components/Image';
 
 function PostMain({ post }: PostProps) {
-    const { pathname } = useLocation();
-
     useEffect(() => {
         const video = document.getElementById(`video-${post?.id}`) as HTMLVideoElement;
         const postMainElement = document.getElementById(`post-main-${post?.id}`);
@@ -28,12 +26,8 @@ function PostMain({ post }: PostProps) {
         return () => observer.disconnect();
     }, [post?.id]);
 
-    const containerClass = pathname === '/' ? 'max-w-[1140px]' : '';
-    const videoContainerClass =
-        'relative min-h-[480px] max-h-[750px] max-w-[750px] flex items-center cursor-pointer';
-
     return (
-        <div id={`post-main-${post?.id}`} className={`lg:px-2.5 px-0 ${containerClass}`}>
+        <div id={`post-main-${post?.id}`}>
             <div className="border-b py-6 px-10 border-gray-200">
                 {/* Header Section */}
                 <div className="flex items-center mb-2.5">
@@ -52,7 +46,7 @@ function PostMain({ post }: PostProps) {
 
                 {/* Content Section */}
                 <div className="flex justify-center">
-                    <div className={videoContainerClass}>
+                    <div>
                         <video
                             className="rounded-lg object-cover mx-auto h-full"
                             id={`video-${post?.id}`}

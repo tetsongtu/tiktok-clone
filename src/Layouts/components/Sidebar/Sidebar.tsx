@@ -37,7 +37,7 @@ function Sidebar() {
     };
 
     return (
-        <aside className={cx('wrapper', 'mt-[71px] w-[100%] lg:w-[256px]')}>
+        <aside className={cx('fixed mt-[71px]')}>
             <Menu>
                 <Search />
                 <div className="my-[12px]">
