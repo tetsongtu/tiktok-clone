@@ -4,7 +4,7 @@ import PostMain from '~/Layouts/components/PostMain';
 
 function Home() {
     return (
-        <div className="max-w-[690px] mx-auto">
+        <div>
             <PostMain
                 post={{
                     id: '1',
