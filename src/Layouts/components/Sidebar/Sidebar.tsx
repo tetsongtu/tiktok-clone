@@ -37,7 +37,7 @@ function Sidebar() {
     };
 
     return (
-        <aside className={cx('fixed mt-[71px]')}>
+        <aside id="Sidebar" className="fixed mt-[71px]">
             <Menu>
                 <Search />
                 <div className="my-[12px]">
@@ -46,22 +46,24 @@ function Sidebar() {
                     ))}
                 </div>
             </Menu>
-            <SuggestedAccounts
-                label="Suggested accounts"
-                data={suggestedUsers}
-                onSeeAll={handleSeeAll}
-            />
-            <SuggestedAccounts label="Following" />
-            <div className={cx('footer')}>
-                <div className="text-[13px] font-semibold opacity-72 border-t border-[#ccc] w-[85%]">
-                    <p>Following accounts</p>
-                    <p>Accounts you follow will appear here</p>
-                </div>
-                <div className="text-[13px] font-semibold opacity-50 border-t border-[#ccc] w-[85%]">
-                    <p>Company</p>
-                    <p>Program</p>
-                    <p>Terms & Policies</p>
-                    <p>© 2025 TikTok</p>
+            <div className="h-[100vh] overflow-y-scroll">
+                <SuggestedAccounts
+                    label="Suggested accounts"
+                    data={suggestedUsers}
+                    onSeeAll={handleSeeAll}
+                />
+                <SuggestedAccounts label="Following" />
+                <div className={cx('footer')}>
+                    <div className="text-[13px] font-semibold opacity-72 border-t border-[#ccc] w-[85%]">
+                        <p>Following accounts</p>
+                        <p>Accounts you follow will appear here</p>
+                    </div>
+                    <div className="text-[13px] font-semibold opacity-50 border-t border-[#ccc] w-[85%]">
+                        <p>Company</p>
+                        <p>Program</p>
+                        <p>Terms & Policies</p>
+                        <p>© 2025 TikTok</p>
+                    </div>
                 </div>
             </div>
         </aside>
