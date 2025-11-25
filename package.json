@@ -16,6 +16,7 @@
     "axios": "^1.12.2",
     "classnames": "^2.5.1",
     "preact": "^10.27.2",
+    "react-image-crop": "^11.0.10",
     "react-router-dom": "^7.9.1",
     "tailwindcss": "^4.1.16"
   },
