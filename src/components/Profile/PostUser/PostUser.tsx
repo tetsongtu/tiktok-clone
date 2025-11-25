@@ -1,10 +1,7 @@
 import { useEffect } from 'react';
-
-import type { PostUserProps } from './PostUserTypes';
-import { SpinnerIcon } from '@phosphor-icons/react';
-import { ChartBarIcon } from '@phosphor-icons/react';
-import { WarningCircleIcon } from '@phosphor-icons/react';
+import { SpinnerIcon, ChartBarIcon, WarningCircleIcon } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
+import type { PostUserProps } from './PostUserTypes';
 
 function PostUser({ post }: PostUserProps) {
     useEffect(() => {

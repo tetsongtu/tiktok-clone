@@ -52,14 +52,6 @@ function Header() {
             separate: true,
             onClick: () => setCurrentUser(false),
         },
-        ...MENU_ITEMS,
-        {
-            icon: '',
-            title: 'Log out',
-            to: '#',
-            separate: true,
-            onClick: () => setCurrentUser(false),
-        },
     ];
 
     const handleMenuChange = (menuItem: MenuItemData) => {

@@ -14,8 +14,8 @@ function UserAvatar({ user, size = 13 }: UserAvatarProps) {
             }}
             className="my-auto"
             rounded
-            src={user?.avatar}
-            alt={user?.nickname}
+            src={user?.avatar || ''}
+            alt={user?.nickname || ''}
         />
     );
 }
