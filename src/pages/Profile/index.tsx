@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { ProfilePageProps } from './ProfilePageTypes';
 import Image from '~/components/Image';
 import { PencilIcon } from '@phosphor-icons/react';
@@ -6,6 +7,8 @@ import danceVideo from '~/assets/videos/dance.mp4';
 import EditProfileOverlay from '~/components/Profile/EditProfileOverlay';
 
 function Profile({ params }: ProfilePageProps) {
+    const [showEditProfile, setShowEditProfile] = useState(false);
+
     const currentProfile = {
         id: '123',
         user_id: '123',
@@ -15,7 +18,9 @@ function Profile({ params }: ProfilePageProps) {
     };
     return (
         <>
-            <EditProfileOverlay />
+            {showEditProfile && (
+                <EditProfileOverlay onClose={() => setShowEditProfile(false)} />
+            )}
             <div className="pt-[90px] ml-[90px] 2xl:pl-[185px] lg:pl-[160px] lg:pr-0 w-[calc(100%-90px)] pr-3 max-w-[1800px] 2xl:mx-auto">
                 <div className="flex w-[calc(100vw-230px)]">
                     {true ? (
@@ -38,7 +43,10 @@ function Profile({ params }: ProfilePageProps) {
                         )}
 
                         {true ? (
-                            <button className="flex item-center rounded-md py-1.5 px-3.5 mt-3 text-[15px] font-semibold border hover:bg-gray-100">
+                            <button
+                                onClick={() => setShowEditProfile(true)}
+                                className="flex item-center rounded-md py-1.5 px-3.5 mt-3 text-[15px] font-semibold border hover:bg-gray-100"
+                            >
                                 <PencilIcon className="mt-0.5 mr-1" size="18" />
                                 <span>Edit profile</span>
                             </button>

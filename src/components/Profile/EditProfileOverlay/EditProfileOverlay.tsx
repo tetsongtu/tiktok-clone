@@ -8,7 +8,11 @@ import type { UserData } from '~/types';
 import Button from '~/components/Buttons/Button';
 import TextInput from './TextInput';
 
-function EditProfileOver() {
+interface EditProfileOverlayProps {
+    onClose: () => void;
+}
+
+function EditProfileOver({ onClose }: EditProfileOverlayProps) {
     const [userBio, setUserBio] = useState<string>('');
     const [userName, setUserName] = useState<string>('');
     const [file, setFile] = useState<File | null>(null);
@@ -98,7 +102,7 @@ function EditProfileOver() {
                         {uploadedImage ? 'Crop Profile Photo' : 'Edit Profile'}
                     </h1>
                     <button
-                        onClick={handleCancelCrop}
+                        onClick={uploadedImage ? handleCancelCrop : onClose}
                         disabled={isUpdating}
                         className="hover:bg-gray-200 p-1 rounded-full"
                     >
@@ -208,7 +212,11 @@ function EditProfileOver() {
                 <div className="absolute p-5 left-0 bottom-0 border-t border-t-gray-300 w-full">
                     {!uploadedImage ? (
                         <div className="flex justify-end gap-3">
-                            <Button variant="outline" disabled={isUpdating}>
+                            <Button
+                                variant="outline"
+                                disabled={isUpdating}
+                                onClick={onClose}
+                            >
                                 Cancel
                             </Button>
                             <Button variant="primary" disabled={isUpdating}>
