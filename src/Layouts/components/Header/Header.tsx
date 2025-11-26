@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import {
     PlusIcon,
     DotsThreeVerticalIcon,
@@ -42,6 +43,18 @@ const MENU_ITEMS: MenuItemData[] = [
 function Header() {
     const { currentUser, setCurrentUser } = useCurrentUser();
 
+    // Phím tắt: Ctrl+L để đăng nhập nhanh
+    useEffect(() => {
+        const handleKeyPress = (e: KeyboardEvent) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'l' && !currentUser) {
+                e.preventDefault();
+                setCurrentUser(true);
+            }
+        };
+        window.addEventListener('keydown', handleKeyPress);
+        return () => window.removeEventListener('keydown', handleKeyPress);
+    }, [currentUser, setCurrentUser]);
+
     const userMenu: MenuItemData[] = [
         { icon: '', title: 'View profile', to: '/@hoaa' },
         { icon: '', title: 'Get coins', to: '/coin' },
@@ -56,79 +69,65 @@ function Header() {
         },
     ];
 
-    const handleMenuChange = (menuItem: MenuItemData) => {
-        if (menuItem.type === 'language') return;
-        if (menuItem.title === 'Log out') setCurrentUser(false);
-    };
-
-    const renderLogo = () => (
-        <div className="h-full">
-            <Link to={config.routes.home}>
-                <Image className="h-[42px] px-[8px]" src={images.logo} alt="TikTok" />
-            </Link>
-        </div>
-    );
-
-    const renderLoggedInButtons = () => (
-        <>
-            <LinkButton
-                to={config.routes.upload}
-                icon={<ArrowUpIcon size={25} />}
-                tooltip="Upload video"
-            />
-            <LinkButton icon={<ChatIcon size={25} />} tooltip="Messages" />
-            <LinkButton icon={<EnvelopeIcon size={25} />} tooltip="Inbox" badge={12} />
-        </>
-    );
-
-    const renderLoggedOutButtons = () => (
-        <div className="flex space-x-3">
-            <Button to={config.routes.upload} variant="outline" leftIcon={<PlusIcon />}>
-                Upload
-            </Button>
-            <Button to={config.routes.login} variant="primary">
-                Log in
-            </Button>
-        </div>
-    );
-
     const guestUser: UserData = {
         avatar: 'https://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/486f3c515c065ccaa844faf058940fe1~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=3172adc4&x-expires=1764342000&x-signature=dpyyN9ZWvISrGqAwnsrc4oL8TP0%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=my3',
     };
 
-    const renderUserAvatar = () => (
-        <UserAvatar
-            size={10}
-            user={guestUser}
-            fallback="https://yt3.ggpht.com/Pa8wyxqTOkhu5DW_RvkiQIS7Bsa7OW7gSen-2WpaQsC2EqUAkgubAg1_QPc951pzpN2F2Q4_TA=s88-c-k-c0x00ffffff-no-rj"
-        />
-    );
-
-    const renderMenuButton = () => (
-        <button className={cx('more-btn')}>
-            <DotsThreeVerticalIcon size={25} weight="bold" />
-        </button>
-    );
-
     return (
-        <header
-            className="
-        fixed w-full h-[100px] py-[20px] px-[16px]
-        hidden lg:flex justify-between
-        "
-        >
-            {renderLogo()}
+        <header className="fixed w-full h-[100px] py-[20px] px-[16px] hidden lg:flex justify-between">
+            <div className="h-full">
+                <Link to={config.routes.home}>
+                    <Image className="h-[42px] px-[8px]" src={images.logo} alt="TikTok" />
+                </Link>
+            </div>
 
             <div className={cx('flex justify-end items-center')}>
-                {currentUser ? renderLoggedInButtons() : renderLoggedOutButtons()}
+                {currentUser ? (
+                    <>
+                        <LinkButton
+                            to={config.routes.upload}
+                            icon={<ArrowUpIcon size={25} />}
+                            tooltip="Upload video"
+                        />
+                        <LinkButton icon={<ChatIcon size={25} />} tooltip="Messages" />
+                        <LinkButton
+                            icon={<EnvelopeIcon size={25} />}
+                            tooltip="Inbox"
+                            badge={12}
+                        />
+                    </>
+                ) : (
+                    <div className="flex space-x-3">
+                        <Button
+                            to={config.routes.upload}
+                            variant="outline"
+                            leftIcon={<PlusIcon />}
+                        >
+                            Upload
+                        </Button>
+                        <Button to={config.routes.login} variant="primary">
+                            Log in
+                        </Button>
+                    </div>
+                )}
 
                 <Menu
                     key={currentUser ? 'user' : 'guest'}
                     items={currentUser ? userMenu : MENU_ITEMS}
-                    onChange={handleMenuChange}
+                    onChange={(item) => item.title === 'Log out' && setCurrentUser(false)}
                 >
                     <div className="mr-10">
-                        {currentUser ? renderUserAvatar() : renderMenuButton()}
+                        {currentUser ? (
+                            <UserAvatar
+                                size={10}
+                                user={guestUser}
+                                fallback="https://yt3.ggpht.com/Pa8wyxqTOkhu5DW_RvkiQIS7Bsa7OW7gSen-2WpaQsC2EqUAkgubAg1_QPc951pzpN2F2Q4_TA=s88-c-k-c0x00ffffff-no-rj"
+                            />
+                        ) : (
+                            <button className={cx('more-btn')}>
+                                <DotsThreeVerticalIcon size={25} weight="bold" />
+                            </button>
+                        )}
                     </div>
                 </Menu>
             </div>
