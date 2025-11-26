@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import config from '~/config';
 import Button from '~/components/Buttons/Button';
 import { GoogleIcon, FacebookIcon } from '~/components/Icons';
+import useCurrentUser from '~/hooks/useCurrentUser';
 
 function Login() {
+    const { setCurrentUser } = useCurrentUser();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -62,13 +64,20 @@ function Login() {
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-pink-50 to-rose-50 p-4">
             <div className="bg-white rounded-3xl p-8 w-full max-w-[45rem] shadow-2xl my-4">
                 <div className="text-center mb-6">
-                    <h1 className="text-[2.8rem] font-bold text-[var(--text-color)] mb-2">Đăng nhập</h1>
-                    <p className="text-[1.4rem] text-gray-600">Chào mừng bạn quay trở lại!</p>
+                    <h1 className="text-[2.8rem] font-bold text-[var(--text-color)] mb-2">
+                        Đăng nhập
+                    </h1>
+                    <p className="text-[1.4rem] text-gray-600">
+                        Chào mừng bạn quay trở lại!
+                    </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="email" className="text-[1.3rem] font-semibold text-[var(--text-color)]">
+                        <label
+                            htmlFor="email"
+                            className="text-[1.3rem] font-semibold text-[var(--text-color)]"
+                        >
                             Email
                         </label>
                         <input
@@ -84,11 +93,18 @@ function Login() {
                                     : 'border-gray-300 focus:border-[var(--primary)] focus:shadow-[0_0_0_3px_rgba(254,44,85,0.1)]'
                             } outline-none`}
                         />
-                        {errors.email && <span className="text-red-500 text-[1.2rem]">{errors.email}</span>}
+                        {errors.email && (
+                            <span className="text-red-500 text-[1.2rem]">
+                                {errors.email}
+                            </span>
+                        )}
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="password" className="text-[1.3rem] font-semibold text-[var(--text-color)]">
+                        <label
+                            htmlFor="password"
+                            className="text-[1.3rem] font-semibold text-[var(--text-color)]"
+                        >
                             Mật khẩu
                         </label>
                         <div className="relative">
@@ -113,7 +129,11 @@ function Login() {
                                 {showPassword ? '👁️' : '👁️‍🗨️'}
                             </button>
                         </div>
-                        {errors.password && <span className="text-red-500 text-[1.2rem]">{errors.password}</span>}
+                        {errors.password && (
+                            <span className="text-red-500 text-[1.2rem]">
+                                {errors.password}
+                            </span>
+                        )}
                     </div>
 
                     <div className="flex justify-between items-center text-[1.3rem]">
@@ -121,12 +141,17 @@ function Login() {
                             <input type="checkbox" className="w-6 h-6 cursor-pointer" />
                             <span>Ghi nhớ đăng nhập</span>
                         </label>
-                        <a href="#" className="text-[var(--primary)] font-medium hover:underline">
+                        <a
+                            href="#"
+                            className="text-[var(--primary)] font-medium hover:underline"
+                        >
                             Quên mật khẩu?
                         </a>
                     </div>
 
-                    <Button variant="primary">Đăng nhập</Button>
+                    <Button type="submit" variant="primary">
+                        Đăng nhập
+                    </Button>
                 </form>
 
                 <div className="flex items-center text-center my-4 text-gray-500">
@@ -142,11 +167,23 @@ function Login() {
                     <Button variant="outline" leftIcon={<FacebookIcon />}>
                         <span>Đăng nhập với Facebook</span>
                     </Button>
+                    <Button
+                        to={config.routes.home}
+                        variant="outline"
+                        onClick={() => {
+                            setCurrentUser(true);
+                        }}
+                    >
+                        <span>Đăng nhập với tư cách khách</span>
+                    </Button>
                 </div>
 
                 <div className="text-center mt-4 text-[1.3rem] text-gray-600">
                     Chưa có tài khoản?{' '}
-                    <Link to={config.routes.register} className="text-[var(--primary)] font-semibold hover:underline">
+                    <Link
+                        to={config.routes.register}
+                        className="text-[var(--primary)] font-semibold hover:underline"
+                    >
                         Đăng ký ngay
                     </Link>
                 </div>

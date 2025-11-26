@@ -2,7 +2,7 @@ import { useState } from 'preact/hooks';
 import { Link } from 'react-router-dom';
 import config from '~/config';
 import Button from '~/components/Buttons/Button';
-import { GoogleIcon, FacebookIcon, UploadIcon } from '~/components/Icons';
+import { GoogleIcon, FacebookIcon } from '~/components/Icons';
 
 function Register() {
     const [formData, setFormData] = useState({
@@ -84,13 +84,20 @@ function Register() {
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-pink-50 to-rose-50 p-4">
             <div className="bg-white rounded-3xl p-8 w-full max-w-[45rem] shadow-2xl my-4">
                 <div className="text-center mb-6">
-                    <h1 className="text-[2.8rem] font-bold text-[var(--text-color)] mb-2">Đăng ký</h1>
-                    <p className="text-[1.4rem] text-gray-600">Tạo tài khoản mới để bắt đầu</p>
+                    <h1 className="text-[2.8rem] font-bold text-[var(--text-color)] mb-2">
+                        Đăng ký
+                    </h1>
+                    <p className="text-[1.4rem] text-gray-600">
+                        Tạo tài khoản mới để bắt đầu
+                    </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="fullName" className="text-[1.3rem] font-semibold text-[var(--text-color)]">
+                        <label
+                            htmlFor="fullName"
+                            className="text-[1.3rem] font-semibold text-[var(--text-color)]"
+                        >
                             Họ và tên
                         </label>
                         <input
@@ -106,11 +113,18 @@ function Register() {
                                     : 'border-gray-300 focus:border-[var(--primary)] focus:shadow-[0_0_0_3px_rgba(254,44,85,0.1)]'
                             } outline-none`}
                         />
-                        {errors.fullName && <span className="text-red-500 text-[1.2rem]">{errors.fullName}</span>}
+                        {errors.fullName && (
+                            <span className="text-red-500 text-[1.2rem]">
+                                {errors.fullName}
+                            </span>
+                        )}
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="email" className="text-[1.3rem] font-semibold text-[var(--text-color)]">
+                        <label
+                            htmlFor="email"
+                            className="text-[1.3rem] font-semibold text-[var(--text-color)]"
+                        >
                             Email
                         </label>
                         <input
@@ -126,11 +140,18 @@ function Register() {
                                     : 'border-gray-300 focus:border-[var(--primary)] focus:shadow-[0_0_0_3px_rgba(254,44,85,0.1)]'
                             } outline-none`}
                         />
-                        {errors.email && <span className="text-red-500 text-[1.2rem]">{errors.email}</span>}
+                        {errors.email && (
+                            <span className="text-red-500 text-[1.2rem]">
+                                {errors.email}
+                            </span>
+                        )}
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="password" className="text-[1.3rem] font-semibold text-[var(--text-color)]">
+                        <label
+                            htmlFor="password"
+                            className="text-[1.3rem] font-semibold text-[var(--text-color)]"
+                        >
                             Mật khẩu
                         </label>
                         <div className="relative">
@@ -155,11 +176,18 @@ function Register() {
                                 {showPassword ? '👁️' : '👁️‍🗨️'}
                             </button>
                         </div>
-                        {errors.password && <span className="text-red-500 text-[1.2rem]">{errors.password}</span>}
+                        {errors.password && (
+                            <span className="text-red-500 text-[1.2rem]">
+                                {errors.password}
+                            </span>
+                        )}
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="confirmPassword" className="text-[1.3rem] font-semibold text-[var(--text-color)]">
+                        <label
+                            htmlFor="confirmPassword"
+                            className="text-[1.3rem] font-semibold text-[var(--text-color)]"
+                        >
                             Xác nhận mật khẩu
                         </label>
                         <div className="relative">
@@ -179,13 +207,17 @@ function Register() {
                             <button
                                 type="button"
                                 className="absolute right-4 top-1/2 -translate-y-1/2 text-[1.8rem] p-1"
-                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                onClick={() =>
+                                    setShowConfirmPassword(!showConfirmPassword)
+                                }
                             >
                                 {showConfirmPassword ? '👁️' : '👁️‍🗨️'}
                             </button>
                         </div>
                         {errors.confirmPassword && (
-                            <span className="text-red-500 text-[1.2rem]">{errors.confirmPassword}</span>
+                            <span className="text-red-500 text-[1.2rem]">
+                                {errors.confirmPassword}
+                            </span>
                         )}
                     </div>
 
@@ -197,26 +229,39 @@ function Register() {
                                 onChange={(e: any) => {
                                     setAgreedToTerms(e.target.checked);
                                     if (errors.terms) {
-                                        setErrors((prev: any) => ({ ...prev, terms: '' }));
+                                        setErrors((prev: any) => ({
+                                            ...prev,
+                                            terms: '',
+                                        }));
                                     }
                                 }}
                                 className="w-6 h-6 cursor-pointer mt-0.5 flex-shrink-0"
                             />
                             <span>
                                 Tôi đồng ý với{' '}
-                                <a href="#" className="text-[var(--primary)] font-medium hover:underline">
+                                <a
+                                    href="#"
+                                    className="text-[var(--primary)] font-medium hover:underline"
+                                >
                                     Điều khoản sử dụng
                                 </a>{' '}
                                 và{' '}
-                                <a href="#" className="text-[var(--primary)] font-medium hover:underline">
+                                <a
+                                    href="#"
+                                    className="text-[var(--primary)] font-medium hover:underline"
+                                >
                                     Chính sách bảo mật
                                 </a>
                             </span>
                         </label>
-                        {errors.terms && <span className="text-red-500 text-[1.2rem]">{errors.terms}</span>}
+                        {errors.terms && (
+                            <span className="text-red-500 text-[1.2rem]">
+                                {errors.terms}
+                            </span>
+                        )}
                     </div>
 
-                    <Button variant="primary"> Đăng ký </Button>
+                    <Button variant="primary">Đăng ký</Button>
                 </form>
 
                 <div className="flex items-center text-center my-4 text-gray-500">
@@ -226,17 +271,20 @@ function Register() {
                 </div>
 
                 <div className="flex flex-col gap-3 w-full">
-                    <Button variant='outline' leftIcon={<GoogleIcon/>} >
+                    <Button variant="outline" leftIcon={<GoogleIcon />}>
                         <span>Đăng ký với Google</span>
                     </Button>
-                    <Button variant='outline' leftIcon={<FacebookIcon/>} >
+                    <Button variant="outline" leftIcon={<FacebookIcon />}>
                         <span>Đăng ký với Facebook</span>
                     </Button>
                 </div>
 
                 <div className="text-center mt-4 text-[1.3rem] text-gray-600">
                     Đã có tài khoản?{' '}
-                    <Link to={config.routes.login} className="text-[var(--primary)] font-semibold hover:underline">
+                    <Link
+                        to={config.routes.login}
+                        className="text-[var(--primary)] font-semibold hover:underline"
+                    >
                         Đăng nhập ngay
                     </Link>
                 </div>

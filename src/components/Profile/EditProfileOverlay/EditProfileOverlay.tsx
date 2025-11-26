@@ -83,7 +83,7 @@ function EditProfileOver() {
         }
     };
 
-    const test: UserData = {
+    const guestUser: UserData = {
         id: 1,
         nickname: 'test',
         avatar: 'test',
@@ -121,7 +121,7 @@ function EditProfileOver() {
                                         htmlFor="image"
                                         className="relative cursor-pointer"
                                     >
-                                        <UserAvatar size={28} user={test} />
+                                        <UserAvatar size={28} user={guestUser} />
                                         <button className="absolute bottom-0 right-0 rounded-full bg-white shadow-xl border p-1 border-gray-300 w-8 h-8">
                                             <PencilIcon className="mx-auto" size="17" />
                                         </button>
