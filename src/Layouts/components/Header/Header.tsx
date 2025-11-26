@@ -82,14 +82,14 @@ function Header() {
     );
 
     const renderLoggedOutButtons = () => (
-        <>
+        <div className='flex space-x-3'>
             <Button to={config.routes.upload} variant="outline" leftIcon={<PlusIcon />}>
                 Upload
             </Button>
             <Button variant="primary" onClick={handleLogin}>
                 Log in
             </Button>
-        </>
+        </div>
     );
 
     const renderUserAvatar = () => (

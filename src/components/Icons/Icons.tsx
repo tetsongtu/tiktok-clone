@@ -48,3 +48,57 @@ export const InboxIcon = ({ width = '3.2rem', height = '3.2rem', className }: an
         ></path>
     </svg>
 );
+
+export const GoogleIcon = ({ width = '2rem', height = '2rem', className }: any) => (
+    <svg
+        className={className}
+        width={width}
+        height={height}
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M19.8 10.2273C19.8 9.51818 19.7364 8.83636 19.6182 8.18182H10V12.05H15.4818C15.2273 13.3 14.4636 14.3591 13.3182 15.0682V17.5773H16.7091C18.6091 15.8364 19.8 13.2727 19.8 10.2273Z"
+            fill="#4285F4"
+        />
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M10 20C12.7 20 14.9636 19.1045 16.7091 17.5773L13.3182 15.0682C12.3409 15.6682 11.0955 16.0227 10 16.0227C7.39545 16.0227 5.19091 14.2636 4.33636 11.9H0.831818V14.4909C2.56818 17.9591 6.00909 20 10 20Z"
+            fill="#34A853"
+        />
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M4.33636 11.9C4.11364 11.3 3.98636 10.6591 3.98636 10C3.98636 9.34091 4.11364 8.7 4.33636 8.1V5.50909H0.831818C0.3 6.56818 0 7.75 0 10C0 12.25 0.3 13.4318 0.831818 14.4909L4.33636 11.9Z"
+            fill="#FBBC05"
+        />
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M10 3.97727C11.2045 3.97727 12.2864 4.38182 13.1409 5.19545L16.1409 2.19545C14.9591 1.09091 12.6955 0 10 0C6.00909 0 2.56818 2.04091 0.831818 5.50909L4.33636 8.1C5.19091 5.73636 7.39545 3.97727 10 3.97727Z"
+            fill="#EA4335"
+        />
+    </svg>
+);
+
+export const FacebookIcon = ({ width = '2rem', height = '2rem', className }: any) => (
+    <svg
+        className={className}
+        width={width}
+        height={height}
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 14.9912 3.65684 19.1283 8.4375 19.8785V12.8906H5.89844V10H8.4375V7.79688C8.4375 5.29063 9.93047 3.90625 12.2146 3.90625C13.3084 3.90625 14.4531 4.10156 14.4531 4.10156V6.5625H13.1922C11.95 6.5625 11.5625 7.3334 11.5625 8.125V10H14.3359L13.8926 12.8906H11.5625V19.8785C16.3432 19.1283 20 14.9912 20 10Z"
+            fill="#1877F2"
+        />
+    </svg>
+);

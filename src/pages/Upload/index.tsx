@@ -178,7 +178,7 @@ function Upload() {
                             placeholder="Add a caption..."
                         />
                     </div>
-                    <div className="mt-8 flex">
+                    <div className="mt-8 flex space-x-3">
                         <Button variant="outline" disabled={!canPost} onClick={discard}>
                             Discard
                         </Button>
