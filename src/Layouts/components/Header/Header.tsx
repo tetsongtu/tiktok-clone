@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
     PlusIcon,
     DotsThreeVerticalIcon,
@@ -20,6 +20,7 @@ import LinkButton from '~/components/Buttons/LinkButton';
 import useCurrentUser from '~/hooks/useCurrentUser';
 import UserAvatar from '~/components/User';
 import type { UserData } from '~/types';
+import LoginModal from '~/components/LoginModal';
 
 const cx = classNames.bind(styles);
 
@@ -42,18 +43,19 @@ const MENU_ITEMS: MenuItemData[] = [
 
 function Header() {
     const { currentUser, setCurrentUser } = useCurrentUser();
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-    // Phím tắt: Ctrl+L để đăng nhập nhanh
     useEffect(() => {
         const handleKeyPress = (e: KeyboardEvent) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'l' && !currentUser) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
                 e.preventDefault();
-                setCurrentUser(true);
+                setCurrentUser((prev) => !prev);
             }
         };
+
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
-    }, [currentUser, setCurrentUser]);
+    }, [setCurrentUser]);
 
     const userMenu: MenuItemData[] = [
         { icon: '', title: 'View profile', to: '/@hoaa' },
@@ -74,64 +76,83 @@ function Header() {
     };
 
     return (
-        <header className="fixed w-full h-[100px] py-[20px] px-[16px] hidden lg:flex justify-between">
-            <div className="h-full">
-                <Link to={config.routes.home}>
-                    <Image className="h-[42px] px-[8px]" src={images.logo} alt="TikTok" />
-                </Link>
-            </div>
+        <>
+            <LoginModal
+                isOpen={isLoginModalOpen}
+                onClose={() => setIsLoginModalOpen(false)}
+            />
 
-            <div className={cx('flex justify-end items-center')}>
-                {currentUser ? (
-                    <>
-                        <LinkButton
-                            to={config.routes.upload}
-                            icon={<ArrowUpIcon size={25} />}
-                            tooltip="Upload video"
+            <header className="fixed w-full h-[100px] py-[20px] px-[16px] hidden lg:flex justify-between">
+                <div className="h-full">
+                    <Link to={config.routes.home}>
+                        <Image
+                            className="h-[42px] px-[8px]"
+                            src={images.logo}
+                            alt="TikTok"
                         />
-                        <LinkButton icon={<ChatIcon size={25} />} tooltip="Messages" />
-                        <LinkButton
-                            icon={<EnvelopeIcon size={25} />}
-                            tooltip="Inbox"
-                            badge={12}
-                        />
-                    </>
-                ) : (
-                    <div className="flex space-x-3">
-                        <Button
-                            to={config.routes.upload}
-                            variant="outline"
-                            leftIcon={<PlusIcon />}
-                        >
-                            Upload
-                        </Button>
-                        <Button to={config.routes.login} variant="primary">
-                            Log in
-                        </Button>
-                    </div>
-                )}
+                    </Link>
+                </div>
 
-                <Menu
-                    key={currentUser ? 'user' : 'guest'}
-                    items={currentUser ? userMenu : MENU_ITEMS}
-                    onChange={(item) => item.title === 'Log out' && setCurrentUser(false)}
-                >
-                    <div className="mr-10">
-                        {currentUser ? (
-                            <UserAvatar
-                                size={10}
-                                user={guestUser}
-                                fallback="https://yt3.ggpht.com/Pa8wyxqTOkhu5DW_RvkiQIS7Bsa7OW7gSen-2WpaQsC2EqUAkgubAg1_QPc951pzpN2F2Q4_TA=s88-c-k-c0x00ffffff-no-rj"
+                <nav className={cx('flex justify-end items-center')}>
+                    {currentUser ? (
+                        <>
+                            <LinkButton
+                                to={config.routes.upload}
+                                icon={<ArrowUpIcon size={25} />}
+                                tooltip="Upload video"
                             />
-                        ) : (
-                            <button className={cx('more-btn')}>
-                                <DotsThreeVerticalIcon size={25} weight="bold" />
-                            </button>
-                        )}
-                    </div>
-                </Menu>
-            </div>
-        </header>
+                            <LinkButton
+                                icon={<ChatIcon size={25} />}
+                                tooltip="Messages"
+                            />
+                            <LinkButton
+                                icon={<EnvelopeIcon size={25} />}
+                                tooltip="Inbox"
+                                badge={12}
+                            />
+                        </>
+                    ) : (
+                        <div className="flex space-x-3">
+                            <Button
+                                to={config.routes.upload}
+                                variant="outline"
+                                leftIcon={<PlusIcon />}
+                            >
+                                Upload
+                            </Button>
+                            <Button
+                                variant="primary"
+                                onClick={() => setIsLoginModalOpen(true)}
+                            >
+                                Log in
+                            </Button>
+                        </div>
+                    )}
+
+                    <Menu
+                        key={currentUser ? 'user' : 'guest'}
+                        items={currentUser ? userMenu : MENU_ITEMS}
+                        onChange={(item) =>
+                            item.title === 'Log out' && setCurrentUser(false)
+                        }
+                    >
+                        <div className="mr-10">
+                            {currentUser ? (
+                                <UserAvatar
+                                    size={10}
+                                    user={guestUser}
+                                    fallback="https://yt3.ggpht.com/Pa8wyxqTOkhu5DW_RvkiQIS7Bsa7OW7gSen-2WpaQsC2EqUAkgubAg1_QPc951pzpN2F2Q4_TA=s88-c-k-c0x00ffffff-no-rj"
+                                />
+                            ) : (
+                                <button className={cx('more-btn')}>
+                                    <DotsThreeVerticalIcon size={25} weight="bold" />
+                                </button>
+                            )}
+                        </div>
+                    </Menu>
+                </nav>
+            </header>
+        </>
     );
 }
 

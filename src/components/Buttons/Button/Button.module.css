@@ -2,6 +2,7 @@
 
 .btn {
     @apply inline-flex items-center justify-center font-semibold select-none rounded min-w-[100px] px-4 py-3 border border-transparent;
+    font-size: 1.6rem;
     font-family: var(--font-family);
 
     &.disabled {

@@ -4,7 +4,7 @@ import type { ComponentChildren } from 'preact';
 
 interface CurrentUserContextType {
     currentUser: boolean;
-    setCurrentUser: (value: boolean) => void;
+    setCurrentUser: (value: boolean | ((prev: boolean) => boolean)) => void;
 }
 
 const CurrentUserContext = createContext<CurrentUserContextType | undefined>(undefined);

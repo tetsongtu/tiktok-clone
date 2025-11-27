@@ -94,8 +94,8 @@ function EditProfileOver({ onClose }: EditProfileOverlayProps) {
     };
 
     return (
-        <div className="fixed flex justify-center pt-14 md:pt-[105px] z-50 top-0 left-0 w-full h-full bg-black/50 overflow-auto">
-            <div className="relative bg-white w-full max-w-[700px] mx-3 p-8 rounded-lg mb-10">
+        <div className="fixed flex justify-center pt-14 md:pt-[70px] z-50 top-0 left-0 w-full h-full bg-black/50 overflow-auto">
+            <div className="relative bg-white w-full max-w-[700px] p-12 rounded-lg mb-10">
                 {/* Header */}
                 <div className="absolute flex items-center justify-between w-full p-5 left-0 top-0 border-b border-b-gray-300">
                     <h1 className="text-[22px] font-medium">

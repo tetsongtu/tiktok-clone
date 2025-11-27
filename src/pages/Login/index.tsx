@@ -63,15 +63,6 @@ function Login() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-pink-50 to-rose-50 p-4">
             <div className="bg-white rounded-3xl p-8 w-full max-w-[45rem] shadow-2xl my-4">
-                <div className="text-center mb-6">
-                    <h1 className="text-[2.8rem] font-bold text-[var(--text-color)] mb-2">
-                        Đăng nhập
-                    </h1>
-                    <p className="text-[1.4rem] text-gray-600">
-                        Chào mừng bạn quay trở lại!
-                    </p>
-                </div>
-
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
                         <label
@@ -141,10 +132,7 @@ function Login() {
                             <input type="checkbox" className="w-6 h-6 cursor-pointer" />
                             <span>Ghi nhớ đăng nhập</span>
                         </label>
-                        <a
-                            href="#"
-                            className="text-[var(--primary)] font-medium hover:underline"
-                        >
+                        <a href="#" className="text-[var(--primary)] font-medium">
                             Quên mật khẩu?
                         </a>
                     </div>
@@ -174,7 +162,7 @@ function Login() {
                             setCurrentUser(true);
                         }}
                     >
-                        <span>Đăng nhập với tư cách khách</span>
+                        <span>Đăng nhập với Guest</span>
                     </Button>
                 </div>
 
