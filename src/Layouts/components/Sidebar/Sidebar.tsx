@@ -33,7 +33,7 @@ function Sidebar() {
     };
 
     return (
-        <aside id="Sidebar" className="fixed mt-[71px]">
+        <aside id="Sidebar" className="fixed">
             <Menu>
                 <Search />
                 <nav className="my-[12px]">

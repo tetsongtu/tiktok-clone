@@ -1,0 +1,18 @@
+@reference "tailwindcss";
+
+.wrapper {
+    @apply py-[20px] px-[16px] hidden lg:flex;
+}
+
+.more-btn {
+    display: flex;
+    font-size: 2rem;
+    margin-left: 4px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: #e5e7eb;
+    }
+}

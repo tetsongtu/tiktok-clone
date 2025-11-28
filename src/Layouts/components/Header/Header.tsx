@@ -1,15 +1,17 @@
+import classNames from 'classnames/bind';
+import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import config from '~/config';
 import images from '~/assets/images';
 import Image from '~/components/Image';
 import useCurrentUser from '~/hooks/useCurrentUser';
-import LoginModal from '~/components/Modals/LoginModal';
+
+const cx = classNames.bind(styles);
 
 function Header() {
     const { setCurrentUser } = useCurrentUser();
-    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
     useEffect(() => {
         const handleKeyPress = (e: KeyboardEvent) => {
@@ -25,12 +27,7 @@ function Header() {
 
     return (
         <>
-            <LoginModal
-                isOpen={isLoginModalOpen}
-                onClose={() => setIsLoginModalOpen(false)}
-            />
-
-            <header className="fixed h-[100px] py-[20px] px-[16px] hidden lg:flex justify-between">
+            <header className={cx('wrapper')}>
                 <div className="h-full">
                     <Link to={config.routes.home}>
                         <Image
