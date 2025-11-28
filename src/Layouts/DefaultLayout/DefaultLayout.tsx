@@ -3,7 +3,7 @@ import Sidebar from '~/Layouts/components/Sidebar';
 
 function DefaultLayout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="flex h-screen bg-yellow-300">
+        <div className="flex h-screen bg-yellow-100">
             <Header />
             <div className="flex w-full px-[2px] lg:px-2.5">
                 <Sidebar />
