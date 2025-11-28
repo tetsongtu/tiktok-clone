@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Image from '~/components/Image';
 import { PencilIcon } from '@phosphor-icons/react';
-import PostUser from '~/pages/Profile/PostUser';
+import PostUser from '~/components/PostUser';
 import danceVideo from '~/assets/videos/dance.mp4';
 import EditProfileModal from '~/components/Modals/EditProfileModal';
 
