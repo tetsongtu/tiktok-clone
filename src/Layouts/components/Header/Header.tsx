@@ -1,48 +1,14 @@
-import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import {
-    PlusIcon,
-    DotsThreeVerticalIcon,
-    ArrowUpIcon,
-    ChatIcon,
-    EnvelopeIcon,
-} from '@phosphor-icons/react';
 
 import config from '~/config';
 import images from '~/assets/images';
-import styles from './Header.module.scss';
-import Menu from '~/components/Popper/Menu';
-import type { MenuItemData } from '~/types';
 import Image from '~/components/Image';
-import Button from '~/components/Buttons/Button';
-import LinkButton from '~/components/Buttons/LinkButton';
 import useCurrentUser from '~/hooks/useCurrentUser';
-import UserAvatar from '~/components/UserAvatar';
-import type { UserData } from '~/types';
 import LoginModal from '~/components/Modals/LoginModal';
 
-const cx = classNames.bind(styles);
-
-// Constants
-const MENU_ITEMS: MenuItemData[] = [
-    {
-        icon: '',
-        title: 'English',
-        children: {
-            title: 'Language',
-            data: [
-                { type: 'language', code: 'en', title: 'English' },
-                { type: 'language', code: 'vi', title: 'Tiếng Việt' },
-            ],
-        },
-    },
-    { icon: '', title: 'Feedback and help', to: '/feedback' },
-    { icon: '', title: 'Keyboard shortcuts' },
-];
-
 function Header() {
-    const { currentUser, setCurrentUser } = useCurrentUser();
+    const { setCurrentUser } = useCurrentUser();
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
     useEffect(() => {
@@ -57,24 +23,6 @@ function Header() {
         return () => window.removeEventListener('keydown', handleKeyPress);
     }, [setCurrentUser]);
 
-    const userMenu: MenuItemData[] = [
-        { icon: '', title: 'View profile', to: '/@hoaa' },
-        { icon: '', title: 'Get coins', to: '/coin' },
-        { icon: '', title: 'Settings', to: '/settings' },
-        ...MENU_ITEMS,
-        {
-            icon: '',
-            title: 'Log out',
-            to: '#',
-            separate: true,
-            onClick: () => setCurrentUser(false),
-        },
-    ];
-
-    const guestUser: UserData = {
-        avatar: 'https://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/486f3c515c065ccaa844faf058940fe1~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=3172adc4&x-expires=1764342000&x-signature=dpyyN9ZWvISrGqAwnsrc4oL8TP0%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=my3',
-    };
-
     return (
         <>
             <LoginModal
@@ -82,7 +30,7 @@ function Header() {
                 onClose={() => setIsLoginModalOpen(false)}
             />
 
-            <header className="fixed w-full h-[100px] py-[20px] px-[16px] hidden lg:flex justify-between">
+            <header className="fixed h-[100px] py-[20px] px-[16px] hidden lg:flex justify-between">
                 <div className="h-full">
                     <Link to={config.routes.home}>
                         <Image
@@ -92,65 +40,6 @@ function Header() {
                         />
                     </Link>
                 </div>
-
-                <nav className={cx('flex justify-end items-center')}>
-                    {currentUser ? (
-                        <>
-                            <LinkButton
-                                to={config.routes.upload}
-                                icon={<ArrowUpIcon size={25} />}
-                                tooltip="Upload video"
-                            />
-                            <LinkButton
-                                icon={<ChatIcon size={25} />}
-                                tooltip="Messages"
-                            />
-                            <LinkButton
-                                icon={<EnvelopeIcon size={25} />}
-                                tooltip="Inbox"
-                                badge={12}
-                            />
-                        </>
-                    ) : (
-                        <div className="flex space-x-3">
-                            <Button
-                                to={config.routes.upload}
-                                variant="outline"
-                                leftIcon={<PlusIcon />}
-                            >
-                                Upload
-                            </Button>
-                            <Button
-                                variant="primary"
-                                onClick={() => setIsLoginModalOpen(true)}
-                            >
-                                Log in
-                            </Button>
-                        </div>
-                    )}
-
-                    <Menu
-                        key={currentUser ? 'user' : 'guest'}
-                        items={currentUser ? userMenu : MENU_ITEMS}
-                        onChange={(item) =>
-                            item.title === 'Log out' && setCurrentUser(false)
-                        }
-                    >
-                        <div className="mr-10">
-                            {currentUser ? (
-                                <UserAvatar
-                                    size={10}
-                                    user={guestUser}
-                                    fallback="https://yt3.ggpht.com/Pa8wyxqTOkhu5DW_RvkiQIS7Bsa7OW7gSen-2WpaQsC2EqUAkgubAg1_QPc951pzpN2F2Q4_TA=s88-c-k-c0x00ffffff-no-rj"
-                                />
-                            ) : (
-                                <button className={cx('more-btn')}>
-                                    <DotsThreeVerticalIcon size={25} weight="bold" />
-                                </button>
-                            )}
-                        </div>
-                    </Menu>
-                </nav>
             </header>
         </>
     );
