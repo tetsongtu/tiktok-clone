@@ -1,20 +1,7 @@
-const files = {
-    logo: './logo.svg',
-    search: './search.svg',
-    clear: './clear.svg',
-    loading: './loading.svg',
-    noImage: './no-image.png',
-};
+import logo from './logo.svg';
+import clear from './clear.svg';
+import loading from './loading.svg';
+import noImage from './no-image.png';
 
-const images = Object.fromEntries(
-    Object.entries(files).map(([key, path]) => {
-        const file = import.meta.glob('./*.(svg|png)', {
-            query: '?url',
-            import: 'default',
-            eager: true,
-        })[path];
-        return [key, String(file)];
-    }),
-);
-
+const images = { logo, clear, loading, noImage };
 export default images;
