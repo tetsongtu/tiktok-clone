@@ -1,14 +1,10 @@
 import { useRef, useState, useEffect } from 'react';
-import classNames from 'classnames/bind';
 
-import styles from './Sidebar.module.scss';
 import Menu, { MenuItem } from './Menu';
 import SuggestedAccounts from '~/components/SuggestedAccounts';
 import * as userServices from '~/services/userService';
 import { SIDEBAR_MENU } from './SiderbarMenu';
 import Search from '~/Layouts/components/Search';
-
-const cx = classNames.bind(styles);
 
 const INIT_PAGE = 1;
 const PER_PAGE = 5;
@@ -40,31 +36,38 @@ function Sidebar() {
         <aside id="Sidebar" className="fixed mt-[71px]">
             <Menu>
                 <Search />
-                <div className="my-[12px]">
+                <nav className="my-[12px]">
                     {SIDEBAR_MENU.map((item) => (
                         <MenuItem key={item.title} {...item} />
                     ))}
-                </div>
+                </nav>
             </Menu>
             <div className="h-[100vh] overflow-y-scroll">
-                <SuggestedAccounts
-                    label="Suggested accounts"
-                    data={suggestedUsers}
-                    onSeeAll={handleSeeAll}
-                />
-                <SuggestedAccounts label="Following" />
-                <div className={cx('footer')}>
-                    <div className="text-[13px] font-semibold opacity-72 border-t border-[#ccc] w-[85%]">
+                <section>
+                    <SuggestedAccounts
+                        label="Suggested accounts"
+                        data={suggestedUsers}
+                        onSeeAll={handleSeeAll}
+                    />
+                </section>
+                <section>
+                    <SuggestedAccounts label="Following" />
+                </section>
+                <footer className="hidden lg:block">
+                    <hr className="border-[#ccc] w-[85%]"></hr>
+                    <section className="text-[13px] font-semibold opacity-72 w-full">
                         <p>Following accounts</p>
                         <p>Accounts you follow will appear here</p>
-                    </div>
-                    <div className="text-[13px] font-semibold opacity-50 border-t border-[#ccc] w-[85%]">
-                        <p>Company</p>
-                        <p>Program</p>
-                        <p>Terms & Policies</p>
-                        <p>© 2025 TikTok</p>
-                    </div>
-                </div>
+                    </section>
+                    <hr className="border-[#ccc] w-[85%]"></hr>
+
+                    <ul className="text-[13px] font-semibold opacity-50 w-full">
+                        <li>Company</li>
+                        <li>Program</li>
+                        <li>Terms & Policies</li>
+                        <li>© 2025 TikTok</li>
+                    </ul>
+                </footer>
             </div>
         </aside>
     );
