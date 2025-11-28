@@ -3,10 +3,10 @@ import { PencilIcon, SpinnerGapIcon, XIcon } from '@phosphor-icons/react';
 import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
-import UserAvatar from '~/components/User';
+import UserAvatar from '~/components/UserAvatar';
 import type { UserData } from '~/types';
 import Button from '~/components/Buttons/Button';
-import TextInput from './TextInput';
+import TextInput from '../../TextInput';
 
 interface EditProfileOverlayProps {
     onClose: () => void;

@@ -18,9 +18,9 @@ import Image from '~/components/Image';
 import Button from '~/components/Buttons/Button';
 import LinkButton from '~/components/Buttons/LinkButton';
 import useCurrentUser from '~/hooks/useCurrentUser';
-import UserAvatar from '~/components/User';
+import UserAvatar from '~/components/UserAvatar';
 import type { UserData } from '~/types';
-import LoginModal from '~/components/LoginModal';
+import LoginModal from '~/components/Modals/LoginModal';
 
 const cx = classNames.bind(styles);
 

@@ -1,12 +1,17 @@
 import { useState } from 'react';
-import type { ProfilePageProps } from './ProfilePageTypes';
 import Image from '~/components/Image';
 import { PencilIcon } from '@phosphor-icons/react';
-import PostUser from '~/components/Profile/PostUser';
+import PostUser from '~/pages/Profile/PostUser';
 import danceVideo from '~/assets/videos/dance.mp4';
-import EditProfileOverlay from '~/components/Profile/EditProfileOverlay';
+import EditProfileOverlay from '~/components/Modals/EditProfileModals';
 
-function Profile({ params }: ProfilePageProps) {
+export interface ProfilePageProps {
+    params: {
+        id: string;
+    };
+}
+
+function Profile() {
     const [showEditProfile, setShowEditProfile] = useState(false);
 
     const currentProfile = {

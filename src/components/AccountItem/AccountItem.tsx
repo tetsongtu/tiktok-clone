@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { CheckCircleIcon } from '@phosphor-icons/react';
 
 import type { UserProps } from '~/types/SiderbarMenu';
-import UserAvatar from '~/components/User';
+import UserAvatar from '~/components/UserAvatar';
 
 // info avatar name check username
 

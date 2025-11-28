@@ -6,7 +6,7 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import Tooltip from '~/components/Tooltip';
 import AccountPreview from './AccountPreview';
 import { CheckCircleIcon } from '@phosphor-icons/react';
-import UserAvatar from '~/components/User';
+import UserAvatar from '~/components/UserAvatar';
 
 // item-info avatar nickname name
 
