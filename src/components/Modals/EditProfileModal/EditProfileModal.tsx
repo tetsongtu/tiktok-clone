@@ -1,58 +1,49 @@
 import { useState, useRef } from 'react';
 import { PencilIcon, SpinnerGapIcon, XIcon } from '@phosphor-icons/react';
 import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
+import type { Crop, PixelCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
 import UserAvatar from '~/components/UserAvatar';
 import type { UserData } from '~/types';
 import Button from '~/components/Buttons/Button';
-import TextInput from '../../TextInput';
+import TextInput from '~/components/TextInput';
 
-interface EditProfileOverlayProps {
+interface EditProfileModalProps {
     onClose: () => void;
 }
 
-function EditProfileOver({ onClose }: EditProfileOverlayProps) {
-    const [userBio, setUserBio] = useState<string>('');
-    const [userName, setUserName] = useState<string>('');
-    const [file, setFile] = useState<File | null>(null);
-    const [isUpdating, setIsUpdating] = useState(false);
-    const [uploadedImage, setUploadedImage] = useState<string | null>(null);
-    const [crop, setCrop] = useState<any>();
-    const [completedCrop, setCompletedCrop] = useState<any>();
-    const imgRef = useRef<HTMLImageElement>(null);
+const BIO_MAX_LENGTH = 80;
+const DEFAULT_CROP_WIDTH = 50;
 
-    const getUploadedImage = (e: any) => {
-        const selectedFile = e.target.files?.[0];
+function EditProfileModal({ onClose }: EditProfileModalProps) {
+    const [bio, setBio] = useState('');
+    const [name, setName] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
+    const [cropConfig, setCropConfig] = useState<Crop>();
+    const [completedCropConfig, setCompletedCropConfig] = useState<PixelCrop>();
+    const imageRef = useRef<HTMLImageElement>(null);
+
+    const handleImageSelect = (event: any) => {
+        const selectedFile = event.currentTarget.files?.[0];
 
         if (selectedFile) {
-            setFile(selectedFile);
             const imageUrl = URL.createObjectURL(selectedFile);
-            setUploadedImage(imageUrl);
-
-            // Tạo crop mặc định
-            const defaultCrop = {
-                unit: '%',
-                width: 50,
-                height: 50,
-                x: 25,
-                y: 25,
-            };
-            setCrop(defaultCrop);
+            setPreviewImageUrl(imageUrl);
         } else {
-            setFile(null);
-            setUploadedImage(null);
-            setCrop(undefined);
+            setPreviewImageUrl(null);
+            setCropConfig(undefined);
         }
     };
 
-    const onImageLoad = (e: any) => {
-        const { width, height } = e.currentTarget;
-        const crop = centerCrop(
+    const handleImageLoad = (event: { currentTarget: HTMLImageElement }) => {
+        const { width, height } = event.currentTarget;
+        const centeredCrop = centerCrop(
             makeAspectCrop(
                 {
                     unit: '%',
-                    width: 50,
+                    width: DEFAULT_CROP_WIDTH,
                 },
                 1,
                 width,
@@ -61,29 +52,28 @@ function EditProfileOver({ onClose }: EditProfileOverlayProps) {
             width,
             height,
         );
-        setCrop(crop);
+        setCropConfig(centeredCrop);
     };
 
     const handleCancelCrop = () => {
-        if (uploadedImage) {
-            URL.revokeObjectURL(uploadedImage);
+        if (previewImageUrl) {
+            URL.revokeObjectURL(previewImageUrl);
         }
-        setUploadedImage(null);
-        setFile(null);
-        setCrop(undefined);
+        setPreviewImageUrl(null);
+        setCropConfig(undefined);
     };
 
     const handleApplyCrop = async () => {
-        if (!uploadedImage || !completedCrop || !imgRef.current) return;
+        if (!previewImageUrl || !completedCropConfig || !imageRef.current) return;
 
-        setIsUpdating(true);
+        setIsSubmitting(true);
         try {
-            console.log('Applying crop:', completedCrop);
+            console.log('Applying crop:', completedCropConfig);
             handleCancelCrop();
         } catch (error) {
             console.error('Error cropping image:', error);
         } finally {
-            setIsUpdating(false);
+            setIsSubmitting(false);
         }
     };
 
@@ -99,20 +89,20 @@ function EditProfileOver({ onClose }: EditProfileOverlayProps) {
                 {/* Header */}
                 <div className="absolute flex items-center justify-between w-full p-5 left-0 top-0 border-b border-b-gray-300">
                     <h1 className="text-[22px] font-medium">
-                        {uploadedImage ? 'Crop Profile Photo' : 'Edit Profile'}
+                        {previewImageUrl ? 'Crop Profile Photo' : 'Edit Profile'}
                     </h1>
                     <button
-                        onClick={uploadedImage ? handleCancelCrop : onClose}
-                        disabled={isUpdating}
+                        onClick={previewImageUrl ? handleCancelCrop : onClose}
+                        disabled={isSubmitting}
                         className="hover:bg-gray-200 p-1 rounded-full"
                     >
-                        <XIcon size="25" />
+                        <XIcon size={25} />
                     </button>
                 </div>
 
                 {/* Main Content */}
                 <div className="mt-16">
-                    {!uploadedImage ? (
+                    {!previewImageUrl ? (
                         // Edit Form
                         <div className="space-y-6">
                             {/* Profile Photo */}
@@ -122,19 +112,22 @@ function EditProfileOver({ onClose }: EditProfileOverlayProps) {
                                 </h3>
                                 <div className="flex justify-center">
                                     <label
-                                        htmlFor="image"
+                                        htmlFor="profile-photo-input"
                                         className="relative cursor-pointer"
                                     >
                                         <UserAvatar size={28} user={guestUser} />
-                                        <button className="absolute bottom-0 right-0 rounded-full bg-white shadow-xl border p-1 border-gray-300 w-8 h-8">
-                                            <PencilIcon className="mx-auto" size="17" />
+                                        <button
+                                            type="button"
+                                            className="absolute bottom-0 right-0 rounded-full bg-white shadow-xl border p-1 border-gray-300 w-8 h-8"
+                                        >
+                                            <PencilIcon className="mx-auto" size={17} />
                                         </button>
                                     </label>
                                     <input
                                         className="hidden"
                                         type="file"
-                                        id="image"
-                                        onChange={getUploadedImage}
+                                        id="profile-photo-input"
+                                        onChange={handleImageSelect}
                                         accept="image/png, image/jpeg, image/jpg"
                                     />
                                 </div>
@@ -148,9 +141,9 @@ function EditProfileOver({ onClose }: EditProfileOverlayProps) {
                                 <div className="flex justify-center">
                                     <div className="w-full max-w-md">
                                         <TextInput
-                                            string={userName}
+                                            string={name}
                                             placeholder="Name"
-                                            onUpdate={setUserName}
+                                            onUpdate={setName}
                                             inputType="text"
                                             error=""
                                         />
@@ -168,34 +161,36 @@ function EditProfileOver({ onClose }: EditProfileOverlayProps) {
                                         <textarea
                                             cols={30}
                                             rows={4}
-                                            value={userBio}
-                                            onChange={(e: any) =>
-                                                setUserBio(e.target.value)
+                                            value={bio}
+                                            onChange={(e) =>
+                                                setBio(e.currentTarget.value)
                                             }
-                                            maxLength={80}
+                                            maxLength={BIO_MAX_LENGTH}
                                             className="resize-none w-full bg-[#F1F1F2] text-gray-800 border border-gray-300 rounded-md py-2.5 px-3 focus:outline-none"
                                         />
                                         <p className="text-[11px] text-gray-500 mt-1">
-                                            {userBio.length}/80
+                                            {bio.length}/{BIO_MAX_LENGTH}
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     ) : (
-                        // Cropper với react-image-crop
+                        // Image Cropper
                         <div className="flex flex-col items-center">
                             <div className="max-w-md max-h-96 overflow-hidden">
                                 <ReactCrop
-                                    crop={crop}
-                                    onChange={(_, percentCrop) => setCrop(percentCrop)}
-                                    onComplete={(c) => setCompletedCrop(c)}
+                                    crop={cropConfig}
+                                    onChange={(_, percentCrop) =>
+                                        setCropConfig(percentCrop)
+                                    }
+                                    onComplete={setCompletedCropConfig}
                                     keepSelection
                                 >
                                     <img
-                                        ref={imgRef}
-                                        src={uploadedImage}
-                                        onLoad={onImageLoad}
+                                        ref={imageRef}
+                                        src={previewImageUrl}
+                                        onLoad={handleImageLoad}
                                         alt="Crop preview"
                                         className="max-w-full max-h-80"
                                     />
@@ -210,16 +205,16 @@ function EditProfileOver({ onClose }: EditProfileOverlayProps) {
 
                 {/* Footer Buttons */}
                 <div className="absolute p-5 left-0 bottom-0 border-t border-t-gray-300 w-full">
-                    {!uploadedImage ? (
+                    {!previewImageUrl ? (
                         <div className="flex justify-end gap-3">
                             <Button
                                 variant="outline"
-                                disabled={isUpdating}
+                                disabled={isSubmitting}
                                 onClick={onClose}
                             >
                                 Cancel
                             </Button>
-                            <Button variant="primary" disabled={isUpdating}>
+                            <Button variant="primary" disabled={isSubmitting}>
                                 Apply
                             </Button>
                         </div>
@@ -227,17 +222,17 @@ function EditProfileOver({ onClose }: EditProfileOverlayProps) {
                         <div className="flex justify-end gap-3">
                             <button
                                 onClick={handleCancelCrop}
-                                disabled={isUpdating}
+                                disabled={isSubmitting}
                                 className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
                             >
                                 Cancel
                             </button>
                             <button
                                 onClick={handleApplyCrop}
-                                disabled={isUpdating}
+                                disabled={isSubmitting}
                                 className="px-4 py-2 bg-[#F02C56] text-white rounded-md disabled:opacity-50 flex items-center gap-2"
                             >
-                                {isUpdating ? (
+                                {isSubmitting ? (
                                     <>
                                         <SpinnerGapIcon
                                             className="animate-spin"
@@ -257,4 +252,4 @@ function EditProfileOver({ onClose }: EditProfileOverlayProps) {
     );
 }
 
-export default EditProfileOver;
+export default EditProfileModal;
