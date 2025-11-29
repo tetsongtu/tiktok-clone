@@ -5,7 +5,7 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
         <div className="grid grid-cols-[auto_8px_1fr_8px_auto] min-h-[100dvh]">
             <aside className="w-[250px] bg-gradient-to-b from-purple-100 via-purple-300">
                 <Header />
-                <div className="flex w-full px-[2px] lg:px-2.5">
+                <div className="fixed flex w-full px-[2px] lg:px-2.5">
                     <Sidebar />
                 </div>
             </aside>
