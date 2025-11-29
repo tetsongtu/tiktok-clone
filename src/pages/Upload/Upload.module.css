@@ -1,0 +1,293 @@
+.container {
+    height: 720px;
+    background-color: white;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    border-radius: 0.375rem;
+    padding: 1.5rem 2.5rem;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem 1rem;
+    }
+}
+
+.header {
+    padding-bottom: 2rem;
+}
+
+.title {
+    font-size: 23px;
+    font-weight: 600;
+}
+
+.subtitle {
+    color: #9ca3af;
+    margin-top: 0.25rem;
+}
+
+.content {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+    }
+}
+
+/* Upload Area */
+.uploadContainer {
+    margin: 1rem auto 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 260px;
+    height: 470px;
+    padding: 0.75rem;
+    border: 2px dashed #d1d5db;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.uploadContainer:hover {
+    background-color: #f3f4f6;
+}
+
+@media (min-width: 768px) {
+    .uploadContainer {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+.uploadIcon {
+    color: #b3b3b1;
+}
+
+.uploadTitle {
+    margin-top: 1rem;
+    font-size: 17px;
+}
+
+.uploadSubtitle {
+    margin-top: 0.375rem;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.uploadInfo {
+    margin-top: 3rem;
+    color: #9ca3af;
+}
+
+.uploadInfo p {
+    font-size: 0.875rem;
+}
+
+.uploadInfo p:not(:first-child) {
+    font-size: 13px;
+}
+
+.uploadButton {
+    padding: 0.375rem 0.5rem;
+    margin-top: 2rem;
+    color: white;
+    font-size: 15px;
+    width: 80%;
+    background-color: #f12b56;
+    border-radius: 0.125rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.uploadButton:hover {
+    background-color: rgba(241, 43, 86, 0.8);
+}
+
+/* Preview Area */
+.previewContainer {
+    margin: 1rem auto 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 260px;
+    height: 540px;
+    padding: 0.75rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .previewContainer {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .previewContainer {
+        margin-bottom: 4rem;
+    }
+}
+
+.uploadingOverlay {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0.75rem;
+    inset: 0;
+}
+
+.uploadingContent {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.uploadingText {
+    color: white;
+    font-weight: 700;
+}
+
+.video {
+    position: absolute;
+    border-radius: 0.75rem;
+    object-fit: cover;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+}
+
+.cancelButton {
+    position: absolute;
+    bottom: -3rem;
+    display: flex;
+    justify-content: center;
+    gap: 8rem;
+    z-index: 50;
+    border-radius: 0.75rem;
+    border: 1px solid #d1d5db;
+    width: 100%;
+    padding: 0.5rem;
+}
+
+.fileInfo {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fileName {
+    font-weight: 600;
+    font-size: 11px;
+    padding-left: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cancelText {
+    color: #f12b56;
+    font-size: 11px;
+    margin-left: 0.5rem;
+    font-weight: 600;
+}
+
+/* Edit Section */
+.editSection {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.editBox {
+    display: flex;
+    background-color: #f8f8f8;
+    padding: 1rem 1.5rem;
+}
+
+.editIcon {
+    margin-right: 1rem;
+    margin-top: 0.125rem;
+}
+
+.editContent {
+    flex: 1;
+}
+
+.editTitle {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 0.375rem;
+}
+
+.editDescription {
+    font-weight: 600;
+    font-size: 13px;
+    color: #9ca3af;
+}
+
+.editButtonWrapper {
+    display: flex;
+    justify-content: flex-end;
+    max-width: 130px;
+    width: 100%;
+    margin: auto 0;
+}
+
+/* Caption Section */
+.captionSection {
+    margin-top: 1.25rem;
+}
+
+.captionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+}
+
+.captionLabel {
+    font-size: 15px;
+}
+
+.captionCounter {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.captionInput {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    padding: 0.625rem;
+    border-radius: 0.375rem;
+}
+
+.captionInput:focus {
+    outline: none;
+}
+
+/* Action Buttons */
+.actionButtons {
+    margin-top: 2rem;
+    display: flex;
+    gap: 0.75rem;
+}
+
+/* Error Message */
+.errorMessage {
+    color: #dc2626;
+    margin-top: 1rem;
+}
