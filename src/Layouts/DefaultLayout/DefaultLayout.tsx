@@ -5,7 +5,7 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
         <div className="grid grid-cols-[250px_8px_1fr_8px_250px] min-h-[100dvh]">
             <aside className="bg-gradient-to-b from-purple-100 via-purple-300">
                 <Header />
-                <div className="fixed mt-[70px] flex w-full px-[2px] lg:px-2.5">
+                <div className="fixed mt-[70px] flex px-[2px] lg:px-2.5">
                     <Sidebar />
                 </div>
             </aside>
@@ -14,7 +14,7 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
                 id="MainContent"
                 className="bg-gradient-to-b from-gray-200 to-yellow-200"
             >
-                <div className="mx-auto">{children}</div>
+                <div className="w-[50%] mx-auto">{children}</div>
             </main>
             <div className="bg-gradient-to-b from-yellow-200 via-cyan-700"></div>
             <aside

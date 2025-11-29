@@ -4,7 +4,7 @@ import PostMain from '~/Layouts/components/PostMain';
 
 function Home() {
     return (
-        <div>
+        <>
             <PostMain
                 post={{
                     id: '1',
@@ -33,7 +33,7 @@ function Home() {
                     },
                 }}
             />
-        </div>
+        </>
     );
 }
 
