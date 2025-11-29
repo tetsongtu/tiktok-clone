@@ -2,10 +2,10 @@ import Header, { TopRightActionBar } from '~/Layouts/components/Header';
 import Sidebar from '~/Layouts/components/Sidebar';
 function DefaultLayout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="grid grid-cols-[auto_8px_1fr_8px_auto] min-h-[100dvh]">
-            <aside className="w-[250px] bg-gradient-to-b from-purple-100 via-purple-300">
+        <div className="grid grid-cols-[250px_8px_1fr_8px_250px] min-h-[100dvh]">
+            <aside className="bg-gradient-to-b from-purple-100 via-purple-300">
                 <Header />
-                <div className="fixed flex w-full px-[2px] lg:px-2.5">
+                <div className="fixed mt-[70px] flex w-full px-[2px] lg:px-2.5">
                     <Sidebar />
                 </div>
             </aside>
