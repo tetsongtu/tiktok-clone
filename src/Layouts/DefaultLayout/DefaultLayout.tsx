@@ -7,6 +7,7 @@ import Sidebar from '~/Layouts/components/Sidebar';
 function DefaultLayout({ children }: { children: React.ReactNode }) {
     const location = useLocation();
     const isHome = location.pathname === config.routes.home;
+
     return (
         <div className="grid grid-cols-[auto_8px_1fr_8px_auto] min-h-[100dvh]">
             <aside className="w-[60px] lg:w-[250px] lg-w-[20px] bg-gradient-to-b from-purple-100 via-purple-300">
@@ -22,7 +23,9 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
             >
                 <div
                     className={`${
-                        isHome ? ' mx-auto sm:w-full md:w-2/3 lg:w-4/5' : 'w-full'
+                        isHome
+                            ? 'w-[calc(100%-10px)] sm:w-2/3 md:w-2/3 lg:w-3/4 sm:mx-auto'
+                            : 'w-full'
                     }`}
                 >
                     {children}
