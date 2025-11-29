@@ -60,12 +60,12 @@ function TopRightActionBar() {
         avatar: 'https://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/486f3c515c065ccaa844faf058940fe1~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=3172adc4&x-expires=1764342000&x-signature=dpyyN9ZWvISrGqAwnsrc4oL8TP0%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=my3',
     };
     return (
-        <div className={cx('wrapper', 'flex justify-end items-center')}>
+        <div className={cx('wrapper', 'right-0')}>
             <LoginModal
                 isOpen={isLoginModalOpen}
                 onClose={() => setIsLoginModalOpen(false)}
             />
-            <nav className={cx('flex justify-end items-center')}>
+            <nav className={cx('flex items-center')}>
                 {currentUser ? (
                     <>
                         <LinkButton
