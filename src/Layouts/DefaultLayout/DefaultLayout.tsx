@@ -20,7 +20,13 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
                 id="MainContent"
                 className="bg-gradient-to-b from-gray-200 to-yellow-200"
             >
-                <div className={`${isHome ? 'w-1/2 mx-auto' : 'w-full'}`}>{children}</div>
+                <div
+                    className={`${
+                        isHome ? ' mx-auto sm:w-full md:w-2/3 lg:w-4/5' : 'w-full'
+                    }`}
+                >
+                    {children}
+                </div>
             </main>
             <div className="bg-gradient-to-b from-yellow-200 via-cyan-700"></div>
             <aside
