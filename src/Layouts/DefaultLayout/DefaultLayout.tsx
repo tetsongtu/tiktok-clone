@@ -1,11 +1,17 @@
+import { useLocation } from 'react-router-dom';
+import config from '~/config';
+
 import Header, { TopRightActionBar } from '~/Layouts/components/Header';
 import Sidebar from '~/Layouts/components/Sidebar';
+
 function DefaultLayout({ children }: { children: React.ReactNode }) {
+    const location = useLocation();
+    const isHome = location.pathname === config.routes.home;
     return (
-        <div className="grid grid-cols-[250px_8px_1fr_8px_250px] min-h-[100dvh]">
-            <aside className="bg-gradient-to-b from-purple-100 via-purple-300">
+        <div className="grid grid-cols-[auto_8px_1fr_8px_auto] min-h-[100dvh]">
+            <aside className="w-[60px] lg:w-[250px] lg-w-[20px] bg-gradient-to-b from-purple-100 via-purple-300">
                 <Header />
-                <div className="fixed mt-[70px] flex px-[2px] lg:px-2.5">
+                <div className="fixed z-50 mt-[70px] flex px-[2px] lg:px-2.5">
                     <Sidebar />
                 </div>
             </aside>
@@ -14,12 +20,12 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
                 id="MainContent"
                 className="bg-gradient-to-b from-gray-200 to-yellow-200"
             >
-                <div className="w-[50%] mx-auto">{children}</div>
+                <div className={`${isHome ? 'w-1/2 mx-auto' : 'w-full'}`}>{children}</div>
             </main>
             <div className="bg-gradient-to-b from-yellow-200 via-cyan-700"></div>
             <aside
                 id="RightSidebar"
-                className="bg-gradient-to-b from-cyan-100 via-cyan-200"
+                className="hidden lg:flex w-[0px] lg:w-[250px] bg-gradient-to-b from-cyan-100 via-cyan-200"
             >
                 <TopRightActionBar />
             </aside>
