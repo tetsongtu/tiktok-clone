@@ -83,8 +83,8 @@ function TopRightActionBar() {
                 ) : (
                     <div className="flex space-x-3">
                         <Button
-                            to={config.routes.upload}
                             variant="outline"
+                            onClick={() => setIsLoginModalOpen(true)}
                             leftIcon={<PlusIcon />}
                         >
                             Upload

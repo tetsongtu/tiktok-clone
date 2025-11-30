@@ -10,28 +10,31 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
 
     return (
         <div className="grid grid-cols-[auto_8px_1fr_8px_auto] min-h-[100dvh]">
-            <aside className="w-[60px] lg:w-[250px] lg-w-[20px] bg-gradient-to-b from-purple-100 via-purple-300">
+            {/* Left Sidebar - cao nhất */}
+            <aside className="w-[60px] lg:w-[250px] bg-gradient-to-b from-purple-100 via-purple-300">
                 <Header />
-                <div className="fixed z-50 mt-[70px] flex px-[2px] lg:px-2.5">
+                <div className="fixed mt-[70px] flex px-[2px] lg:px-2.5 z-40">
                     <Sidebar />
                 </div>
             </aside>
+
+            {/* Left Gradient Divider */}
             <div className="bg-gradient-to-b from-purple-300 via-yellow-700"></div>
+
+            {/* Main Content - thấp hơn nhưng nội dung click được */}
             <main
                 id="MainContent"
                 className="bg-gradient-to-b from-gray-200 to-yellow-200"
             >
-                <div
-                    className={`${
-                        isHome
-                            ? 'w-[calc(100%-10px)] sm:w-2/3 md:w-2/3 lg:w-3/4 sm:mx-auto'
-                            : 'w-full'
-                    }`}
-                >
+                <div className={`${isHome ? 'max-w-6xl mx-auto' : 'w-full'}`}>
                     {children}
                 </div>
             </main>
+
+            {/* Right Gradient Divider */}
             <div className="bg-gradient-to-b from-yellow-200 via-cyan-700"></div>
+
+            {/* Right Sidebar */}
             <aside
                 id="RightSidebar"
                 className="hidden lg:flex w-[0px] lg:w-[250px] bg-gradient-to-b from-cyan-100 via-cyan-200"
@@ -41,4 +44,5 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
         </div>
     );
 }
+
 export default DefaultLayout;

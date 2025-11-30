@@ -37,10 +37,6 @@ button {
     cursor: pointer;
 }
 
-a {
-    text-decoration: none;
-}
-
 .tooltip-arrow {
     background: #333;
 }
