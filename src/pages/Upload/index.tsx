@@ -8,7 +8,7 @@ import {
 } from '@phosphor-icons/react';
 
 import type { UploadError } from '~/shared/types/UploadError';
-import Button from '~/shared/components/Buttons/Button';
+import { Button } from '~/shared';
 
 function Upload() {
     const [fileDisplay, setFileDisplay] = useState('');

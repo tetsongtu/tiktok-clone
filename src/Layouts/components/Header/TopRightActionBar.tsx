@@ -12,12 +12,8 @@ import {
 
 import config from '~/core/config';
 import type { MenuItemData, UserData } from '~/shared/types';
-import useCurrentUser from '~/shared/hooks/useCurrentUser';
-import LoginModal from '~/features/Modals/LoginModal';
-import Menu from '~/shared/components/Popper/Menu';
-import Button from '~/shared/components/Buttons/Button';
-import LinkButton from '~/shared/components/Buttons/LinkButton';
-import UserAvatar from '~/features/UserAvatar';
+import { useCurrentUser, Menu, Button, LinkButton } from '~/shared';
+import { LoginModal, UserAvatar } from '~/features';
 
 const cx = classNames.bind(styles);
 

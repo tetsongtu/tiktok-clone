@@ -3,13 +3,9 @@ import { useEffect, useState, useRef } from 'preact/hooks';
 import { MagnifyingGlassIcon, XIcon, SpinnerGapIcon } from '@phosphor-icons/react';
 
 import * as searchServices from '~/core/services/searchService';
-import { Wrapper as PopperWrapper } from '~/shared/components/Popper';
-import AccountItem from '~/features/AccountItem';
+import { AccountItem } from '~/features';
 import type { UserData } from '~/shared/types/SiderbarMenu';
-import Tooltip from '~/shared/components/Tooltip';
-import { useDebounce } from '~/shared/hooks';
-import LinkButton from '~/shared/components/Buttons/LinkButton';
-import BaseButton from '~/shared/components/Buttons';
+import { useDebounce, LinkButton, BaseButton, Tooltip, PopperWrapper } from '~/shared';
 
 const DEBOUNCE_TIME = 500;
 

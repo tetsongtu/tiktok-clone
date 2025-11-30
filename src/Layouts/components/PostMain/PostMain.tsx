@@ -4,8 +4,7 @@ import { HeartIcon, MusicNotesIcon } from '@phosphor-icons/react';
 
 import { type PostProps } from '~/shared/types';
 import PostMainLikes from './PostMainLikes';
-import Image from '~/shared/components/Image';
-import Button from '~/shared/components/Buttons/Button';
+import { Image, Button } from '~/shared';
 
 function PostMain({ post }: PostProps) {
     useEffect(() => {

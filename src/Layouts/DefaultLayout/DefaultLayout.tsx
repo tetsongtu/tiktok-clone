@@ -1,8 +1,7 @@
 import { useLocation } from 'wouter-preact';
 import config from '~/core/config';
 
-import Header, { TopRightActionBar } from '~/Layouts/components/Header';
-import Sidebar from '~/Layouts/components/Sidebar';
+import { Header, TopRightActionBar, Sidebar } from '~/Layouts/components';
 
 function DefaultLayout({ children }: { children: any }) {
     const [location] = useLocation();

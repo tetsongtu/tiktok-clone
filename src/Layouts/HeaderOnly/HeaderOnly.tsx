@@ -1,4 +1,4 @@
-import Header from '~/Layouts/components/Header';
+import { Header } from '~/Layouts/components';
 
 function HeaderOnly({ children }: { children: React.ReactNode }) {
     return (

@@ -3,10 +3,9 @@ import styles from './SuggestedAccounts.module.scss';
 import { CheckCircleIcon } from '@phosphor-icons/react';
 
 import type { UserProps } from '~/shared/types';
-import { Wrapper as PopperWrapper } from '~/shared/components/Popper';
+import { PopperWrapper, Tooltip } from '~/shared';
 import AccountPreview from './AccountPreview';
-import Tooltip from '~/shared/components/Tooltip';
-import UserAvatar from '~/features/UserAvatar';
+import { UserAvatar } from '~/features';
 
 // item-info avatar nickname name
 

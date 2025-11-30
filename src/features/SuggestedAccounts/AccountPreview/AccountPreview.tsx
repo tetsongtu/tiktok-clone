@@ -2,8 +2,8 @@ import classNames from 'classnames/bind';
 import styles from './AccountPreview.module.scss';
 
 import type { UserProps } from '~/shared/types';
-import Button from '~/shared/components/Buttons/Button';
-import UserAvatar from '~/features/UserAvatar';
+import { Button } from '~/shared';
+import { UserAvatar } from '~/features';
 
 const cx = classNames.bind(styles);
 

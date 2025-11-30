@@ -4,10 +4,9 @@ import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
 import type { Crop, PixelCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
-import UserAvatar from '~/features/UserAvatar';
+import { UserAvatar } from '~/features';
 import type { UserData } from '~/shared/types';
-import Button from '~/shared/components/Buttons/Button';
-import TextInput from '~/shared/components/TextInput';
+import { Button, TextInput } from '~/shared';
 
 interface EditProfileModalProps {
     onClose: () => void;

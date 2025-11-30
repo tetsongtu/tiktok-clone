@@ -1,8 +1,7 @@
 import { XIcon } from '@phosphor-icons/react';
 
-import Button from '~/shared/components/Buttons/Button';
+import { Button, FacebookIcon, GoogleIcon } from '~/shared';
 import config from '~/core/config';
-import { FacebookIcon, GoogleIcon } from '~/shared/components/Icons';
 
 interface LoginModalProps {
     isOpen: boolean;

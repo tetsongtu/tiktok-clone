@@ -1,8 +1,7 @@
 import { useState } from 'preact/hooks';
 import { Link } from 'wouter-preact';
 import config from '~/core/config';
-import Button from '~/shared/components/Buttons/Button';
-import useCurrentUser from '~/shared/hooks/useCurrentUser';
+import { Button, useCurrentUser } from '~/shared';
 
 const EMAIL_REGEX = /\S+@\S+\.\S+/;
 const MIN_PASSWORD_LENGTH = 6;

@@ -1,10 +1,10 @@
 import { useRef, useState, useEffect } from 'preact/hooks';
 
 import Menu, { MenuItem } from './Menu';
-import SuggestedAccounts from '~/features/SuggestedAccounts';
+import { SuggestedAccounts } from '~/features';
 import * as userServices from '~/core/services/userService';
 import { SIDEBAR_MENU } from './SiderbarMenu';
-import Search from '~/Layouts/components/Search';
+import { Search } from '~/Layouts/components';
 
 const INIT_PAGE = 1;
 const PER_PAGE = 5;

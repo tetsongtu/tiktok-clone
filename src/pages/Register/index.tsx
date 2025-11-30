@@ -1,7 +1,6 @@
 import { Link } from 'wouter-preact';
 import config from '~/core/config';
-import Button from '~/shared/components/Buttons/Button';
-import { GoogleIcon, FacebookIcon } from '~/shared/components/Icons';
+import { Button, GoogleIcon, FacebookIcon } from '~/shared';
 
 function Register() {
     return (

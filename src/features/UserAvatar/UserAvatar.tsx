@@ -1,5 +1,5 @@
 import type { UserProps } from '~/shared/types';
-import Image from '~/shared/components/Image';
+import { Image } from '~/shared';
 
 interface UserAvatarProps extends UserProps {
     size?: number;
