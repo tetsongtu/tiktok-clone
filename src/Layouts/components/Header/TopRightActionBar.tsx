@@ -10,15 +10,14 @@ import {
     EnvelopeIcon,
 } from '@phosphor-icons/react';
 
-import config from '~/config';
-import Menu from '~/components/Popper/Menu';
-import type { MenuItemData } from '~/types';
-import type { UserData } from '~/types';
-import Button from '~/components/Buttons/Button';
-import LinkButton from '~/components/Buttons/LinkButton';
-import UserAvatar from '~/components/UserAvatar';
-import useCurrentUser from '~/hooks/useCurrentUser';
-import LoginModal from '~/components/Modals/LoginModal';
+import config from '~/core/config';
+import type { MenuItemData, UserData } from '~/shared/types';
+import useCurrentUser from '~/shared/hooks/useCurrentUser';
+import LoginModal from '~/features/Modals/LoginModal';
+import Menu from '~/shared/components/Popper/Menu';
+import Button from '~/shared/components/Buttons/Button';
+import LinkButton from '~/shared/components/Buttons/LinkButton';
+import UserAvatar from '~/features/UserAvatar';
 
 const cx = classNames.bind(styles);
 

@@ -3,10 +3,10 @@ import styles from './Header.module.css';
 import { Link } from 'wouter-preact';
 import { useEffect } from 'preact/hooks';
 
-import config from '~/config';
-import images from '~/assets/images';
-import Image from '~/components/Image';
-import useCurrentUser from '~/hooks/useCurrentUser';
+import config from '~/core/config';
+import images from '~/shared/assets/images';
+import Image from '~/shared/components/Image';
+import useCurrentUser from '~/shared/hooks/useCurrentUser';
 
 const cx = classNames.bind(styles);
 

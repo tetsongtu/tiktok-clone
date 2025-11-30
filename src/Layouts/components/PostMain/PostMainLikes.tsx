@@ -1,7 +1,7 @@
 import { HeartIcon, ChatCircleIcon, ShareIcon } from '@phosphor-icons/react';
-import type { PostLikeProps } from '~/types';
+import type { PostLikeProps } from '~/shared/types';
 import { useState } from 'preact/hooks';
-import ActionButton from '~/components/Buttons/ActionButton';
+import ActionButton from '~/shared/components/Buttons/ActionButton';
 
 export function PostMainLikes({ post }: PostLikeProps) {
     const [hasClickedLike, setHasClickedLike] = useState(false);

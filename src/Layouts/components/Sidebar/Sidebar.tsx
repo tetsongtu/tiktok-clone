@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from 'preact/hooks';
 
 import Menu, { MenuItem } from './Menu';
-import SuggestedAccounts from '~/components/SuggestedAccounts';
-import * as userServices from '~/services/userService';
+import SuggestedAccounts from '~/features/SuggestedAccounts';
+import * as userServices from '~/core/services/userService';
 import { SIDEBAR_MENU } from './SiderbarMenu';
 import Search from '~/Layouts/components/Search';
 

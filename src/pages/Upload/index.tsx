@@ -1,3 +1,4 @@
+import styles from './Upload.module.css';
 import { useState } from 'preact/hooks';
 import {
     CheckCircleIcon,
@@ -5,9 +6,9 @@ import {
     SpinnerGapIcon,
     KnifeIcon,
 } from '@phosphor-icons/react';
-import Button from '~/components/Buttons/Button';
-import type { UploadError } from '~/types/UploadError';
-import styles from './Upload.module.css';
+
+import type { UploadError } from '~/shared/types/UploadError';
+import Button from '~/shared/components/Buttons/Button';
 
 function Upload() {
     const [fileDisplay, setFileDisplay] = useState('');

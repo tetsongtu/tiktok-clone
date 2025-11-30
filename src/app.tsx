@@ -1,8 +1,8 @@
 import { Fragment } from 'preact';
 import { Switch, Route } from 'wouter-preact';
-import { publicRoutes } from './routes';
+import { publicRoutes } from './core/routes';
 import DefaultLayout from './Layouts';
-import ZoomWarning from './components/ZoomWarning';
+import ZoomWarning from './shared/components/ZoomWarning';
 
 function App() {
     return (

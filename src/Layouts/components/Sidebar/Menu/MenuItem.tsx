@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import { Link, useRoute } from 'wouter-preact';
 import styles from './Menu.module.scss';
-import type { MenuItemProps } from '~/types';
+import type { MenuItemProps } from '~/shared/types';
 
 const cx = classNames.bind(styles);
 

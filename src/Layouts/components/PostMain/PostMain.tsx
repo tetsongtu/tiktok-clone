@@ -2,10 +2,10 @@ import { useEffect } from 'preact/hooks';
 import { Link } from 'wouter-preact';
 import { HeartIcon, MusicNotesIcon } from '@phosphor-icons/react';
 
-import { type PostProps } from '~/types';
-import Button from '~/components/Buttons/Button';
+import { type PostProps } from '~/shared/types';
 import PostMainLikes from './PostMainLikes';
-import Image from '~/components/Image';
+import Image from '~/shared/components/Image';
+import Button from '~/shared/components/Buttons/Button';
 
 function PostMain({ post }: PostProps) {
     useEffect(() => {

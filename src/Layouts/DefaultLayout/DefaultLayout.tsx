@@ -1,5 +1,5 @@
 import { useLocation } from 'wouter-preact';
-import config from '~/config';
+import config from '~/core/config';
 
 import Header, { TopRightActionBar } from '~/Layouts/components/Header';
 import Sidebar from '~/Layouts/components/Sidebar';

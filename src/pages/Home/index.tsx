@@ -1,5 +1,5 @@
-import images from '~/assets/images';
-import danceVideo from '~/assets/videos/dance.mp4';
+import images from '~/shared/assets/images';
+import danceVideo from '~/shared/assets/videos/dance.mp4';
 import PostMain from '~/Layouts/components/PostMain';
 
 function Home() {

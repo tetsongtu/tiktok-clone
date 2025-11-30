@@ -2,14 +2,14 @@ import classNames from 'classnames';
 import { useEffect, useState, useRef } from 'preact/hooks';
 import { MagnifyingGlassIcon, XIcon, SpinnerGapIcon } from '@phosphor-icons/react';
 
-import * as searchServices from '~/services/searchService';
-import { Wrapper as PopperWrapper } from '~/components/Popper';
-import AccountItem from '~/components/AccountItem';
-import type { UserData } from '~/types/SiderbarMenu';
-import Tooltip from '~/components/Tooltip';
-import { useDebounce } from '~/hooks';
-import LinkButton from '~/components/Buttons/LinkButton';
-import BaseButton from '~/components/Buttons';
+import * as searchServices from '~/core/services/searchService';
+import { Wrapper as PopperWrapper } from '~/shared/components/Popper';
+import AccountItem from '~/features/AccountItem';
+import type { UserData } from '~/shared/types/SiderbarMenu';
+import Tooltip from '~/shared/components/Tooltip';
+import { useDebounce } from '~/shared/hooks';
+import LinkButton from '~/shared/components/Buttons/LinkButton';
+import BaseButton from '~/shared/components/Buttons';
 
 const DEBOUNCE_TIME = 500;
 

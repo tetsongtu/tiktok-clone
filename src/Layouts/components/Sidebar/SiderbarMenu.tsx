@@ -1,4 +1,4 @@
-import config from '~/config';
+import config from '~/core/config';
 import { HouseIcon, UsersIcon, VideoCameraIcon } from '@phosphor-icons/react';
 
 export const SIDEBAR_MENU = [

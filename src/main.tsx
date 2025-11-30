@@ -1,6 +1,6 @@
 import { render } from 'preact';
 import { Router } from 'wouter-preact';
-import { CurrentUserProvider } from './hooks/useCurrentUser';
+import { CurrentUserProvider } from './shared/hooks/useCurrentUser';
 
 import './global.css';
 import App from './app';
