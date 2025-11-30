@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'preact/hooks';
 import Image from '~/components/Image';
 import { PencilIcon } from '@phosphor-icons/react';
 import PostUser from '~/components/PostUser';

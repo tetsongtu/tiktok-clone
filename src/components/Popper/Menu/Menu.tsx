@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useState } from 'preact/hooks';
 
 import Tooltip from '~/components/Tooltip';
 import { Wrapper as PopperWrapper } from '~/components/Popper';

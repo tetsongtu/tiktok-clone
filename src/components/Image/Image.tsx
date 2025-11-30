@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useState } from 'preact/hooks';
 import images from '~/assets/images';
 import styles from './Image.module.scss';
 

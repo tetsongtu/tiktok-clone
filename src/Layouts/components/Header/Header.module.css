@@ -1,7 +1,7 @@
 @reference "tailwindcss";
 
 .wrapper {
-    @apply fixed py-[20px] px-[16px] hidden lg:flex;
+    @apply z-40 fixed py-[20px] px-[16px] hidden lg:flex;
 }
 
 .more-btn {
