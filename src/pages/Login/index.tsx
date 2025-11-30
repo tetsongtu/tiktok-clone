@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter-preact';
 import config from '~/config';
 import Button from '~/components/Buttons/Button';
 import useCurrentUser from '~/hooks/useCurrentUser';

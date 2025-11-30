@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'preact/hooks';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'wouter-preact';
 import { useZoomDetection } from '~/hooks/useZoomDetection';
 import styles from './ZoomWarning.module.css';
 
 const ZoomWarning = () => {
     const isZoomCorrect = useZoomDetection();
-    const location = useLocation();
+    const [location] = useLocation();
     const [showWarning, setShowWarning] = useState(false);
 
     useEffect(() => {
@@ -22,7 +22,7 @@ const ZoomWarning = () => {
         } else {
             setShowWarning(false);
         }
-    }, [location.pathname, isZoomCorrect]);
+    }, [location, isZoomCorrect]); // location từ wouter là string, không có pathname
 
     if (!showWarning) return null;
 

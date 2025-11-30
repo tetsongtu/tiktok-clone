@@ -1,5 +1,5 @@
 import { Fragment } from 'preact';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Router, Switch, Route } from 'wouter-preact';
 import { publicRoutes } from './routes';
 import DefaultLayout from './Layouts';
 import ZoomWarning from './components/ZoomWarning';
@@ -9,8 +9,8 @@ function App() {
         <Router>
             <div className="app">
                 <ZoomWarning />
-                <Routes>
-                    {publicRoutes.map((route: any, index) => {
+                <Switch>
+                    {publicRoutes.map((route, index) => {
                         let Layout: any = DefaultLayout;
 
                         if (route.layout) {
@@ -18,21 +18,17 @@ function App() {
                         } else if (route.layout === null) {
                             Layout = Fragment;
                         }
-
                         const Page = route.component;
+
                         return (
-                            <Route
-                                key={index}
-                                path={route.path}
-                                element={
-                                    <Layout>
-                                        <Page />
-                                    </Layout>
-                                }
-                            />
+                            <Route key={index} path={route.path}>
+                                <Layout>
+                                    <Page />
+                                </Layout>
+                            </Route>
                         );
                     })}
-                </Routes>
+                </Switch>
             </div>
         </Router>
     );

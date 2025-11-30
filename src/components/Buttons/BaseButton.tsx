@@ -1,5 +1,5 @@
 // BaseButton.tsx
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter-preact';
 
 interface BaseButtonProps {
     to?: string;

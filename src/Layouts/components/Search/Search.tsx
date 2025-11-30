@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { useEffect, useState, useRef } from 'react';
-import { MagnifyingGlassIcon } from '@phosphor-icons/react';
+import { useEffect, useState, useRef } from 'preact/hooks';
+import { MagnifyingGlassIcon, XIcon, SpinnerGapIcon } from '@phosphor-icons/react';
 
 import * as searchServices from '~/services/searchService';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
@@ -8,7 +8,6 @@ import AccountItem from '~/components/AccountItem';
 import type { UserData } from '~/types/SiderbarMenu';
 import Tooltip from '~/components/Tooltip';
 import { useDebounce } from '~/hooks';
-import images from '~/assets/images';
 import LinkButton from '~/components/Buttons/LinkButton';
 import BaseButton from '~/components/Buttons';
 
@@ -111,13 +110,13 @@ function Search() {
                 />
                 {showClear && (
                     <BaseButton className="mr-3" onClick={handleClear}>
-                        <img src={images.clear} alt="Clear" className="h-8" />
+                        <XIcon size="12" weight="light" />
                     </BaseButton>
                 )}
 
                 {loading && (
                     <BaseButton className="mr-3 animate-spin">
-                        <img src={images.loading} alt="Loading" className="h-8" />
+                        <SpinnerGapIcon size={12} className="animate-spin" />
                     </BaseButton>
                 )}
             </div>

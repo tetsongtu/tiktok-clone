@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect } from 'preact/hooks';
 import { SpinnerIcon, ChartBarIcon, WarningCircleIcon } from '@phosphor-icons/react';
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter-preact';
 import type { PostUserProps } from './PostUserTypes';
 
 function PostUser({ post }: PostUserProps) {

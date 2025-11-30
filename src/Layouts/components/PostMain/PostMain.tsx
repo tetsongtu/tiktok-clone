@@ -1,5 +1,5 @@
 import { useEffect } from 'preact/hooks';
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter-preact';
 import { HeartIcon, MusicNotesIcon } from '@phosphor-icons/react';
 
 import { type PostProps } from '~/types';

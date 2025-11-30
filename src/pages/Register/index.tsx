@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter-preact';
 import config from '~/config';
 import Button from '~/components/Buttons/Button';
 import { GoogleIcon, FacebookIcon } from '~/components/Icons';

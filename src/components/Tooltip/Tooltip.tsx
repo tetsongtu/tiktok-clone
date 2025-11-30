@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import classNames from 'classnames';
-import './Tooltip.scss';
 import {
     useFloating,
     offset,
@@ -11,6 +10,7 @@ import {
     type Placement,
 } from '@floating-ui/react';
 import Arrow from './Arrow';
+import './Tooltip.scss';
 
 interface TooltipProps {
     children: React.ReactNode;
@@ -62,12 +62,6 @@ function Tooltip({
         ],
     });
 
-    // Set reference từ wrapper
-    useEffect(() => {
-        const firstChild = wrapperRef.current?.firstElementChild;
-        firstChild && refs.setReference(firstChild as HTMLElement);
-    }, []);
-
     // Hover configuration
     const hoverConfig = Array.isArray(delay)
         ? { delay: { open: delay[0], close: delay[1] } }
@@ -77,7 +71,12 @@ function Tooltip({
         useHover(context, { ...hoverConfig, enabled: !isControlled }),
     ]);
 
-    // Xử lý click outside
+    // Effects
+    useEffect(() => {
+        const firstChild = wrapperRef.current?.firstElementChild;
+        firstChild && refs.setReference(firstChild as HTMLElement);
+    }, []);
+
     useEffect(() => {
         if (!showTooltip) return;
 
@@ -94,6 +93,7 @@ function Tooltip({
         return () => document.removeEventListener('mousedown', handleClick);
     }, [showTooltip, onClickOutside]);
 
+    // Render helpers
     const { x: arrowX, y: arrowY } = middlewareData.arrow || {};
 
     const contentClass =
@@ -124,7 +124,6 @@ function Tooltip({
             {...(!isControlled ? getReferenceProps() : {})}
         >
             {children}
-
             {showTooltip && renderContent}
         </div>
     );

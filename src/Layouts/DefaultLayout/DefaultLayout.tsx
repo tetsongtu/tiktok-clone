@@ -1,12 +1,12 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'wouter-preact';
 import config from '~/config';
 
 import Header, { TopRightActionBar } from '~/Layouts/components/Header';
 import Sidebar from '~/Layouts/components/Sidebar';
 
-function DefaultLayout({ children }: { children: React.ReactNode }) {
-    const location = useLocation();
-    const isHome = location.pathname === config.routes.home;
+function DefaultLayout({ children }: { children: any }) {
+    const [location] = useLocation();
+    const isHome = location === config.routes.home;
 
     return (
         <div className="grid grid-cols-[auto_8px_1fr_8px_auto] min-h-[100dvh]">

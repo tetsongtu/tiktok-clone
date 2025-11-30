@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.css';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Link } from 'wouter-preact';
+import { useEffect } from 'preact/hooks';
 
 import config from '~/config';
 import images from '~/assets/images';

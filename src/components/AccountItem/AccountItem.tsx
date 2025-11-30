@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter-preact';
 import { CheckCircleIcon } from '@phosphor-icons/react';
 
 import type { UserProps } from '~/types/SiderbarMenu';
