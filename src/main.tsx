@@ -1,13 +1,16 @@
-import './global.css';
-
 import { render } from 'preact';
-import App from './app';
+import { Router } from 'wouter-preact';
 import { CurrentUserProvider } from './hooks/useCurrentUser';
+
+import './global.css';
+import App from './app';
 
 const root = document.getElementById('app')!;
 render(
     <CurrentUserProvider>
-        <App />
+        <Router>
+            <App />
+        </Router>
     </CurrentUserProvider>,
     root,
 );
