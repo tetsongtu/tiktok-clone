@@ -1,12 +1,11 @@
 import { useEffect } from 'preact/hooks';
 import { Link } from 'wouter-preact';
-import { HeartIcon, MusicNotesIcon } from '@phosphor-icons/react';
 
 import { type PostProps } from '~/shared/types';
 import PostMainLikes from './PostMainLikes';
 import { Image, Button } from '~/shared';
 
-function PostMain({ post }: PostProps) {
+function PostMain({ post }: any) {
     useEffect(() => {
         const video = document.getElementById(`video-${post?.id}`) as HTMLVideoElement;
         const postMainElement = document.getElementById(`post-main-${post?.id}`);
@@ -31,7 +30,7 @@ function PostMain({ post }: PostProps) {
                 {/* Header Section */}
                 <div className="flex items-center mb-2.5">
                     <Image
-                        src={post?.profile?.img}
+                        src={post?.user?.avatar}
                         className="cursor-pointer min-w-18 h-18 rounded-full object-cover"
                     />
 
@@ -45,14 +44,14 @@ function PostMain({ post }: PostProps) {
 
                 {/* Content Section */}
                 <div className="flex justify-center">
-                    <div>
+                    <div className="h-[700px]">
                         <video
                             className="rounded-lg object-cover mx-auto h-full"
                             id={`video-${post?.id}`}
                             loop
                             controls
                             muted
-                            src={post?.video_url}
+                            src={post?.file_url}
                         />
                     </div>
                     <PostMainLikes post={post} />
@@ -63,19 +62,14 @@ function PostMain({ post }: PostProps) {
 }
 
 // Extracted component for user information
-function UserInfo({ post }: { post: PostProps['post'] }) {
+function UserInfo({ post }: any) {
     return (
         <div>
-            <Link to={`/profile/${post?.profile?.user_id}`}>
-                <strong className="hover:underline">{post?.profile?.name}</strong>
+            <Link to={`/profile/${post?.user?.id}`}>
+                <strong className="hover:underline">{post?.user?.nickname}</strong>
             </Link>
-            <p className="my-1">{post?.text}</p>
+            <p className="my-1">{post?.description}</p>
             <p className="text-gray-500 text-xl">#fun #cool #SuperAwesome</p>
-            <p className="font-bold flex items-center mt-1">
-                <MusicNotesIcon size={20} weight="fill" />
-                <span className="px-1">original sound - AWESOME</span>
-                <HeartIcon size={20} weight="fill" />
-            </p>
         </div>
     );
 }

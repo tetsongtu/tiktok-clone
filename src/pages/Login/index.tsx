@@ -110,7 +110,7 @@ function Login() {
 
                         <a
                             href="#"
-                            className="block text-neutral-500 hover:underline hover:text-black"
+                            className="block text-gray-500 hover:underline hover:text-black"
                         >
                             Forgot password?
                         </a>
