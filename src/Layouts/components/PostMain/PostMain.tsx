@@ -44,9 +44,9 @@ function PostMain({ post }: any) {
 
                 {/* Content Section */}
                 <div className="flex justify-center">
-                    <div className="h-[700px]">
+                    <div>
                         <video
-                            className="rounded-lg object-cover mx-auto h-full"
+                            className="rounded-lg object-cover min-w-[400px] max-h-[800px]"
                             id={`video-${post?.id}`}
                             loop
                             controls
