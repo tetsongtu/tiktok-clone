@@ -1,13 +1,8 @@
 import * as httpRequest from '~/utils/httpRequest';
 
-export const getVideos = async (page: number, type = 'for-you') => {
+export const getVideo = async (id: number) => {
     try {
-        const res = await httpRequest.get(`videos`, {
-            params: {
-                type,
-                page,
-            },
-        });
+        const res = await httpRequest.get(`videos/${id}`);
         return res.data;
     } catch (error) {
         console.log(error);

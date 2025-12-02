@@ -1,58 +1,66 @@
+import { useState, useEffect, useRef } from 'react';
 import { PostMain } from '~/Layouts/components';
-import { useEffect, useState } from 'preact/hooks';
 import * as videoService from '~/core/services/videoService';
+import type { PostData } from '~/shared/types/Home';
+
+const VIDEOS_PER_BATCH = 5;
+const MAX_VIDEO_ID = 109;
+const SCROLL_THRESHOLD = 800;
 
 function Home() {
-    const [videos, setVideos] = useState<any[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [hasMore, setHasMore] = useState(true);
-    const [page, setPage] = useState(1); // page hiện tại
+    const [videos, setVideos] = useState<PostData[]>([]);
+    const isFetchingRef = useRef(false);
+    const fetchedIdsRef = useRef(new Set<number>());
 
-    const loadNextPage = async () => {
-        if (loading || !hasMore) return;
+    const fetchVideos = async () => {
+        if (isFetchingRef.current) return;
+        isFetchingRef.current = true;
 
-        setLoading(true);
-        try {
-            const res = await videoService.getVideos(page);
-            if (res?.length) {
-                setVideos((prev) => [...prev, ...res]);
-                setPage((prev) => prev + 1);
-            } else {
-                setHasMore(false);
-            }
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
+        const videoIds = Array.from(
+            { length: VIDEOS_PER_BATCH },
+            () => Math.floor(Math.random() * MAX_VIDEO_ID) + 1,
+        ).filter((id) => !fetchedIdsRef.current.has(id));
+
+        const results = await Promise.allSettled(
+            videoIds.map((id) => videoService.getVideo(id)),
+        );
+
+        const newVideos = results
+            .map((result, index) => {
+                if (result.status === 'fulfilled' && result.value) {
+                    fetchedIdsRef.current.add(videoIds[index]);
+                    return result.value;
+                }
+                return null;
+            })
+            .filter((video): video is PostData => video !== null);
+
+        setVideos((prev) => [...prev, ...newVideos]);
+        isFetchingRef.current = false;
     };
 
-    // scroll listener
     useEffect(() => {
+        fetchVideos();
+
         const handleScroll = () => {
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
-                loadNextPage();
+            const isNearBottom =
+                window.scrollY + window.innerHeight >=
+                document.documentElement.scrollHeight - SCROLL_THRESHOLD;
+
+            if (isNearBottom) {
+                fetchVideos();
             }
         };
+
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [loading, hasMore, page]);
-
-    // load page 1 lúc mount
-    useEffect(() => {
-        loadNextPage();
     }, []);
 
     return (
         <div>
-            {videos.map((video) => (
-                <PostMain key={video.id} post={video} />
+            {videos.map((video, index) => (
+                <PostMain key={`${video.id}-${index}`} post={video} />
             ))}
-
-            {loading && <p className="text-center">Đang tải...</p>}
-            {!hasMore && videos.length > 0 && (
-                <p className="text-center">Hết video rồi!</p>
-            )}
         </div>
     );
 }

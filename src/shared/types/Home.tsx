@@ -16,17 +16,12 @@ export interface Comment {
 export interface PostData {
     id: string;
     user_id: string;
-    video_url: string;
-    text: string;
-    create_at: string;
-    profile: {
-        user_id: string;
-        name: string;
-        img: string;
-    };
-    likes?: Like[];
-    comments?: Comment[];
-    shares?: number;
+    file_url: string;
+    description: string;
+
+    likes_count?: Like[];
+    comments_count?: Comment[];
+    shares_count?: number;
 }
 
 export interface PostProps {
