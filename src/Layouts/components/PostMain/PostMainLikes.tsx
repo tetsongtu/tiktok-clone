@@ -8,8 +8,8 @@ export function PostMainLikes({ post }: PostLikeProps) {
     const [userLiked] = useState(false);
 
     // Sử dụng trực tiếp từ post data
-    const comments = post.comments || [];
-    const likes = post.likes || [];
+    const comments = post.comments_count || [];
+    const likes = post.likes_count || [];
 
     const handleLike = () => {
         console.log('likeOrUnlike');
@@ -54,7 +54,7 @@ export function PostMainLikes({ post }: PostLikeProps) {
                     {/* Share Button */}
                     <ActionButton
                         icon={<ShareIcon color="#374151" size={20} weight="fill" />}
-                        count={post.shares || 0}
+                        count={post.shares_count || 0}
                         onClick={handleShare}
                     />
                 </div>

@@ -1,12 +1,13 @@
 import { useEffect } from 'preact/hooks';
 import { Link } from 'wouter-preact';
 
-import { type PostProps } from '~/shared/types';
 import PostMainLikes from './PostMainLikes';
 import { Image, Button } from '~/shared';
 
 function PostMain({ post }: any) {
     useEffect(() => {
+        if (!post) return;
+
         const video = document.getElementById(`video-${post?.id}`) as HTMLVideoElement;
         const postMainElement = document.getElementById(`post-main-${post?.id}`);
 
@@ -14,7 +15,7 @@ function PostMain({ post }: any) {
 
         const observer = new IntersectionObserver(
             (entries) => {
-                entries[0].isIntersecting ? video.play() : video.pause();
+                entries[0].isIntersecting ? video.play().catch(() => {}) : video.pause();
             },
             { threshold: 0.5 },
         );

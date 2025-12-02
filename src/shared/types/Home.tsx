@@ -24,10 +24,6 @@ export interface PostData {
     shares_count?: number;
 }
 
-export interface PostProps {
-    post: PostData;
-}
-
 export interface PostLikeProps {
     post: PostData;
 }
