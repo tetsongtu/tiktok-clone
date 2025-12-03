@@ -25,7 +25,11 @@ function DefaultLayout({ children }: { children: any }) {
                 id="MainContent"
                 className="bg-gradient-to-b from-gray-200 to-yellow-200"
             >
-                <div className={`${isHome ? 'max-w-6xl mx-auto' : 'w-full'}`}>
+                <div
+                    className={`h-[100dvh] overflow-y-auto ${
+                        isHome ? 'max-w-6xl mx-auto' : 'w-full'
+                    }`}
+                >
                     {children}
                 </div>
             </main>

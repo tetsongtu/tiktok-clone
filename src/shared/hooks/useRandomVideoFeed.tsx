@@ -42,18 +42,26 @@ export function useRandomVideoFeed() {
     useEffect(() => {
         fetchVideos();
 
+        // Tìm phần tử scroll: ưu tiên MainContent > overflow-y-auto > window
+        const mainEl = document.getElementById('MainContent');
+        const scrollEl =
+            (mainEl?.querySelector('.overflow-y-auto') as HTMLElement) || mainEl;
+
+        if (!scrollEl) return;
+
         const handleScroll = () => {
             const isNearBottom =
-                window.scrollY + window.innerHeight >=
-                document.documentElement.scrollHeight - SCROLL_THRESHOLD;
+                scrollEl.scrollTop + scrollEl.clientHeight >=
+                scrollEl.scrollHeight - SCROLL_THRESHOLD;
 
             if (isNearBottom) {
                 fetchVideos();
             }
         };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        scrollEl.addEventListener('scroll', handleScroll);
+        return () => scrollEl.removeEventListener('scroll', handleScroll);
     }, []);
+
     return videos;
 }
