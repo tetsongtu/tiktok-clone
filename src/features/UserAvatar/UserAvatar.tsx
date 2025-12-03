@@ -17,7 +17,7 @@ function UserAvatar({ user, size = 13, fallback }: UserAvatarProps) {
             src={user?.avatar || ''}
             alt={user?.nickname || ''}
             fallback={fallback}
-            className="ml-2 cursor-pointer"
+            className="ml-2 cursor-pointer shrink-0"
         />
     );
 }

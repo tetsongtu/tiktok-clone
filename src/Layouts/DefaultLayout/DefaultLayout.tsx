@@ -12,7 +12,7 @@ function DefaultLayout({ children }: { children: any }) {
             {/* Left Sidebar - cao nhất */}
             <aside className="w-[60px] lg:w-[250px] bg-gradient-to-b from-purple-100 via-purple-300">
                 <Header />
-                <div className="fixed mt-[70px] flex px-[2px] lg:px-2.5 z-40">
+                <div className="fixed top-[70px] bottom-0 w-[60px] lg:w-[250px] px-[2px] lg:px-2.5 z-40">
                     <Sidebar />
                 </div>
             </aside>
