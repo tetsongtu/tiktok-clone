@@ -33,7 +33,7 @@ function Sidebar() {
     };
 
     return (
-        <aside id="Sidebar">
+        <aside id="Sidebar" className="h-full flex flex-col">
             <Menu>
                 <Search />
                 <nav className="my-[12px]">
@@ -42,33 +42,31 @@ function Sidebar() {
                     ))}
                 </nav>
             </Menu>
-            <div className="h-[100vh] overflow-y-scroll">
-                <section>
-                    <SuggestedAccounts
-                        label="Suggested accounts"
-                        data={suggestedUsers}
-                        onSeeAll={handleSeeAll}
-                    />
+            <section>
+                <SuggestedAccounts
+                    label="Suggested accounts"
+                    data={suggestedUsers}
+                    onSeeAll={handleSeeAll}
+                />
+            </section>
+            <section>
+                <SuggestedAccounts label="Following" />
+            </section>
+            <footer className="hidden lg:block py-4">
+                <hr className="border-[#ccc] w-[85%]"></hr>
+                <section className="text-[13px] font-semibold opacity-72 w-full">
+                    <p>Following accounts</p>
+                    <p>Accounts you follow will appear here</p>
                 </section>
-                <section>
-                    <SuggestedAccounts label="Following" />
-                </section>
-                <footer className="hidden lg:block">
-                    <hr className="border-[#ccc] w-[85%]"></hr>
-                    <section className="text-[13px] font-semibold opacity-72 w-full">
-                        <p>Following accounts</p>
-                        <p>Accounts you follow will appear here</p>
-                    </section>
-                    <hr className="border-[#ccc] w-[85%]"></hr>
+                <hr className="border-[#ccc] w-[85%]"></hr>
 
-                    <ul className="text-[13px] font-semibold opacity-50 w-full">
-                        <li>Company</li>
-                        <li>Program</li>
-                        <li>Terms & Policies</li>
-                        <li>© 2025 TikTok</li>
-                    </ul>
-                </footer>
-            </div>
+                <ul className="text-[13px] font-semibold opacity-50 w-full">
+                    <li>Company</li>
+                    <li>Program</li>
+                    <li>Terms & Policies</li>
+                    <li>© 2025 TikTok</li>
+                </ul>
+            </footer>
         </aside>
     );
 }

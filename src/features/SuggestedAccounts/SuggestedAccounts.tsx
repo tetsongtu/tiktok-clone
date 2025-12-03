@@ -17,9 +17,12 @@ function SuggestedAccounts({ label, data = [], onSeeAll }: SuggestedAccountsProp
             <div className="border-t border-[#ccc] w-[50px] lg:w-[85%]"></div>
             <p className={cx('label')}>{label}</p>
 
-            {data.map((account) => (
-                <AccountItem key={account.id} user={account} />
-            ))}
+            <div className="max-h-[250px] overflow-y-auto">
+                {data.map((account) => (
+                    <AccountItem key={account.id} user={account} />
+                ))}
+            </div>
+
             <p className={cx('more-btn')} onClick={onSeeAll}>
                 See all
             </p>
