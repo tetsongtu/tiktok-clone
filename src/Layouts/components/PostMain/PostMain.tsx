@@ -4,8 +4,9 @@ import PostMainLikes from './PostMainLikes';
 import { UserAvatar } from '~/features';
 import { Link } from 'wouter-preact';
 import { PlusIcon } from '@phosphor-icons/react';
+import type { PostMainProps } from '~/shared/types';
 
-function PostMain({ post }: any) {
+function PostMain({ post }: PostMainProps) {
     useEffect(() => {
         if (!post) return;
 

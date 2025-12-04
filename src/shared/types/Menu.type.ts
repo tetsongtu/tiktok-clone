@@ -1,3 +1,10 @@
+export interface MenuItemProps {
+    title: string;
+    to: string;
+    icon: React.ReactNode;
+    actionIcon: React.ReactNode;
+}
+
 export interface MenuProps {
     children: React.ReactNode;
     items: MenuItemData[];

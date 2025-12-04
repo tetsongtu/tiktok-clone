@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './SuggestedAccounts.module.scss';
 import { CheckCircleIcon } from '@phosphor-icons/react';
 
-import type { UserProps } from '~/shared/types';
+import type { AccountItemProps } from '~/shared/types';
 import { PopperWrapper, Tooltip } from '~/shared';
 import AccountPreview from './AccountPreview/AccountPreview';
 import { UserAvatar } from '~/features';
@@ -11,7 +11,7 @@ import { UserAvatar } from '~/features';
 
 const cx = classNames.bind(styles);
 
-function AccountItem({ user }: UserProps) {
+function AccountItem({ user }: AccountItemProps) {
     const renderReview = () => {
         return (
             <PopperWrapper className="min-w-[308px]">

@@ -4,7 +4,7 @@ import Menu from './Menu/Menu';
 import MenuItem from './Menu/MenuItem';
 import { SuggestedAccounts } from '~/features';
 import * as userServices from '~/core/services/userService';
-import { SIDEBAR_MENU } from './SiderbarMenu';
+import { SIDEBAR_MENU } from './SidebarMenu';
 import { Search } from '~/Layouts/components';
 
 const INIT_PAGE = 1;

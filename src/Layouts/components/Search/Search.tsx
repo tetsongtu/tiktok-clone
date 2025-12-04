@@ -4,7 +4,7 @@ import { MagnifyingGlassIcon, XIcon, SpinnerGapIcon } from '@phosphor-icons/reac
 
 import * as searchServices from '~/core/services/searchService';
 import { AccountItem } from '~/features';
-import type { UserData } from '~/shared/types/SiderbarMenu';
+import type { Account } from '~/shared/types';
 import { LinkButton, BaseButton, Tooltip, PopperWrapper } from '~/shared';
 import { useDebounce } from '~/shared/hooks';
 
@@ -12,7 +12,7 @@ const DEBOUNCE_TIME = 500;
 
 function Search() {
     const [searchValue, setSearchValue] = useState('');
-    const [searchResult, setSearchResult] = useState<UserData[]>([]);
+    const [searchResult, setSearchResult] = useState<Account[]>([]);
     const [showResult, setShowResult] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -70,7 +70,7 @@ function Search() {
                 <h4 className="px-3 py-[5px] text-[1.4rem] font-semibold text-[rgba(22,24,35,0.5)]">
                     Accounts
                 </h4>
-                {searchResult.map((result: UserData) => (
+                {searchResult.map((result: Account) => (
                     <AccountItem key={result.id} user={result} />
                 ))}
             </PopperWrapper>

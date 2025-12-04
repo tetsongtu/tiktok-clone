@@ -1,12 +1,12 @@
 import { Link } from 'wouter-preact';
 import { CheckCircleIcon } from '@phosphor-icons/react';
 
-import type { UserProps } from '~/shared/types/SiderbarMenu';
+import type { AccountItemProps } from '~/shared/types';
 import { UserAvatar } from '~/features';
 
 const wrapper = `flex items-center cursor-pointer hover:bg-[var(--primary)] p-1 px-2 hover:text-white`;
 
-function AccountItem({ user }: UserProps) {
+function AccountItem({ user }: AccountItemProps) {
     return (
         <Link to={`/@${user.nickname}`} className={wrapper}>
             <UserAvatar user={user} />

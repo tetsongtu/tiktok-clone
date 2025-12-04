@@ -5,7 +5,7 @@ import type { Crop, PixelCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
 import { UserAvatar } from '~/features';
-import type { UserData } from '~/shared/types';
+import type { Account } from '~/shared/types';
 import { Button, TextInput, Modal } from '~/shared';
 
 interface EditProfileModalProps {
@@ -76,7 +76,7 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
         }
     };
 
-    const guestUser: UserData = {
+    const guestUser: Account = {
         id: 1,
         nickname: 'test',
         avatar: 'test',

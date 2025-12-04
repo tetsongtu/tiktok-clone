@@ -1,9 +1,9 @@
 import { useEffect } from 'preact/hooks';
 import { SpinnerIcon, ChartBarIcon, WarningCircleIcon } from '@phosphor-icons/react';
 import { Link } from 'wouter-preact';
-import type { PostUserProps } from './PostUserTypes';
+import type { ProfilePostProps } from '~/shared/types';
 
-function PostUser({ post }: PostUserProps) {
+function ProfilePost({ post }: ProfilePostProps) {
     useEffect(() => {
         const video = document.getElementById(`video${post?.id}`) as HTMLVideoElement;
 
@@ -50,4 +50,4 @@ function PostUser({ post }: PostUserProps) {
     );
 }
 
-export default PostUser;
+export default ProfilePost;

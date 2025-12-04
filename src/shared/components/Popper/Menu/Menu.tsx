@@ -6,7 +6,7 @@ import PopperWrapper from '~/shared/components/Popper/Wrapper';
 import MenuItem from './MenuItem';
 import Header from './Header';
 import styles from './Menu.module.scss';
-import type { MenuProps, MenuItemData, MenuLevel } from '~/shared/types/UserMenu';
+import type { MenuProps, MenuItemData, MenuLevel } from '~/shared/types';
 
 const cx = classNames.bind(styles);
 

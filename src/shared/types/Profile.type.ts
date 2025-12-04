@@ -1,4 +1,4 @@
-export interface Post {
+export interface ProfilePost {
     id: string;
     user_id: string;
     video_url: string;
@@ -6,6 +6,6 @@ export interface Post {
     created_at: string;
 }
 
-export interface PostUserProps {
-    post: Post;
+export interface ProfilePostProps {
+    post: ProfilePost;
 }

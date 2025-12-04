@@ -2,4 +2,4 @@
 export { default as UserAvatar } from './UserAvatar/UserAvatar';
 export { default as AccountItem } from './AccountItem/AccountItem';
 export { default as SuggestedAccounts } from './SuggestedAccounts/SuggestedAccounts';
-export { default as PostUser } from './PostUser/PostUser';
+export { default as ProfilePost } from './ProfilePost/ProfilePost';

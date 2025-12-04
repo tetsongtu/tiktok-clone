@@ -12,7 +12,7 @@ import {
 
 import config from '~/core/config';
 import { Menu, Button, LinkButton } from '~/shared';
-import type { MenuItemData, UserData } from '~/shared/types';
+import type { MenuItemData, Account } from '~/shared/types';
 import { useCurrentUser } from '~/shared/hooks';
 import { AuthOptionsModal, LoginModal, RegisterModal } from '~/features/Modals';
 import { UserAvatar } from '~/features';
@@ -55,7 +55,7 @@ function TopRightActionBar() {
         },
     ];
 
-    const guestUser: UserData = {
+    const guestUser: Account = {
         avatar: 'https://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/486f3c515c065ccaa844faf058940fe1~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=3172adc4&x-expires=1764342000&x-signature=dpyyN9ZWvISrGqAwnsrc4oL8TP0%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=my3',
     };
     const handleSwitchToRegister = () => {

@@ -28,7 +28,7 @@ export function ActionButton({
             >
                 {isLoading ? <SpinnerGapIcon size={20} className="animate-spin" /> : icon}
             </div>
-            {count && <span className="text-sm font-medium">{count}</span>}
+            <span className="text-sm font-medium">{count}</span>
         </BaseButton>
     );
 }

@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import type { UserProps } from '~/shared/types';
 import { Image } from '~/shared';
 
-interface UserAvatarProps extends UserProps {
+interface UserAvatarProps {
+    user?: { nickname?: string; avatar?: string };
     size?: number;
     fallback?: string;
     className?: string;

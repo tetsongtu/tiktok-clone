@@ -1,5 +1,6 @@
-import type { TextInputTypes } from './TextInput.types';
-function TextInput({ string, inputType, placeholder, error, onUpdate }: TextInputTypes) {
+import type { TextInputProps } from './TextInput.type';
+
+function TextInput({ string, inputType, placeholder, error, onUpdate }: TextInputProps) {
     return (
         <>
             <input

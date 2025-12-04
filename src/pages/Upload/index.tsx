@@ -7,7 +7,7 @@ import {
     KnifeIcon,
 } from '@phosphor-icons/react';
 
-import type { UploadError } from '~/shared/types/UploadError';
+import type { UploadError } from '~/shared/types';
 import { Button } from '~/shared';
 
 function Upload() {

@@ -1,7 +1,7 @@
 import { useState } from 'preact/hooks';
 import { Image } from '~/shared';
 import { PencilIcon } from '@phosphor-icons/react';
-import { PostUser } from '~/features';
+import { ProfilePost } from '~/features';
 import { EditProfileModal } from '~/features/Modals';
 import danceVideo from '~/shared/assets/videos/dance.mp4';
 
@@ -92,7 +92,7 @@ function Profile() {
                 </ul>
 
                 <div className="mt-4 grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3">
-                    <PostUser
+                    <ProfilePost
                         post={{
                             id: '123',
                             user_id: '123',

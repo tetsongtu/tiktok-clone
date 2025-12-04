@@ -1,9 +1,9 @@
 import { HeartIcon, ChatCircleIcon, ShareIcon } from '@phosphor-icons/react';
-import type { PostLikeProps } from '~/shared/types';
+import type { PostMainProps } from '~/shared/types';
 import { useState } from 'preact/hooks';
 import { ActionButton } from '~/shared';
 
-export function PostMainLikes({ post }: PostLikeProps) {
+export function PostMainLikes({ post }: PostMainProps) {
     const [hasClickedLike, setHasClickedLike] = useState(false);
     const [userLiked] = useState(false);
 
@@ -31,7 +31,7 @@ export function PostMainLikes({ post }: PostLikeProps) {
                         weight="fill"
                     />
                 }
-                count={post.user.likes_count}
+                count={post.likes_count}
                 onClick={handleLike}
                 disabled={hasClickedLike}
                 isActive={userLiked}
@@ -41,7 +41,7 @@ export function PostMainLikes({ post }: PostLikeProps) {
             {/* Comment Button */}
             <ActionButton
                 icon={<ChatCircleIcon color="#374151" size={24} weight="fill" />}
-                count={post?.comments_count}
+                count={post.comments_count}
                 onClick={handleOpenComments}
             />
 

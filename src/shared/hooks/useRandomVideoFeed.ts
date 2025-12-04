@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from 'preact/hooks';
 
 import * as videoService from '~/core/services/videoService';
-import type { PostData } from '~/shared/types/Home';
+import type { Post } from '~/shared/types';
 
 const VIDEOS_PER_BATCH = 5;
 const MAX_VIDEO_ID = 109;
 const SCROLL_THRESHOLD = 800;
 
 export function useRandomVideoFeed() {
-    const [videos, setVideos] = useState<PostData[]>([]);
+    const [videos, setVideos] = useState<Post[]>([]);
     const isFetchingRef = useRef(false);
     const fetchedIdsRef = useRef(new Set<number>());
 
@@ -33,7 +33,7 @@ export function useRandomVideoFeed() {
                 }
                 return null;
             })
-            .filter((video): video is PostData => video !== null);
+            .filter((video): video is Post => video !== null);
 
         setVideos((prev) => [...prev, ...newVideos]);
         isFetchingRef.current = false;
