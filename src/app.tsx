@@ -5,36 +5,40 @@ import DefaultLayout from './Layouts';
 import ZoomWarning from './shared/components/ZoomWarning/ZoomWarning';
 
 function App() {
+    const [customRoutes, defaultRoutes] = publicRoutes.reduce(
+        (acc, route) => {
+            route.layout !== undefined ? acc[0].push(route) : acc[1].push(route);
+            return acc;
+        },
+        [[], []] as [typeof publicRoutes, typeof publicRoutes],
+    );
+
     return (
         <div className="app">
             <ZoomWarning />
-            <DefaultLayout>
-                <Switch>
-                    {publicRoutes.map((route, index) => {
-                        const Page = route.component;
-
-                        // Nếu route có layout riêng hoặc không có layout
-                        if (route.layout !== undefined) {
-                            let Layout: any =
-                                route.layout === null ? Fragment : route.layout;
-                            return (
-                                <Route key={index} path={route.path}>
-                                    <Layout>
-                                        <Page />
-                                    </Layout>
+            <Switch>
+                {customRoutes.map((route, i) => {
+                    const Layout: any = route.layout || Fragment;
+                    return (
+                        <Route key={i} path={route.path}>
+                            <Layout>
+                                <route.component />
+                            </Layout>
+                        </Route>
+                    );
+                })}
+                <Route>
+                    <DefaultLayout>
+                        <Switch>
+                            {defaultRoutes.map((route, i) => (
+                                <Route key={i} path={route.path}>
+                                    <route.component />
                                 </Route>
-                            );
-                        }
-
-                        // Dùng DefaultLayout (đã wrap bên ngoài)
-                        return (
-                            <Route key={index} path={route.path}>
-                                <Page />
-                            </Route>
-                        );
-                    })}
-                </Switch>
-            </DefaultLayout>
+                            ))}
+                        </Switch>
+                    </DefaultLayout>
+                </Route>
+            </Switch>
         </div>
     );
 }
