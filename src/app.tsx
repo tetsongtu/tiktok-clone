@@ -8,26 +8,33 @@ function App() {
     return (
         <div className="app">
             <ZoomWarning />
-            <Switch>
-                {publicRoutes.map((route, index) => {
-                    let Layout: any = DefaultLayout;
+            <DefaultLayout>
+                <Switch>
+                    {publicRoutes.map((route, index) => {
+                        const Page = route.component;
 
-                    if (route.layout) {
-                        Layout = route.layout;
-                    } else if (route.layout === null) {
-                        Layout = Fragment;
-                    }
-                    const Page = route.component;
+                        // Nếu route có layout riêng hoặc không có layout
+                        if (route.layout !== undefined) {
+                            let Layout: any =
+                                route.layout === null ? Fragment : route.layout;
+                            return (
+                                <Route key={index} path={route.path}>
+                                    <Layout>
+                                        <Page />
+                                    </Layout>
+                                </Route>
+                            );
+                        }
 
-                    return (
-                        <Route key={index} path={route.path}>
-                            <Layout>
+                        // Dùng DefaultLayout (đã wrap bên ngoài)
+                        return (
+                            <Route key={index} path={route.path}>
                                 <Page />
-                            </Layout>
-                        </Route>
-                    );
-                })}
-            </Switch>
+                            </Route>
+                        );
+                    })}
+                </Switch>
+            </DefaultLayout>
         </div>
     );
 }
