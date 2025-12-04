@@ -1,5 +1,6 @@
-import { Button, FacebookIcon, GoogleIcon, useCurrentUser } from '~/shared';
-import { AuthModalLayout } from '~/features';
+import { Button, FacebookIcon, GoogleIcon } from '~/shared';
+import { useCurrentUser } from '~/shared/hooks';
+import { AuthModalLayout } from '~/features/Modals';
 
 interface AuthOptionsModalProps {
     isOpen: boolean;

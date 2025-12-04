@@ -11,9 +11,11 @@ import {
 } from '@phosphor-icons/react';
 
 import config from '~/core/config';
+import { Menu, Button, LinkButton } from '~/shared';
 import type { MenuItemData, UserData } from '~/shared/types';
-import { useCurrentUser, Menu, Button, LinkButton } from '~/shared';
-import { AuthOptionsModal, LoginModal, RegisterModal, UserAvatar } from '~/features';
+import { useCurrentUser } from '~/shared/hooks';
+import { AuthOptionsModal, LoginModal, RegisterModal } from '~/features/Modals';
+import { UserAvatar } from '~/features';
 
 const cx = classNames.bind(styles);
 

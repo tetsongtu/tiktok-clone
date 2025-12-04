@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'preact/hooks';
 
-import Menu, { MenuItem } from './Menu';
+import Menu from './Menu/Menu';
+import MenuItem from './Menu/MenuItem';
 import { SuggestedAccounts } from '~/features';
 import * as userServices from '~/core/services/userService';
 import { SIDEBAR_MENU } from './SiderbarMenu';

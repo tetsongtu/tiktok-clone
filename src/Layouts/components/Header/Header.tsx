@@ -4,7 +4,8 @@ import { Link } from 'wouter-preact';
 import { useEffect } from 'preact/hooks';
 
 import config from '~/core/config';
-import { images, Image, useCurrentUser } from '~/shared';
+import { images, Image } from '~/shared';
+import { useCurrentUser } from '~/shared/hooks';
 
 const cx = classNames.bind(styles);
 

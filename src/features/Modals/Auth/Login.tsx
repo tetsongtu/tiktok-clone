@@ -1,6 +1,7 @@
 import { useState } from 'preact/hooks';
-import { Button, useCurrentUser } from '~/shared';
-import { AuthModalLayout } from '~/features';
+import { Button } from '~/shared';
+import { useCurrentUser } from '~/shared/hooks';
+import { AuthModalLayout } from '~/features/Modals';
 
 interface LoginModalProps {
     isOpen: boolean;

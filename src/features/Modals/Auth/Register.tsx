@@ -1,5 +1,5 @@
 import { Button, GoogleIcon, FacebookIcon } from '~/shared';
-import { AuthModalLayout } from '~/features';
+import { AuthModalLayout } from '~/features/Modals';
 
 interface RegisterModalProps {
     isOpen: boolean;

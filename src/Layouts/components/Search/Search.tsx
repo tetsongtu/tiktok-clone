@@ -5,7 +5,8 @@ import { MagnifyingGlassIcon, XIcon, SpinnerGapIcon } from '@phosphor-icons/reac
 import * as searchServices from '~/core/services/searchService';
 import { AccountItem } from '~/features';
 import type { UserData } from '~/shared/types/SiderbarMenu';
-import { useDebounce, LinkButton, BaseButton, Tooltip, PopperWrapper } from '~/shared';
+import { LinkButton, BaseButton, Tooltip, PopperWrapper } from '~/shared';
+import { useDebounce } from '~/shared/hooks';
 
 const DEBOUNCE_TIME = 500;
 

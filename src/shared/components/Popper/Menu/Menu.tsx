@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import { useState } from 'preact/hooks';
 
 import Tooltip from '~/shared/components/Tooltip/Tooltip';
-import { Wrapper as PopperWrapper } from '~/shared/components/Popper';
+import PopperWrapper from '~/shared/components/Popper/Wrapper';
 import MenuItem from './MenuItem';
 import Header from './Header';
 import styles from './Menu.module.scss';

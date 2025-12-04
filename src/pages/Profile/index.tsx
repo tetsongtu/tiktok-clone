@@ -1,7 +1,8 @@
 import { useState } from 'preact/hooks';
 import { Image } from '~/shared';
 import { PencilIcon } from '@phosphor-icons/react';
-import { PostUser, EditProfileModal } from '~/features';
+import { PostUser } from '~/features';
+import { EditProfileModal } from '~/features/Modals';
 import danceVideo from '~/shared/assets/videos/dance.mp4';
 
 export interface ProfilePageProps {
