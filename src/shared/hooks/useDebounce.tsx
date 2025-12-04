@@ -9,7 +9,7 @@ export function useDebounce(value: string, delay: number): string {
         }, delay);
 
         return () => clearTimeout(handler);
-    }, [value]);
+    }, [value, delay]);
 
     return debouncedValue;
 }

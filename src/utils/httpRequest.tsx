@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { type AxiosRequestConfig } from 'axios';
 
 // console.log(import.meta.env);
 
@@ -6,7 +6,7 @@ const httpRequest = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
 });
 
-export const get = async (path: any, options = {}) => {
+export const get = async (path: string, options: AxiosRequestConfig = {}) => {
     const response = await httpRequest.get(path, options);
     return response.data;
 };

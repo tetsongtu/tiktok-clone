@@ -11,7 +11,7 @@ interface ImageProps {
     className?: string;
     rounded?: boolean;
     fallback?: string;
-    style?: React.CSSProperties;
+    style?: Record<string, string | number>;
 }
 
 function Image({

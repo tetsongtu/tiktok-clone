@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'preact/hooks';
 
 import * as videoService from '~/core/services/videoService';
 import type { PostData } from '~/shared/types/Home';

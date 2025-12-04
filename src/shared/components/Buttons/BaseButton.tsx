@@ -1,11 +1,14 @@
 // BaseButton.tsx
 import { Link } from 'wouter-preact';
+import type { ComponentChildren } from 'preact';
 
 interface BaseButtonProps {
     to?: string;
     href?: string;
-    children?: React.ReactNode;
+    children?: ComponentChildren;
     className?: string;
+    disabled?: boolean;
+    onClick?: () => void;
     [key: string]: any;
 }
 
@@ -16,7 +19,7 @@ export function BaseButton({
     className,
     ...passProps
 }: BaseButtonProps) {
-    let Comp: React.ElementType = 'button';
+    let Comp: any = 'button';
     const props: any = { ...passProps, className };
 
     if (to) {
