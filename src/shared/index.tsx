@@ -11,6 +11,7 @@ export { default as Menu } from './components/Popper/Menu/Menu';
 export { default as Tooltip } from './components/Tooltip/Tooltip';
 export { Wrapper as PopperWrapper } from './components/Popper';
 export { default as TextInput } from './components/TextInput/TextInput';
+export { default as Modal } from './components/Modal';
 export {
     GoogleIcon,
     FacebookIcon,

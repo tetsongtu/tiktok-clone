@@ -13,7 +13,7 @@ import {
 import config from '~/core/config';
 import type { MenuItemData, UserData } from '~/shared/types';
 import { useCurrentUser, Menu, Button, LinkButton } from '~/shared';
-import { LoginModal, UserAvatar } from '~/features';
+import { AuthOptionsModal, LoginModal, RegisterModal, UserAvatar } from '~/features';
 
 const cx = classNames.bind(styles);
 
@@ -35,7 +35,9 @@ const MENU_ITEMS: MenuItemData[] = [
 
 function TopRightActionBar() {
     const { currentUser, setCurrentUser } = useCurrentUser();
+    const [isAuthOptionsModalOpen, setIsAuthOptionsModalOpen] = useState(false);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
     const userMenu: MenuItemData[] = [
         { icon: '', title: 'View profile', to: '/@hoaa' },
@@ -54,11 +56,45 @@ function TopRightActionBar() {
     const guestUser: UserData = {
         avatar: 'https://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/486f3c515c065ccaa844faf058940fe1~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=3172adc4&x-expires=1764342000&x-signature=dpyyN9ZWvISrGqAwnsrc4oL8TP0%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=my3',
     };
+    const handleSwitchToRegister = () => {
+        setIsAuthOptionsModalOpen(false);
+        setIsLoginModalOpen(false);
+        setIsRegisterModalOpen(true);
+    };
+
+    const handleSwitchToAuthOptions = () => {
+        setIsRegisterModalOpen(false);
+        setIsLoginModalOpen(false);
+        setIsAuthOptionsModalOpen(true);
+    };
+
+    const handleShowLoginForm = () => {
+        setIsAuthOptionsModalOpen(false);
+        setIsLoginModalOpen(true);
+    };
+
+    const handleBackToAuthOptions = () => {
+        setIsLoginModalOpen(false);
+        setIsAuthOptionsModalOpen(true);
+    };
+
     return (
         <div className={cx('wrapper', 'right-0')}>
+            <AuthOptionsModal
+                isOpen={isAuthOptionsModalOpen}
+                onClose={() => setIsAuthOptionsModalOpen(false)}
+                onSwitchToRegister={handleSwitchToRegister}
+                onShowLoginForm={handleShowLoginForm}
+            />
             <LoginModal
                 isOpen={isLoginModalOpen}
                 onClose={() => setIsLoginModalOpen(false)}
+                onBack={handleBackToAuthOptions}
+            />
+            <RegisterModal
+                isOpen={isRegisterModalOpen}
+                onClose={() => setIsRegisterModalOpen(false)}
+                onSwitchToLogin={handleSwitchToAuthOptions}
             />
             <nav className={cx('flex items-center')}>
                 {currentUser ? (
@@ -79,14 +115,14 @@ function TopRightActionBar() {
                     <div className="flex space-x-3">
                         <Button
                             variant="outline"
-                            onClick={() => setIsLoginModalOpen(true)}
+                            onClick={() => setIsAuthOptionsModalOpen(true)}
                             leftIcon={<PlusIcon />}
                         >
                             Upload
                         </Button>
                         <Button
                             variant="primary"
-                            onClick={() => setIsLoginModalOpen(true)}
+                            onClick={() => setIsAuthOptionsModalOpen(true)}
                         >
                             Log in
                         </Button>
