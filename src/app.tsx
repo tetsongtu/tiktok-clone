@@ -5,18 +5,14 @@ import DefaultLayout from './Layouts';
 import ZoomWarning from './shared/components/ZoomWarning/ZoomWarning';
 
 function App() {
-    const [customRoutes, defaultRoutes] = publicRoutes.reduce(
-        (acc, route) => {
-            route.layout !== undefined ? acc[0].push(route) : acc[1].push(route);
-            return acc;
-        },
-        [[], []] as [typeof publicRoutes, typeof publicRoutes],
-    );
+    const customRoutes = publicRoutes.filter((route) => route.layout !== undefined);
+    const defaultRoutes = publicRoutes.filter((route) => route.layout === undefined);
 
     return (
         <div className="app">
             <ZoomWarning />
             <Switch>
+                {/* Routes có layout riêng */}
                 {customRoutes.map((route, i) => {
                     const Layout: any = route.layout || Fragment;
                     return (
@@ -27,6 +23,8 @@ function App() {
                         </Route>
                     );
                 })}
+
+                {/* Routes dùng DefaultLayout chung */}
                 <Route>
                     <DefaultLayout>
                         <Switch>
