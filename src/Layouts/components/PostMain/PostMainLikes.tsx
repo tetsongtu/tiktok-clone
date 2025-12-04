@@ -7,10 +7,6 @@ export function PostMainLikes({ post }: PostLikeProps) {
     const [hasClickedLike, setHasClickedLike] = useState(false);
     const [userLiked] = useState(false);
 
-    // Sử dụng trực tiếp từ post data
-    const comments = post.comments_count || [];
-    const likes = post.likes_count || [];
-
     const handleLike = () => {
         console.log('likeOrUnlike');
         setHasClickedLike(true);
@@ -25,40 +21,36 @@ export function PostMainLikes({ post }: PostLikeProps) {
     };
 
     return (
-        <div className="relative" id={`post-likes-${post.id}`}>
-            <div className="absolute bottom-0 pl-4">
-                <div className="pb-1 flex flex-col gap-1">
-                    {/* Like Button */}
-                    <ActionButton
-                        icon={
-                            <HeartIcon
-                                color={userLiked ? '#ff2626' : '#374151'}
-                                size={20}
-                                weight="fill"
-                            />
-                        }
-                        count={likes.length}
-                        onClick={handleLike}
-                        disabled={hasClickedLike}
-                        isActive={userLiked}
-                        isLoading={hasClickedLike}
+        <div id={`post-likes-${post.id}`}>
+            {/* Like Button */}
+            <ActionButton
+                icon={
+                    <HeartIcon
+                        color={userLiked ? '#ff2626' : '#374151'}
+                        size={24}
+                        weight="fill"
                     />
+                }
+                count={post.user.likes_count}
+                onClick={handleLike}
+                disabled={hasClickedLike}
+                isActive={userLiked}
+                isLoading={hasClickedLike}
+            />
 
-                    {/* Comment Button */}
-                    <ActionButton
-                        icon={<ChatCircleIcon color="#374151" size={20} weight="fill" />}
-                        count={comments.length}
-                        onClick={handleOpenComments}
-                    />
+            {/* Comment Button */}
+            <ActionButton
+                icon={<ChatCircleIcon color="#374151" size={24} weight="fill" />}
+                count={post?.comments_count}
+                onClick={handleOpenComments}
+            />
 
-                    {/* Share Button */}
-                    <ActionButton
-                        icon={<ShareIcon color="#374151" size={20} weight="fill" />}
-                        count={post.shares_count || 0}
-                        onClick={handleShare}
-                    />
-                </div>
-            </div>
+            {/* Share Button */}
+            <ActionButton
+                icon={<ShareIcon color="#374151" size={24} weight="fill" />}
+                count={post.shares_count}
+                onClick={handleShare}
+            />
         </div>
     );
 }

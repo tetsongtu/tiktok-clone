@@ -1,13 +1,9 @@
-import classNames from 'classnames/bind';
-import styles from './Header.module.css';
 import { Link } from 'wouter-preact';
 import { useEffect } from 'preact/hooks';
 
 import config from '~/core/config';
 import { images, Image } from '~/shared';
 import { useCurrentUser } from '~/shared/hooks';
-
-const cx = classNames.bind(styles);
 
 function Header() {
     const { setCurrentUser } = useCurrentUser();
@@ -26,17 +22,11 @@ function Header() {
 
     return (
         <>
-            <header className={cx('wrapper')}>
-                <div className="h-full">
-                    <Link to={config.routes.home}>
-                        <Image
-                            className="h-[42px] px-[8px]"
-                            src={images.logo}
-                            alt="TikTok"
-                        />
-                    </Link>
-                </div>
-            </header>
+            <div className="fixed pl-4.5 pt-5">
+                <Link to={config.routes.home}>
+                    <Image className="h-[42px] px-[8px]" src={images.logo} alt="TikTok" />
+                </Link>
+            </div>
         </>
     );
 }

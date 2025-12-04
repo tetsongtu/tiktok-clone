@@ -1,12 +1,14 @@
+import classNames from 'classnames';
 import type { UserProps } from '~/shared/types';
 import { Image } from '~/shared';
 
 interface UserAvatarProps extends UserProps {
     size?: number;
     fallback?: string;
+    className?: string;
 }
 
-function UserAvatar({ user, size = 13, fallback }: UserAvatarProps) {
+function UserAvatar({ user, size = 13, fallback, className }: UserAvatarProps) {
     return (
         <Image
             style={{
@@ -17,7 +19,7 @@ function UserAvatar({ user, size = 13, fallback }: UserAvatarProps) {
             src={user?.avatar || ''}
             alt={user?.nickname || ''}
             fallback={fallback}
-            className="ml-2 cursor-pointer shrink-0"
+            className={classNames(className, 'cursor-pointer shrink-0')}
         />
     );
 }

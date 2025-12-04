@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 export function ActionButton({
     icon,
-    count,
+    count = 0,
     onClick,
     disabled = false,
     isActive = false,
@@ -22,13 +22,13 @@ export function ActionButton({
         >
             <div
                 className={classNames(
-                    'grid place-items-center w-12 h-12 rounded-full',
+                    'grid place-items-center w-16 h-16 rounded-full',
                     isActive ? 'bg-red-100' : 'bg-gray-200',
                 )}
             >
                 {isLoading ? <SpinnerGapIcon size={20} className="animate-spin" /> : icon}
             </div>
-            <span className="text-sm font-medium">{count}</span>
+            {count && <span className="text-sm font-medium">{count}</span>}
         </BaseButton>
     );
 }

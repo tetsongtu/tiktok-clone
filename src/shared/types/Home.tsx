@@ -1,27 +1,18 @@
-// 📸 POST TYPES (Home)
-export interface Like {
-    id: string;
-    user_id: string;
-    post_id: string;
+export interface User {
+    nickname?: string;
+    likes_count: number;
 }
-
-export interface Comment {
-    id: string;
-    user_id: string;
-    post_id: string;
-    text: string;
-    created_at: string;
-}
-
 export interface PostData {
     id: string;
     user_id: string;
     file_url: string;
     description: string;
 
-    likes_count?: Like[];
-    comments_count?: Comment[];
+    likes_count: number;
+    comments_count?: number;
     shares_count?: number;
+
+    user?: User[];
 }
 
 export interface PostLikeProps {

@@ -34,7 +34,10 @@ function Sidebar() {
     };
 
     return (
-        <aside id="Sidebar" className="h-full flex flex-col">
+        <aside
+            id="Sidebar"
+            className="fixed top-[70px] bottom-0 w-[60px] lg:w-[250px] px-[2px] lg:px-2.5 z-40"
+        >
             <Menu>
                 <Search />
                 <nav className="my-[12px]">

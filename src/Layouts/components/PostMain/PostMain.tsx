@@ -1,8 +1,9 @@
 import { useEffect } from 'preact/hooks';
-import { Link } from 'wouter-preact';
 
 import PostMainLikes from './PostMainLikes';
-import { Image, Button } from '~/shared';
+import { UserAvatar } from '~/features';
+import { Link } from 'wouter-preact';
+import { PlusIcon } from '@phosphor-icons/react';
 
 function PostMain({ post }: any) {
     useEffect(() => {
@@ -26,51 +27,37 @@ function PostMain({ post }: any) {
     }, [post?.id]);
 
     return (
-        <div id={`post-main-${post?.id}`}>
-            <div className="border-b py-6 px-10 border-gray-200">
-                {/* Header Section */}
-                <div className="flex items-center mb-2.5">
-                    <Image
-                        src={post?.user?.avatar}
-                        className="cursor-pointer min-w-18 h-18 rounded-full object-cover"
-                    />
+        <div className="pb-12" id={`post-main-${post?.id}`}>
+            <video
+                className="aspect-[9/16] rounded-2xl object-cover"
+                id={`video-${post?.id}`}
+                loop
+                controls
+                muted
+                src={post?.file_url}
+            />
+            <div className="relative">
+                <div className="absolute bottom-0 inset-x-0">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50 rounded-b-3xl"></div>
 
-                    <div className="pl-3 w-full px-4">
-                        <div className="flex items-center justify-between">
-                            <UserInfo post={post} />
-                            <Button variant="outline">Follow</Button>
-                        </div>
+                    <div className=" p-5 text-white">
+                        <p className="my-1">{post?.description}</p>
+                        <p className="text-gray-500 text-xl">#fun #cool #SuperAwesome</p>
                     </div>
                 </div>
-
-                {/* Content Section */}
-                <div className="flex justify-center">
-                    <div>
-                        <video
-                            className="rounded-lg object-cover min-w-[400px] max-h-[800px]"
-                            id={`video-${post?.id}`}
-                            loop
-                            controls
-                            muted
-                            src={post?.file_url}
-                        />
-                    </div>
+                <div className="absolute -right-22 bottom-0 flex items-center flex-col gap-2">
+                    <Link
+                        className="flex justify-center mb-6"
+                        to={`/@${post?.user?.nickname}`}
+                    >
+                        <UserAvatar user={post.user} size={18} />
+                        <button className="text-white flex justify-center items-center absolute size-8 rounded-full top-14 bg-[var(--primary)]">
+                            <PlusIcon size={12} />
+                        </button>
+                    </Link>
                     <PostMainLikes post={post} />
                 </div>
             </div>
-        </div>
-    );
-}
-
-// Extracted component for user information
-function UserInfo({ post }: any) {
-    return (
-        <div>
-            <Link to={`/profile/${post?.user?.id}`}>
-                <strong className="hover:underline">{post?.user?.nickname}</strong>
-            </Link>
-            <p className="my-1">{post?.description}</p>
-            <p className="text-gray-500 text-xl">#fun #cool #SuperAwesome</p>
         </div>
     );
 }

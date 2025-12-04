@@ -81,7 +81,7 @@ function TopRightActionBar() {
     };
 
     return (
-        <div className={cx('wrapper', 'right-0')}>
+        <>
             <AuthOptionsModal
                 isOpen={isAuthOptionsModalOpen}
                 onClose={() => setIsAuthOptionsModalOpen(false)}
@@ -136,7 +136,7 @@ function TopRightActionBar() {
                     items={currentUser ? userMenu : MENU_ITEMS}
                     onChange={(item) => item.title === 'Log out' && setCurrentUser(false)}
                 >
-                    <div>
+                    <div className="ml-3">
                         {currentUser ? (
                             <UserAvatar
                                 size={10}
@@ -151,7 +151,7 @@ function TopRightActionBar() {
                     </div>
                 </Menu>
             </nav>
-        </div>
+        </>
     );
 }
 
