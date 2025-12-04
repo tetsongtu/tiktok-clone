@@ -4,7 +4,7 @@ import { CheckCircleIcon } from '@phosphor-icons/react';
 
 import type { UserProps } from '~/shared/types';
 import { PopperWrapper, Tooltip } from '~/shared';
-import AccountPreview from './AccountPreview';
+import AccountPreview from './AccountPreview/AccountPreview';
 import { UserAvatar } from '~/features';
 
 // item-info avatar nickname name

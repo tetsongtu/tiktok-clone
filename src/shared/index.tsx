@@ -9,9 +9,9 @@ export { default as ActionButton } from './components/Buttons/ActionButton/Actio
 export { default as BaseButton } from './components/Buttons/BaseButton';
 export { default as Menu } from './components/Popper/Menu/Menu';
 export { default as Tooltip } from './components/Tooltip/Tooltip';
-export { Wrapper as PopperWrapper } from './components/Popper';
+export { default as PopperWrapper } from './components/Popper/Wrapper';
 export { default as TextInput } from './components/TextInput/TextInput';
-export { default as Modal } from './components/Modal';
+export { default as Modal } from './components/Modal/Modal';
 export {
     GoogleIcon,
     FacebookIcon,
