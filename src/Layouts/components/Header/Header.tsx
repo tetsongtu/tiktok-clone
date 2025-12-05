@@ -2,23 +2,28 @@ import { Link } from 'wouter-preact';
 import { useEffect } from 'preact/hooks';
 
 import config from '~/core/config';
-import { images, Image } from '~/shared';
+import { images, Image, GUEST_USER } from '~/shared';
 import { useCurrentUser } from '~/shared/hooks';
 
 function Header() {
-    const { setCurrentUser } = useCurrentUser();
+    const { setCurrentUser, setCurrentUserData } = useCurrentUser();
 
     useEffect(() => {
         const handleKeyPress = (e: KeyboardEvent) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
                 e.preventDefault();
-                setCurrentUser((prev) => !prev);
+                setCurrentUser((prev) => {
+                    const newValue = !prev;
+                    // Khi login, set GUEST_USER; khi logout, clear data
+                    setCurrentUserData(newValue ? GUEST_USER : null);
+                    return newValue;
+                });
             }
         };
 
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
-    }, [setCurrentUser]);
+    }, [setCurrentUser, setCurrentUserData]);
 
     return (
         <>

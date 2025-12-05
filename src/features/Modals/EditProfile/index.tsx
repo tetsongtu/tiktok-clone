@@ -5,8 +5,7 @@ import type { Crop, PixelCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
 import { UserAvatar } from '~/features';
-import type { Account } from '~/shared/types';
-import { Button, TextInput, Modal } from '~/shared';
+import { Button, TextInput, Modal, GUEST_USER } from '~/shared';
 
 interface EditProfileModalProps {
     onClose: () => void;
@@ -76,12 +75,6 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
         }
     };
 
-    const guestUser: Account = {
-        id: 1,
-        nickname: 'test',
-        avatar: 'test',
-    };
-
     return (
         <Modal
             isOpen={true}
@@ -105,7 +98,7 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
                                     htmlFor="profile-photo-input"
                                     className="relative cursor-pointer"
                                 >
-                                    <UserAvatar size={28} user={guestUser} />
+                                    <UserAvatar size={28} user={GUEST_USER} />
                                     <button
                                         type="button"
                                         className="absolute bottom-0 right-0 rounded-full bg-white shadow-xl border p-1 border-gray-300 w-8 h-8"

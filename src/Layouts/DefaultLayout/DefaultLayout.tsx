@@ -26,7 +26,7 @@ function DefaultLayout({ children }: { children: any }) {
             >
                 <div className="h-[100dvh] overflow-y-auto">
                     <article className="h-full w-full py-2 px-4 flex justify-center items-center">
-                        <div className={`${isHome ? 'aspect-[9/16]' : ''} h-full`}>
+                        <div className={`${isHome ? 'aspect-[9/16]' : 'w-full'} h-full`}>
                             {children}
                         </div>
                     </article>

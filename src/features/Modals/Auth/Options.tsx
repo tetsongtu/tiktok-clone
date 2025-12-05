@@ -3,7 +3,7 @@ import { SOCIAL_BUTTONS } from './constants';
 
 interface OptionsProps {
     onLoginClick: () => void;
-    onSuccess: () => void;
+    onSuccess: (userData?: any) => void;
 }
 
 function Options({ onLoginClick, onSuccess }: OptionsProps) {

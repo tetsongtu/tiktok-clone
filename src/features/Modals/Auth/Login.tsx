@@ -1,9 +1,9 @@
 import { useState } from 'preact/hooks';
-import { Button } from '~/shared';
+import { Button, GUEST_USER } from '~/shared';
 import { EMAIL_REGEX, MIN_PASSWORD_LENGTH } from './constants';
 
 interface LoginProps {
-    onSuccess: () => void;
+    onSuccess: (userData?: any) => void;
 }
 
 const FORM_FIELDS = [
@@ -46,7 +46,7 @@ function Login({ onSuccess }: LoginProps) {
         if (Object.keys(newErrors).length) return setErrors(newErrors);
 
         console.log('Login data:', formData);
-        onSuccess();
+        onSuccess(GUEST_USER);
     };
 
     return (

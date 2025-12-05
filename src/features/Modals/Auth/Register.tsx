@@ -2,7 +2,7 @@ import { Button } from '~/shared';
 import { SOCIAL_BUTTONS } from './constants';
 
 interface RegisterProps {
-    onSuccess: () => void;
+    onSuccess: (userData?: any) => void;
 }
 
 function Register({ onSuccess }: RegisterProps) {

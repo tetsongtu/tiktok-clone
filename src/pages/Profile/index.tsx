@@ -1,53 +1,68 @@
-import { useState } from 'preact/hooks';
+import { useState, useEffect } from 'preact/hooks';
+import { useRoute } from 'wouter-preact';
 import { Image } from '~/shared';
 import { PencilIcon } from '@phosphor-icons/react';
 import { ProfilePost } from '~/features';
 import { EditProfileModal } from '~/features/Modals';
-import danceVideo from '~/shared/assets/videos/dance.mp4';
-
-export interface ProfilePageProps {
-    params: {
-        id: string;
-    };
-}
+import { useCurrentUser } from '~/shared/hooks';
+import * as searchService from '~/core/services/searchService';
 
 function Profile() {
     const [showEditProfile, setShowEditProfile] = useState(false);
+    const [currentProfile, setCurrentProfile] = useState<any>(null);
+    const [, params] = useRoute('/:nickname');
+    const nickname = params?.nickname?.replace('@', '');
+    const { currentUserData } = useCurrentUser();
 
-    const currentProfile = {
-        id: '123',
-        user_id: '123',
-        name: 'John Weeks',
-        image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        bio: 'this is the bio',
-    };
+    useEffect(() => {
+        if (!nickname) return;
+
+        // Nếu đang xem profile của mình, dùng currentUserData
+        if (currentUserData?.nickname === nickname) {
+            setCurrentProfile(currentUserData);
+            return;
+        }
+
+        // Nếu xem profile người khác, gọi API
+        searchService.search(nickname, 'less').then((results) => {
+            if (results?.length > 0) {
+                const user =
+                    results.find((u: any) => u.nickname === nickname) || results[0];
+                setCurrentProfile(user);
+            }
+        });
+    }, [nickname, currentUserData]);
+
     return (
         <>
             {showEditProfile && (
                 <EditProfileModal onClose={() => setShowEditProfile(false)} />
             )}
-            <div className="pt-[90px] px-10 max-w-[1800px]">
+            <div className="pt-[90px] px-10">
                 <div className="flex">
-                    {true ? (
-                        <Image className="w-[120px] min-w-[120px] rounded-full" src="" />
+                    {currentProfile?.avatar ? (
+                        <Image
+                            className="w-[120px] h-[120px] min-w-[120px] rounded-full"
+                            src={currentProfile.avatar}
+                        />
                     ) : (
                         <div className="min-w-[150px] h-[120px] bg-gray-200 rounded-full" />
                     )}
                     <div className="ml-5 w-full">
-                        {currentProfile?.name ? (
+                        {currentProfile ? (
                             <div>
                                 <p className="text-[30px] font-bold truncate">
-                                    {currentProfile?.name}
+                                    {currentProfile.nickname}
                                 </p>
                                 <p className="text-[18px] truncate">
-                                    {currentProfile?.name}
+                                    {currentProfile.first_name} {currentProfile.last_name}
                                 </p>
                             </div>
                         ) : (
                             <div className="h-[60px]" />
                         )}
 
-                        {true ? (
+                        {currentUserData?.nickname === nickname ? (
                             <button
                                 onClick={() => setShowEditProfile(true)}
                                 className="flex item-center rounded-md py-1.5 px-3.5 mt-3 text-[15px] font-semibold border hover:bg-gray-100"
@@ -56,7 +71,7 @@ function Profile() {
                                 <span>Edit profile</span>
                             </button>
                         ) : (
-                            <button className="flex item-center rounded-md py-1.5 px-8 mt-3 text-[15px] text-white font-semibold bg-[#F02C56]">
+                            <button className="flex item-center rounded-md py-1.5 px-8 mt-3 text-[15px] text-white font-semibold bg-[#F02C56] hover:bg-[#d02648]">
                                 Follow
                             </button>
                         )}
@@ -65,15 +80,19 @@ function Profile() {
 
                 <div className="flex items-center pt-4">
                     <div className="mr-4">
-                        <span className="font-bold">10K</span>
+                        <span className="font-bold">
+                            {currentProfile?.followings_count || 0}
+                        </span>
                         <span className="text-gray-500 font-light text-[15px] pl-1.5">
                             Following
                         </span>
                     </div>
                     <div className="mr-4">
-                        <span className="font-bold">44K</span>
+                        <span className="font-bold">
+                            {currentProfile?.likes_count || 0}
+                        </span>
                         <span className="text-gray-500 font-light text-[15px] pl-1.5">
-                            Followers
+                            Likes
                         </span>
                     </div>
                 </div>
@@ -92,15 +111,9 @@ function Profile() {
                 </ul>
 
                 <div className="mt-4 grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3">
-                    <ProfilePost
-                        post={{
-                            id: '123',
-                            user_id: '123',
-                            video_url: danceVideo,
-                            text: 'this is the bio',
-                            created_at: '2022-01-01',
-                        }}
-                    />
+                    {currentProfile?.videos?.map((video: any) => (
+                        <ProfilePost key={video.id} post={video} />
+                    ))}
                 </div>
             </div>
         </>

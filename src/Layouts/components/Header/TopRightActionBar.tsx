@@ -12,7 +12,7 @@ import {
 
 import config from '~/core/config';
 import { Menu, Button, LinkButton } from '~/shared';
-import type { MenuItemData, Account } from '~/shared/types';
+import type { MenuItemData } from '~/shared/types';
 import { useCurrentUser } from '~/shared/hooks';
 import { AuthModal } from '~/features/Modals';
 import { UserAvatar } from '~/features';
@@ -36,11 +36,21 @@ const MENU_ITEMS: MenuItemData[] = [
 ];
 
 function TopRightActionBar() {
-    const { currentUser, setCurrentUser } = useCurrentUser();
+    const { currentUser, currentUserData, setCurrentUser, setCurrentUserData } =
+        useCurrentUser();
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
+    const handleLogout = () => {
+        setCurrentUser(false);
+        setCurrentUserData(null);
+    };
+
     const userMenu: MenuItemData[] = [
-        { icon: '', title: 'View profile', to: '/@hoaa' },
+        {
+            icon: '',
+            title: 'View profile',
+            to: `/@${currentUserData?.nickname || 'test'}`,
+        },
         { icon: '', title: 'Get coins', to: '/coin' },
         { icon: '', title: 'Settings', to: '/settings' },
         ...MENU_ITEMS,
@@ -49,13 +59,9 @@ function TopRightActionBar() {
             title: 'Log out',
             to: '#',
             separate: true,
-            onClick: () => setCurrentUser(false),
+            onClick: handleLogout,
         },
     ];
-
-    const guestUser: Account = {
-        avatar: 'https://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/486f3c515c065ccaa844faf058940fe1~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=3172adc4&x-expires=1764342000&x-signature=dpyyN9ZWvISrGqAwnsrc4oL8TP0%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=my3',
-    };
 
     return (
         <>
@@ -99,13 +105,13 @@ function TopRightActionBar() {
                 <Menu
                     key={currentUser ? 'user' : 'guest'}
                     items={currentUser ? userMenu : MENU_ITEMS}
-                    onChange={(item) => item.title === 'Log out' && setCurrentUser(false)}
+                    onChange={(item) => item.title === 'Log out' && handleLogout()}
                 >
                     <div className="ml-3">
                         {currentUser ? (
                             <UserAvatar
                                 size={10}
-                                user={guestUser}
+                                user={currentUserData || {}}
                                 fallback="https://yt3.ggpht.com/Pa8wyxqTOkhu5DW_RvkiQIS7Bsa7OW7gSen-2WpaQsC2EqUAkgubAg1_QPc951pzpN2F2Q4_TA=s88-c-k-c0x00ffffff-no-rj"
                             />
                         ) : (

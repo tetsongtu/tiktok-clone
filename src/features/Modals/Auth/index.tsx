@@ -35,7 +35,7 @@ const VIEW_CONFIG = {
 };
 
 function AuthModal({ isOpen, onClose, initialView = 'options' }: AuthModalProps) {
-    const { setCurrentUser } = useCurrentUser();
+    const { setCurrentUser, setCurrentUserData } = useCurrentUser();
     const [view, setView] = useState<View>(initialView);
 
     const config = VIEW_CONFIG[view];
@@ -45,8 +45,11 @@ function AuthModal({ isOpen, onClose, initialView = 'options' }: AuthModalProps)
         onClose();
     };
 
-    const handleSuccess = () => {
+    const handleSuccess = (userData?: any) => {
         setCurrentUser(true);
+        if (userData) {
+            setCurrentUserData(userData);
+        }
         resetAndClose();
     };
 
