@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
+import classNames from 'classnames';
+
 import {
     useFloating,
     offset,
@@ -25,6 +27,7 @@ interface TooltipProps {
     onClickOutside?: () => void;
     animation?: boolean;
     animationDuration?: number;
+    className?: string;
 }
 
 function Tooltip({
@@ -39,6 +42,7 @@ function Tooltip({
     onClickOutside,
     animation = true,
     animationDuration = 200,
+    className,
 }: TooltipProps) {
     const [isOpen, setIsOpen] = useState(false);
     const arrowRef = useRef<HTMLDivElement>(null);
@@ -114,7 +118,11 @@ function Tooltip({
 
     return (
         <>
-            <div ref={wrapperRef} className="wrapper" {...getReferenceProps()}>
+            <div
+                ref={wrapperRef}
+                className={classNames(className, 'wrapper')}
+                {...getReferenceProps()}
+            >
                 {children}
             </div>
             {isMounted && (

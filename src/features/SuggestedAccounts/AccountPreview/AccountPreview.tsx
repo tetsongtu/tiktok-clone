@@ -4,6 +4,7 @@ import styles from './AccountPreview.module.scss';
 import type { Account } from '~/shared/types';
 import { Button } from '~/shared';
 import { UserAvatar } from '~/features';
+import { Link } from 'wouter-preact';
 
 const cx = classNames.bind(styles);
 
@@ -14,10 +15,12 @@ interface AccountPreviewProps {
 function AccountPreview({ user }: AccountPreviewProps) {
     return (
         <div className={cx('w-full p-8')}>
-            <header className={cx('flex justify-between')}>
-                <UserAvatar size={18} user={user} />
-                <Button variant="primary">Follow</Button>
-            </header>
+            <Link to={`/@${user.nickname}`}>
+                <header className={cx('flex justify-between')}>
+                    <UserAvatar size={18} user={user} />
+                    <Button variant="primary">Follow</Button>
+                </header>
+            </Link>
             <section>
                 <p className={cx('text-3xl')}>
                     <strong>{user.nickname}</strong>

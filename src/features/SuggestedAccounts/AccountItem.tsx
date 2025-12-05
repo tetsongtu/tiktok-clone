@@ -6,6 +6,7 @@ import type { AccountItemProps } from '~/shared/types';
 import { PopperWrapper, Tooltip } from '~/shared';
 import AccountPreview from './AccountPreview/AccountPreview';
 import { UserAvatar } from '~/features';
+import { Link } from 'wouter-preact';
 
 // item-info avatar nickname name
 
@@ -21,8 +22,14 @@ function AccountItem({ user }: AccountItemProps) {
     };
 
     return (
-        <Tooltip offset={[-20, -20]} delay={500} placement="bottom" render={renderReview}>
-            <div className={cx('account-item')}>
+        <Tooltip
+            className="w-full"
+            offset={[-20, -20]}
+            delay={500}
+            placement="bottom"
+            render={renderReview}
+        >
+            <Link to={`/@${user.nickname}`} className={cx('account-item')}>
                 <UserAvatar user={user} />
                 <section className={cx('ml-5 hidden lg:block')}>
                     <p className={cx('text-4xl flex items-center')}>
@@ -38,7 +45,7 @@ function AccountItem({ user }: AccountItemProps) {
                         {user?.first_name + ' ' + user?.last_name}
                     </p>
                 </section>
-            </div>
+            </Link>
         </Tooltip>
     );
 }

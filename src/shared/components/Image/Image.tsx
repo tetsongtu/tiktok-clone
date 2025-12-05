@@ -28,7 +28,9 @@ function Image({
         setFallback(customFallback);
     };
 
-    const classes = cx('wrapper', className, { rounded });
+    const classes = cx('wrapper', 'select-none pointer-events-none', className, {
+        rounded,
+    });
 
     return (
         <img
