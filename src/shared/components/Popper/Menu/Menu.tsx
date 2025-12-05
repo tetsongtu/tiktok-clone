@@ -14,59 +14,57 @@ function Menu({ children, items = [], onChange = () => {} }: MenuProps) {
     const [history, setHistory] = useState<MenuLevel[]>([]);
     const [isOpen, setIsOpen] = useState(false);
 
-    // Always use current items for first level, history for deeper levels
-    const currentMenu =
-        history.length > 0 ? history[history.length - 1] : { data: items };
+    const currentMenu = history[history.length - 1] || { data: items };
 
-    const resetMenu = () => {
-        setHistory([]);
-        setIsOpen(false);
+    const handleVisibleChange = (open: boolean) => {
+        if (!open) {
+            setHistory([]);
+        }
+        setIsOpen(open);
     };
-
-    // Reset history and close menu when items change
-    useEffect(resetMenu, [items.length, items[0]?.title]);
 
     const handleBack = () => {
-        setHistory((prev) => prev.slice(0, prev.length - 1));
+        setHistory((prev) => prev.slice(0, -1));
     };
 
-    const menuContent = (
-        <div className={cx('menu-list')}>
-            <PopperWrapper className={cx('menu-popper')}>
-                {history.length > 1 && (
-                    <Header title={currentMenu.title} onBack={handleBack} />
-                )}
-                <div className={cx('menu-body')}>
-                    {currentMenu.data.map((item: MenuItemData, index: number) => (
-                        <MenuItem
-                            key={index}
-                            data={item}
-                            onClick={() => {
-                                if (item.children) {
-                                    setHistory((prev) => [
-                                        ...prev,
-                                        item.children as MenuLevel,
-                                    ]);
-                                } else {
-                                    setIsOpen(false);
-                                    onChange(item);
-                                }
-                            }}
-                        />
-                    ))}
-                </div>
-            </PopperWrapper>
-        </div>
-    );
+    const handleMenuItemClick = (item: MenuItemData) => {
+        if (item.children) {
+            setHistory((prev) => [...prev, item.children as MenuLevel]);
+        } else {
+            setHistory([]);
+            setIsOpen(false);
+            onChange(item);
+        }
+    };
+
+    useEffect(() => {
+        setHistory([]);
+    }, [items.length, items[0]?.title]);
 
     return (
         <Tooltip
             delay={[0, 700]}
             placement="bottom-end"
-            render={() => menuContent}
-            onHide={resetMenu}
             visible={isOpen}
-            onVisibleChange={setIsOpen}
+            onVisibleChange={handleVisibleChange}
+            render={() => (
+                <div className={cx('menu-list')}>
+                    <PopperWrapper className={cx('menu-popper')}>
+                        {currentMenu.title && (
+                            <Header title={currentMenu.title} onBack={handleBack} />
+                        )}
+                        <div className={cx('menu-body')}>
+                            {currentMenu.data.map((item: MenuItemData, index: number) => (
+                                <MenuItem
+                                    key={index}
+                                    data={item}
+                                    onClick={() => handleMenuItemClick(item)}
+                                />
+                            ))}
+                        </div>
+                    </PopperWrapper>
+                </div>
+            )}
         >
             {children}
         </Tooltip>
