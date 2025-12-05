@@ -1,6 +1,7 @@
 import { createContext } from 'preact';
 import { useContext, useState, useEffect, useMemo } from 'preact/hooks';
 import type { ComponentChildren } from 'preact';
+import { GUEST_USER } from '../constants/guestUser';
 
 interface CurrentUserContextType {
     user: any;
@@ -15,11 +16,25 @@ export function CurrentUserProvider({ children }: { children: ComponentChildren 
         return saved ? JSON.parse(saved) : null;
     });
 
+    // Sync with localStorage
     useEffect(() => {
         user
             ? localStorage.setItem('user', JSON.stringify(user))
             : localStorage.removeItem('user');
     }, [user]);
+
+    // Handle Ctrl + L shortcut
+    useEffect(() => {
+        const handleKeyPress = (e: KeyboardEvent) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+                e.preventDefault();
+                setUser((currentUser: any) => (currentUser ? null : GUEST_USER));
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyPress);
+        return () => window.removeEventListener('keydown', handleKeyPress);
+    }, []);
 
     const value = useMemo(() => ({ user, setUser }), [user]);
 

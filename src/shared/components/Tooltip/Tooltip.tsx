@@ -43,19 +43,12 @@ function Tooltip({
     const arrowRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
-    // Constants
-    const isControlled = visible !== undefined;
     const showTooltip = visible ?? isOpen;
 
-    // Floating UI configuration
     const { x, y, refs, context, middlewareData } = useFloating({
         open: showTooltip,
         onOpenChange: (open) => {
-            if (isControlled) {
-                onVisibleChange?.(open);
-            } else {
-                setIsOpen(open);
-            }
+            visible !== undefined ? onVisibleChange?.(open) : setIsOpen(open);
             !open && onHide?.();
         },
         placement,
@@ -101,18 +94,17 @@ function Tooltip({
         return () => document.removeEventListener('mousedown', handleClick);
     }, [showTooltip, onClickOutside]);
 
-    // Render helpers
     const { x: arrowX, y: arrowY } = middlewareData.arrow || {};
 
-    const contentClass =
-        'text-white font-bold bg-black px-2 py-1 rounded text-[1.4rem] select-none';
-    const renderClass = '';
-
-    const renderContent = (
+    const tooltipContent = (
         <div
             ref={refs.setFloating}
             style={{ position: 'absolute', top: y ?? 0, left: x ?? 0 }}
-            className={content ? contentClass : renderClass}
+            className={
+                content
+                    ? 'text-white font-bold bg-black px-2 py-1 rounded text-[1.4rem] select-none'
+                    : ''
+            }
         >
             {content || render?.()}
             <Arrow
@@ -132,7 +124,7 @@ function Tooltip({
             {...getReferenceProps()}
         >
             {children}
-            {showTooltip && renderContent}
+            {showTooltip && tooltipContent}
         </div>
     );
 }
