@@ -45,7 +45,6 @@ function Login({ onSuccess }: LoginProps) {
 
         if (Object.keys(newErrors).length) return setErrors(newErrors);
 
-        console.log('Login data:', formData);
         onSuccess(GUEST_USER);
     };
 

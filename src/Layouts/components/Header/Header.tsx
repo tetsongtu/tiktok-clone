@@ -6,24 +6,19 @@ import { images, Image, GUEST_USER } from '~/shared';
 import { useCurrentUser } from '~/shared/hooks';
 
 function Header() {
-    const { setCurrentUser, setCurrentUserData } = useCurrentUser();
+    const { user, setUser } = useCurrentUser();
 
     useEffect(() => {
         const handleKeyPress = (e: KeyboardEvent) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
                 e.preventDefault();
-                setCurrentUser((prev) => {
-                    const newValue = !prev;
-                    // Khi login, set GUEST_USER; khi logout, clear data
-                    setCurrentUserData(newValue ? GUEST_USER : null);
-                    return newValue;
-                });
+                setUser(user ? null : GUEST_USER);
             }
         };
 
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
-    }, [setCurrentUser, setCurrentUserData]);
+    }, [user, setUser]);
 
     return (
         <>

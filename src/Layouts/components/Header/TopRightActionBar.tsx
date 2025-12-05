@@ -36,20 +36,27 @@ const MENU_ITEMS: MenuItemData[] = [
 ];
 
 function TopRightActionBar() {
-    const { currentUser, currentUserData, setCurrentUser, setCurrentUserData } =
-        useCurrentUser();
+    // Hooks
+    const { user, setUser } = useCurrentUser();
+
+    // State
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
-    const handleLogout = () => {
-        setCurrentUser(false);
-        setCurrentUserData(null);
-    };
+    // Derived
+    const isLoggedIn = user !== null;
 
+    // Handlers
+    const handleLogout = () => setUser(null);
+
+    const openAuthModal = () => setIsAuthModalOpen(true);
+    const closeAuthModal = () => setIsAuthModalOpen(false);
+
+    // Menu items
     const userMenu: MenuItemData[] = [
         {
             icon: '',
             title: 'View profile',
-            to: `/@${currentUserData?.nickname || 'test'}`,
+            to: `/@${user?.nickname || 'test'}`,
         },
         { icon: '', title: 'Get coins', to: '/coin' },
         { icon: '', title: 'Settings', to: '/settings' },
@@ -63,63 +70,58 @@ function TopRightActionBar() {
         },
     ];
 
+    // Render
+    const renderLoggedInActions = () => (
+        <>
+            <LinkButton
+                to={config.routes.upload}
+                icon={<ArrowUpIcon size={25} />}
+                tooltip="Upload video"
+            />
+            <LinkButton icon={<ChatIcon size={25} />} tooltip="Messages" />
+            <LinkButton icon={<EnvelopeIcon size={25} />} tooltip="Inbox" badge={12} />
+        </>
+    );
+
+    const renderGuestActions = () => (
+        <div className="flex space-x-3">
+            <Button variant="outline" onClick={openAuthModal} leftIcon={<PlusIcon />}>
+                Upload
+            </Button>
+            <Button variant="primary" onClick={openAuthModal}>
+                Log in
+            </Button>
+        </div>
+    );
+
+    const renderAvatar = () => (
+        <div className="ml-3">
+            {isLoggedIn ? (
+                <UserAvatar
+                    size={10}
+                    user={user}
+                    fallback="https://yt3.ggpht.com/Pa8wyxqTOkhu5DW_RvkiQIS7Bsa7OW7gSen-2WpaQsC2EqUAkgubAg1_QPc951pzpN2F2Q4_TA=s88-c-k-c0x00ffffff-no-rj"
+                />
+            ) : (
+                <button className={cx('more-btn')}>
+                    <DotsThreeVerticalIcon size={25} weight="bold" />
+                </button>
+            )}
+        </div>
+    );
+
     return (
         <>
-            <AuthModal
-                isOpen={isAuthModalOpen}
-                onClose={() => setIsAuthModalOpen(false)}
-            />
+            <AuthModal isOpen={isAuthModalOpen} onClose={closeAuthModal} />
             <nav className={cx('flex items-center')}>
-                {currentUser ? (
-                    <>
-                        <LinkButton
-                            to={config.routes.upload}
-                            icon={<ArrowUpIcon size={25} />}
-                            tooltip="Upload video"
-                        />
-                        <LinkButton icon={<ChatIcon size={25} />} tooltip="Messages" />
-                        <LinkButton
-                            icon={<EnvelopeIcon size={25} />}
-                            tooltip="Inbox"
-                            badge={12}
-                        />
-                    </>
-                ) : (
-                    <div className="flex space-x-3">
-                        <Button
-                            variant="outline"
-                            onClick={() => setIsAuthModalOpen(true)}
-                            leftIcon={<PlusIcon />}
-                        >
-                            Upload
-                        </Button>
-                        <Button
-                            variant="primary"
-                            onClick={() => setIsAuthModalOpen(true)}
-                        >
-                            Log in
-                        </Button>
-                    </div>
-                )}
+                {isLoggedIn ? renderLoggedInActions() : renderGuestActions()}
 
                 <Menu
-                    key={currentUser ? 'user' : 'guest'}
-                    items={currentUser ? userMenu : MENU_ITEMS}
+                    key={isLoggedIn ? 'user' : 'guest'}
+                    items={isLoggedIn ? userMenu : MENU_ITEMS}
                     onChange={(item) => item.title === 'Log out' && handleLogout()}
                 >
-                    <div className="ml-3">
-                        {currentUser ? (
-                            <UserAvatar
-                                size={10}
-                                user={currentUserData || {}}
-                                fallback="https://yt3.ggpht.com/Pa8wyxqTOkhu5DW_RvkiQIS7Bsa7OW7gSen-2WpaQsC2EqUAkgubAg1_QPc951pzpN2F2Q4_TA=s88-c-k-c0x00ffffff-no-rj"
-                            />
-                        ) : (
-                            <button className={cx('more-btn')}>
-                                <DotsThreeVerticalIcon size={25} weight="bold" />
-                            </button>
-                        )}
-                    </div>
+                    {renderAvatar()}
                 </Menu>
             </nav>
         </>

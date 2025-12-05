@@ -4,41 +4,26 @@ import type { ComponentChildren } from 'preact';
 import { GUEST_USER } from '../constants/guestUser';
 
 interface CurrentUserContextType {
-    currentUser: boolean;
-    currentUserData: any;
-    setCurrentUser: (value: boolean | ((prev: boolean) => boolean)) => void;
-    setCurrentUserData: (value: any) => void;
+    user: any;
+    setUser: (value: any) => void;
 }
 
 const CurrentUserContext = createContext<CurrentUserContextType | undefined>(undefined);
 
 export function CurrentUserProvider({ children }: { children: ComponentChildren }) {
-    const [currentUser, setCurrentUser] = useState(() => {
-        const saved = localStorage.getItem('currentUser');
-        return saved ? JSON.parse(saved) : true; // Auto login
-    });
-
-    const [currentUserData, setCurrentUserData] = useState<any>(() => {
-        const saved = localStorage.getItem('currentUserData');
-        return saved ? JSON.parse(saved) : GUEST_USER; // Auto login với GUEST_USER
+    const [user, setUser] = useState<any>(() => {
+        const saved = localStorage.getItem('user');
+        return saved ? JSON.parse(saved) : GUEST_USER;
     });
 
     useEffect(() => {
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    }, [currentUser]);
-
-    useEffect(() => {
-        if (currentUserData) {
-            localStorage.setItem('currentUserData', JSON.stringify(currentUserData));
-        } else {
-            localStorage.removeItem('currentUserData');
-        }
-    }, [currentUserData]);
+        user
+            ? localStorage.setItem('user', JSON.stringify(user))
+            : localStorage.removeItem('user');
+    }, [user]);
 
     return (
-        <CurrentUserContext.Provider
-            value={{ currentUser, currentUserData, setCurrentUser, setCurrentUserData }}
-        >
+        <CurrentUserContext.Provider value={{ user, setUser }}>
             {children}
         </CurrentUserContext.Provider>
     );

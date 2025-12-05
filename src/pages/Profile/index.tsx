@@ -1,37 +1,34 @@
-import { useState, useEffect } from 'preact/hooks';
+import { useState } from 'preact/hooks';
 import { useRoute } from 'wouter-preact';
 import { Image } from '~/shared';
 import { PencilIcon } from '@phosphor-icons/react';
 import { ProfilePost } from '~/features';
 import { EditProfileModal } from '~/features/Modals';
 import { useCurrentUser } from '~/shared/hooks';
-import * as searchService from '~/core/services/searchService';
+import { useProfileData } from './useProfileData';
 
 function Profile() {
-    const [showEditProfile, setShowEditProfile] = useState(false);
-    const [currentProfile, setCurrentProfile] = useState<any>(null);
     const [, params] = useRoute('/:nickname');
-    const nickname = params?.nickname?.replace('@', '');
-    const { currentUserData } = useCurrentUser();
+    const { user } = useCurrentUser();
+    const [showEditProfile, setShowEditProfile] = useState(false);
 
-    useEffect(() => {
-        if (!nickname) return;
+    const nickname = params?.nickname?.replace('@', '').trim() || '';
+    const { data: profileData, status, error } = useProfileData(nickname);
+    const isOwnProfile = user?.nickname === nickname;
 
-        // Nếu đang xem profile của mình, dùng currentUserData
-        if (currentUserData?.nickname === nickname) {
-            setCurrentProfile(currentUserData);
-            return;
-        }
-
-        // Nếu xem profile người khác, gọi API
-        searchService.search(nickname, 'less').then((results) => {
-            if (results?.length > 0) {
-                const user =
-                    results.find((u: any) => u.nickname === nickname) || results[0];
-                setCurrentProfile(user);
-            }
-        });
-    }, [nickname, currentUserData]);
+    if (status !== 'success' || !profileData) {
+        return (
+            <div className="pt-[90px] px-10 text-center">
+                <p
+                    className={
+                        status === 'loading' ? 'text-gray-500' : 'text-red-500 text-xl'
+                    }
+                >
+                    {status === 'loading' ? 'Loading...' : error}
+                </p>
+            </div>
+        );
+    }
 
     return (
         <>
@@ -40,29 +37,25 @@ function Profile() {
             )}
             <div className="pt-[90px] px-10">
                 <div className="flex">
-                    {currentProfile?.avatar ? (
+                    {profileData?.avatar ? (
                         <Image
                             className="w-[120px] h-[120px] min-w-[120px] rounded-full"
-                            src={currentProfile.avatar}
+                            src={profileData.avatar}
                         />
                     ) : (
                         <div className="min-w-[150px] h-[120px] bg-gray-200 rounded-full" />
                     )}
                     <div className="ml-5 w-full">
-                        {currentProfile ? (
-                            <div>
-                                <p className="text-[30px] font-bold truncate">
-                                    {currentProfile.nickname}
-                                </p>
-                                <p className="text-[18px] truncate">
-                                    {currentProfile.first_name} {currentProfile.last_name}
-                                </p>
-                            </div>
-                        ) : (
-                            <div className="h-[60px]" />
-                        )}
+                        <div>
+                            <p className="text-[30px] font-bold truncate">
+                                {profileData.nickname}
+                            </p>
+                            <p className="text-[18px] truncate">
+                                {profileData.first_name} {profileData.last_name}
+                            </p>
+                        </div>
 
-                        {currentUserData?.nickname === nickname ? (
+                        {isOwnProfile ? (
                             <button
                                 onClick={() => setShowEditProfile(true)}
                                 className="flex item-center rounded-md py-1.5 px-3.5 mt-3 text-[15px] font-semibold border hover:bg-gray-100"
@@ -81,16 +74,14 @@ function Profile() {
                 <div className="flex items-center pt-4">
                     <div className="mr-4">
                         <span className="font-bold">
-                            {currentProfile?.followings_count || 0}
+                            {profileData?.followings_count || 0}
                         </span>
                         <span className="text-gray-500 font-light text-[15px] pl-1.5">
                             Following
                         </span>
                     </div>
                     <div className="mr-4">
-                        <span className="font-bold">
-                            {currentProfile?.likes_count || 0}
-                        </span>
+                        <span className="font-bold">{profileData?.likes_count || 0}</span>
                         <span className="text-gray-500 font-light text-[15px] pl-1.5">
                             Likes
                         </span>
@@ -98,7 +89,7 @@ function Profile() {
                 </div>
 
                 <p className="pt-4 mr-4 text-gray-500 font-light text-[15px] pl-1.5 max-w-[500px]">
-                    {currentProfile?.bio}
+                    {profileData?.bio}
                 </p>
 
                 <ul className="w-full flex items-center pt-4 border-b">
@@ -111,7 +102,7 @@ function Profile() {
                 </ul>
 
                 <div className="mt-4 grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3">
-                    {currentProfile?.videos?.map((video: any) => (
+                    {profileData?.videos?.map((video: any) => (
                         <ProfilePost key={video.id} post={video} />
                     ))}
                 </div>
