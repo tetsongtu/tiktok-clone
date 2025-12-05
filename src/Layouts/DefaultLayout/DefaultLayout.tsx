@@ -1,5 +1,4 @@
-import { CaretCircleUpIcon, CaretCircleDownIcon } from '@phosphor-icons/react';
-import { Header, TopRightActionBar, Sidebar } from '~/Layouts/components';
+import { Header, TopRightActionBar, Sidebar, ScrollButtons } from '~/Layouts/components';
 
 function DefaultLayout({ children }: { children: any }) {
     return (
@@ -21,20 +20,7 @@ function DefaultLayout({ children }: { children: any }) {
                         <div className="min-h-full py-2 px-4">{children}</div>
                     </div>
 
-                    <div className="fixed top-0 right-0 h-screen w-24 flex items-center justify-center pointer-events-none z-30">
-                        <div className="hidden lg:flex flex-col gap-4 pointer-events-auto">
-                            {[CaretCircleUpIcon, CaretCircleDownIcon].map(
-                                (Icon, index) => (
-                                    <button
-                                        key={index}
-                                        className="flex justify-center items-center size-18 rounded-full bg-white/80 hover:bg-white shadow-lg cursor-pointer"
-                                    >
-                                        <Icon size={52} weight="light" />
-                                    </button>
-                                ),
-                            )}
-                        </div>
-                    </div>
+                    <ScrollButtons />
 
                     <div className="fixed top-10 right-16 z-30 hidden lg:flex">
                         <TopRightActionBar />
