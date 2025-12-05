@@ -66,7 +66,7 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
 
         setIsSubmitting(true);
         try {
-            console.log('Applying crop:', completedCropConfig);
+            // TODO: Apply crop and save
             handleCancelCrop();
         } catch (error) {
             console.error('Error cropping image:', error);

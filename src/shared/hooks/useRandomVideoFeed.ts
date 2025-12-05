@@ -7,10 +7,17 @@ const VIDEOS_PER_BATCH = 5;
 const MAX_VIDEO_ID = 109;
 const SCROLL_THRESHOLD = 800;
 
-export function useRandomVideoFeed() {
+export function useRandomVideoFeed(resetKey?: number) {
     const [videos, setVideos] = useState<Post[]>([]);
     const isFetchingRef = useRef(false);
     const fetchedIdsRef = useRef(new Set<number>());
+
+    useEffect(() => {
+        // Reset when resetKey changes
+        setVideos([]);
+        fetchedIdsRef.current.clear();
+        isFetchingRef.current = false;
+    }, [resetKey]);
 
     const fetchVideos = async () => {
         if (isFetchingRef.current) return;

@@ -12,12 +12,11 @@ export function PostMainLikes({ post, onOpenComments }: PostMainLikesProps) {
     const [userLiked] = useState(false);
 
     const handleLike = () => {
-        console.log('likeOrUnlike');
         setHasClickedLike(true);
     };
 
     const handleShare = () => {
-        console.log('share post');
+        // TODO: Implement share functionality
     };
 
     return (

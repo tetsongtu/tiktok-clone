@@ -1,45 +1,46 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect } from 'preact/hooks';
 
 import PostMainLikes from './PostMainLikes';
-import { UserAvatar, CommentDrawer } from '~/features';
+import { UserAvatar } from '~/features';
 import { Link } from 'wouter-preact';
 import { PlusIcon } from '@phosphor-icons/react';
 import type { PostMainProps } from '~/shared/types';
+import { useCommentContext } from '~/shared/contexts/CommentContext';
+import { resetToHome, setVideoUrl } from '~/shared/utils/urlHelper';
 
 function PostMain({ post }: PostMainProps) {
-    const [showComments, setShowComments] = useState(false);
+    const { activeVideoId, setActiveVideoId } = useCommentContext();
+    const showComments = activeVideoId === post.id;
+    const isAnyCommentOpen = activeVideoId !== null;
 
     const handleToggleComments = () => {
-        const newState = !showComments;
-        setShowComments(newState);
-
-        if (newState) {
-            // Mở comment → thêm query param
-            window.history.replaceState(null, '', `/?video=${post.id}`);
+        if (showComments) {
+            setActiveVideoId(null);
+            resetToHome();
         } else {
-            // Tắt comment → xóa query param
-            window.history.replaceState(null, '', '/');
+            setActiveVideoId(post.id);
+            setVideoUrl(post.id);
         }
     };
-    // Calculate aspect ratio from meta
+
     const getAspectRatio = () => {
         const width = post?.meta?.video?.resolution_x;
         const height = post?.meta?.video?.resolution_y;
 
-        if (!width || !height) return 'aspect-[9/16]';
+        if (!width || !height) return { class: 'aspect-[9/16]', isWide: false };
 
         const ratio = width / height;
 
         if (Math.abs(ratio - 1) < 0.15) {
-            return 'aspect-square'; // 1:1
+            return { class: 'aspect-square', isWide: true }; // 1:1
         } else if (ratio > 1.3) {
-            return 'aspect-video'; // 16:9
+            return { class: 'aspect-video', isWide: true }; // 16:9
         } else {
-            return 'aspect-[9/16]'; // 9:16
+            return { class: 'aspect-[9/16]', isWide: false }; // 9:16
         }
     };
 
-    const aspectRatio = getAspectRatio();
+    const { class: aspectRatio, isWide } = getAspectRatio();
 
     useEffect(() => {
         if (!post) return;
@@ -54,10 +55,10 @@ function PostMain({ post }: PostMainProps) {
                 if (entries[0].isIntersecting) {
                     video.play().catch(() => {});
 
-                    // Nếu comment drawer đang mở, update URL sang video mới
-                    const currentUrl = new URL(window.location.href);
-                    if (currentUrl.searchParams.has('video')) {
-                        window.history.replaceState(null, '', `/?video=${post.id}`);
+                    // Nếu có video đang mở comment, tự động chuyển sang video mới
+                    if (activeVideoId !== null) {
+                        setActiveVideoId(post.id);
+                        setVideoUrl(post.id);
                     }
                 } else {
                     video.pause();
@@ -69,16 +70,28 @@ function PostMain({ post }: PostMainProps) {
         observer.observe(postMainElement);
 
         return () => observer.disconnect();
-    }, [post?.id]);
+    }, [post?.id, activeVideoId, setActiveVideoId]);
 
     return (
         <div
-            className="h-screen w-full flex justify-center items-center snap-start"
+            className={`h-screen w-full flex justify-center items-center snap-start ${
+                isAnyCommentOpen ? 'pr-[150px]' : ''
+            }`}
             id={`post-main-${post?.id}`}
+            style={{
+                transition: 'padding 700ms cubic-bezier(0.33, 1, 0.68, 1)',
+            }}
         >
             <div className="relative flex items-center justify-center">
                 <video
-                    className={`${aspectRatio} rounded-2xl object-cover h-[95vh] max-w-[60vw]`}
+                    className={`${aspectRatio} rounded-2xl object-cover ${
+                        isAnyCommentOpen && isWide
+                            ? 'h-[85vh] max-w-[50vw]'
+                            : 'h-[95vh] max-w-[60vw]'
+                    }`}
+                    style={{
+                        transition: 'all 700ms cubic-bezier(0.33, 1, 0.68, 1)',
+                    }}
                     id={`video-${post?.id}`}
                     loop
                     controls
@@ -106,12 +119,6 @@ function PostMain({ post }: PostMainProps) {
                     <PostMainLikes post={post} onOpenComments={handleToggleComments} />
                 </div>
             </div>
-
-            <CommentDrawer
-                post={post}
-                isOpen={showComments}
-                onClose={handleToggleComments}
-            />
         </div>
     );
 }

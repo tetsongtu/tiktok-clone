@@ -15,7 +15,7 @@ interface Comment {
 }
 
 interface CommentDrawerProps {
-    post: Post;
+    post: Post | null;
     isOpen: boolean;
     onClose: () => void;
 }
@@ -23,10 +23,14 @@ interface CommentDrawerProps {
 export function CommentDrawer({ post, isOpen, onClose }: CommentDrawerProps) {
     const [comments, setComments] = useState<Comment[]>([]);
     const [comment, setComment] = useState('');
+    const [shouldRender, setShouldRender] = useState(false);
+
+    useEffect(() => {
+        setShouldRender(true);
+    }, []);
 
     useEffect(() => {
         if (isOpen) {
-            // TODO: Fetch comments from API
             setComments([
                 {
                     id: 1,
@@ -43,6 +47,15 @@ export function CommentDrawer({ post, isOpen, onClose }: CommentDrawerProps) {
             ]);
         }
     }, [isOpen]);
+
+    if (!post) {
+        return (
+            <div
+                className="fixed top-0 right-0 h-full w-[450px] z-50"
+                style={{ transform: 'translateX(100%)' }}
+            />
+        );
+    }
 
     const handleSubmit = (e: Event) => {
         e.preventDefault();
@@ -62,9 +75,15 @@ export function CommentDrawer({ post, isOpen, onClose }: CommentDrawerProps) {
 
     return (
         <div
-            className={`fixed top-0 right-0 h-full w-[450px] bg-white shadow-2xl z-50 flex flex-col transition-transform duration-300 ease-out ${
-                isOpen ? 'translate-x-0' : 'translate-x-full'
-            }`}
+            data-comment-drawer
+            className="fixed top-0 right-0 h-full w-[450px] bg-white shadow-2xl z-50 flex flex-col"
+            style={{
+                transform: isOpen && shouldRender ? 'translateX(0)' : 'translateX(100%)',
+                transition: shouldRender
+                    ? 'transform 700ms cubic-bezier(0.33, 1, 0.68, 1)'
+                    : 'none',
+                willChange: 'transform',
+            }}
         >
             {/* Header */}
             <div className="p-4 border-b">
