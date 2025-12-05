@@ -1,161 +1,91 @@
 import { useState } from 'preact/hooks';
 import { Button } from '~/shared';
-import { useCurrentUser } from '~/shared/hooks';
-import { AuthModalLayout } from '~/features/Modals';
+import { EMAIL_REGEX, MIN_PASSWORD_LENGTH } from './constants';
 
-interface LoginModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    onBack?: () => void;
+interface LoginProps {
+    onSuccess: () => void;
 }
 
-const EMAIL_REGEX = /\S+@\S+\.\S+/;
-const MIN_PASSWORD_LENGTH = 6;
+const FORM_FIELDS = [
+    {
+        name: 'email',
+        label: 'Email or username',
+        placeholder: 'Nhập email của bạn',
+        type: 'text',
+    },
+    {
+        name: 'password',
+        label: 'Password',
+        placeholder: 'Nhập mật khẩu',
+        type: 'password',
+    },
+] as const;
 
-function LoginModal({ isOpen, onClose, onBack }: LoginModalProps) {
-    const { setCurrentUser } = useCurrentUser();
+function Login({ onSuccess }: LoginProps) {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const handleChange = (e: any) => {
-        const { name, value } = e.target;
+    const handleChange = (e: Event) => {
+        const { name, value } = e.target as HTMLInputElement;
         setFormData((prev) => ({ ...prev, [name]: value }));
-
-        if (errors[name]) {
-            setErrors((prev) => ({ ...prev, [name]: '' }));
-        }
+        if (errors[name]) setErrors((prev) => ({ ...prev, [name]: '' }));
     };
 
-    const validateEmail = (email: string) => {
-        if (!email) return 'Email là bắt buộc';
-        if (!EMAIL_REGEX.test(email)) return 'Email không hợp lệ';
-        return '';
-    };
-
-    const validatePassword = (password: string) => {
-        if (!password) return 'Mật khẩu là bắt buộc';
-        if (password.length < MIN_PASSWORD_LENGTH)
-            return 'Mật khẩu phải có ít nhất 6 ký tự';
-        return '';
-    };
-
-    const validate = () => {
-        const emailError = validateEmail(formData.email);
-        const passwordError = validatePassword(formData.password);
-
-        const newErrors: Record<string, string> = {};
-        if (emailError) newErrors.email = emailError;
-        if (passwordError) newErrors.password = passwordError;
-
-        return newErrors;
-    };
-
-    const handleSubmit = (e: any) => {
+    const handleSubmit = (e: Event) => {
         e.preventDefault();
-        const newErrors = validate();
+        const newErrors: Record<string, string> = {};
 
-        if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
-            return;
-        }
+        if (!formData.email) newErrors.email = 'Email là bắt buộc';
+        else if (!EMAIL_REGEX.test(formData.email))
+            newErrors.email = 'Email không hợp lệ';
+
+        if (!formData.password) newErrors.password = 'Mật khẩu là bắt buộc';
+        else if (formData.password.length < MIN_PASSWORD_LENGTH)
+            newErrors.password = 'Mật khẩu phải có ít nhất 6 ký tự';
+
+        if (Object.keys(newErrors).length) return setErrors(newErrors);
 
         console.log('Login data:', formData);
-        setCurrentUser(true);
-        onClose();
-        // TODO: Call API login
-    };
-
-    const getInputClassName = (hasError: boolean) => {
-        const baseClass =
-            'p-3 text-[1.4rem] border-2 rounded-lg transition-all outline-none w-full';
-        const errorClass = 'border-red-500';
-        const normalClass =
-            'border-gray-300 focus:border-[var(--primary)] focus:shadow-[0_0_0_3px_rgba(254,44,85,0.1)]';
-        return `${baseClass} ${hasError ? errorClass : normalClass}`;
-    };
-
-    const handleBack = () => {
-        setFormData({ email: '', password: '' });
-        setErrors({});
-        onBack?.();
+        onSuccess();
     };
 
     return (
-        <AuthModalLayout
-            isOpen={isOpen}
-            onClose={onClose}
-            onBack={handleBack}
-            title="Log in"
-        >
-            <form onSubmit={handleSubmit} className="text-left">
-                <div className="flex flex-col gap-3">
-                    <div>
-                        <p className="font-semibold mb-1 text-[1.3rem]">
-                            Email or username
-                        </p>
+        <form onSubmit={handleSubmit} className="text-left">
+            <div className="flex flex-col gap-3">
+                {FORM_FIELDS.map(({ name, label, placeholder, type }) => (
+                    <div key={name}>
+                        <p className="font-semibold mb-1 text-[1.3rem]">{label}</p>
                         <input
-                            type="text"
-                            name="email"
-                            value={formData.email}
+                            type={type}
+                            name={name}
+                            value={formData[name as keyof typeof formData]}
                             onChange={handleChange}
-                            placeholder="Nhập email của bạn"
-                            className={getInputClassName(!!errors.email)}
+                            placeholder={placeholder}
+                            className={`p-3 text-[1.4rem] border-2 rounded-lg transition-all outline-none w-full ${
+                                errors[name]
+                                    ? 'border-red-500'
+                                    : 'border-gray-300 focus:border-[var(--primary)] focus:shadow-[0_0_0_3px_rgba(254,44,85,0.1)]'
+                            }`}
                         />
-                        {errors.email && (
+                        {errors[name] && (
                             <span className="text-red-500 text-[1.1rem]">
-                                {errors.email}
+                                {errors[name]}
                             </span>
                         )}
                     </div>
-
-                    <div>
-                        <p className="font-semibold mb-1 text-[1.3rem]">Password</p>
-                        <input
-                            type="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            placeholder="Nhập mật khẩu"
-                            className={getInputClassName(!!errors.password)}
-                        />
-                        {errors.password && (
-                            <span className="text-red-500 text-[1.1rem]">
-                                {errors.password}
-                            </span>
-                        )}
-                    </div>
-
-                    <a
-                        href="#"
-                        className="text-gray-500 hover:underline hover:text-black text-[1.2rem]"
-                    >
-                        Forgot password?
-                    </a>
-
-                    <Button className="w-full mt-2" type="submit" variant="primary">
-                        Đăng nhập
-                    </Button>
-                </div>
-            </form>
-
-            <div className="flex items-center text-center my-4 text-gray-500">
-                <div className="flex-1 border-b border-gray-300"></div>
-                <span className="px-4 text-[1.3rem]">hoặc</span>
-                <div className="flex-1 border-b border-gray-300"></div>
+                ))}
+                <a
+                    href="#"
+                    className="text-gray-500 hover:underline hover:text-black text-[1.2rem]"
+                >
+                    Forgot password?
+                </a>
+                <Button className="w-full mt-2" type="submit" variant="primary">
+                    Đăng nhập
+                </Button>
             </div>
-
-            <Button
-                className="w-full"
-                variant="outline"
-                onClick={() => {
-                    setCurrentUser(true);
-                    onClose();
-                }}
-            >
-                <span>Đăng nhập với Guest</span>
-            </Button>
-        </AuthModalLayout>
+        </form>
     );
 }
 
-export default LoginModal;
+export default Login;

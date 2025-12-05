@@ -41,7 +41,7 @@ function DefaultLayout({ children }: { children: any }) {
 
             {/* Scroll Buttons */}
             <div className="fixed right-0 top-0 h-screen w-24 flex items-center justify-center z-30 pointer-events-none">
-                <div className="flex flex-col gap-4 pointer-events-auto">
+                <div className="pointer-events-auto hidden lg:flex flex-col gap-4">
                     {[CaretCircleUpIcon, CaretCircleDownIcon].map((Icon, index) => (
                         <button
                             key={index}
@@ -54,7 +54,7 @@ function DefaultLayout({ children }: { children: any }) {
             </div>
 
             {/* Top Right Action Bar */}
-            <div className="fixed right-16 top-10 z-30">
+            <div className="fixed right-16 top-10 z-30 hidden lg:flex">
                 <TopRightActionBar />
             </div>
         </div>

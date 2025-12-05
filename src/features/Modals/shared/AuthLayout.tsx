@@ -1,7 +1,7 @@
 import type { ComponentChildren } from 'preact';
 import { Modal } from '~/shared';
 
-interface AuthModalLayoutProps {
+interface AuthLayoutProps {
     isOpen: boolean;
     onClose: () => void;
     onBack?: () => void;
@@ -10,14 +10,14 @@ interface AuthModalLayoutProps {
     footerAction?: ComponentChildren;
 }
 
-function AuthModalLayout({
+function AuthLayout({
     isOpen,
     onClose,
     onBack,
     title,
     children,
     footerAction,
-}: AuthModalLayoutProps) {
+}: AuthLayoutProps) {
     return (
         <Modal isOpen={isOpen} onClose={onClose} onBack={onBack} title={title}>
             {children}
@@ -40,4 +40,4 @@ function AuthModalLayout({
     );
 }
 
-export default AuthModalLayout;
+export default AuthLayout;
