@@ -3,17 +3,17 @@ import type { PostMainProps } from '~/shared/types';
 import { useState } from 'preact/hooks';
 import { ActionButton } from '~/shared';
 
-export function PostMainLikes({ post }: PostMainProps) {
+interface PostMainLikesProps extends PostMainProps {
+    onOpenComments: () => void;
+}
+
+export function PostMainLikes({ post, onOpenComments }: PostMainLikesProps) {
     const [hasClickedLike, setHasClickedLike] = useState(false);
     const [userLiked] = useState(false);
 
     const handleLike = () => {
         console.log('likeOrUnlike');
         setHasClickedLike(true);
-    };
-
-    const handleOpenComments = () => {
-        console.log('open comments');
     };
 
     const handleShare = () => {
@@ -42,7 +42,7 @@ export function PostMainLikes({ post }: PostMainProps) {
             <ActionButton
                 icon={<ChatCircleIcon color="#374151" size={24} weight="fill" />}
                 count={post.comments_count}
-                onClick={handleOpenComments}
+                onClick={onOpenComments}
             />
 
             {/* Share Button */}

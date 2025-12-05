@@ -1,12 +1,26 @@
-import { useEffect } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 
 import PostMainLikes from './PostMainLikes';
-import { UserAvatar } from '~/features';
+import { UserAvatar, CommentDrawer } from '~/features';
 import { Link } from 'wouter-preact';
 import { PlusIcon } from '@phosphor-icons/react';
 import type { PostMainProps } from '~/shared/types';
 
 function PostMain({ post }: PostMainProps) {
+    const [showComments, setShowComments] = useState(false);
+
+    const handleToggleComments = () => {
+        const newState = !showComments;
+        setShowComments(newState);
+
+        if (newState) {
+            // Mở comment → thêm query param
+            window.history.replaceState(null, '', `/?video=${post.id}`);
+        } else {
+            // Tắt comment → xóa query param
+            window.history.replaceState(null, '', '/');
+        }
+    };
     // Calculate aspect ratio from meta
     const getAspectRatio = () => {
         const width = post?.meta?.video?.resolution_x;
@@ -37,7 +51,17 @@ function PostMain({ post }: PostMainProps) {
 
         const observer = new IntersectionObserver(
             (entries) => {
-                entries[0].isIntersecting ? video.play().catch(() => {}) : video.pause();
+                if (entries[0].isIntersecting) {
+                    video.play().catch(() => {});
+
+                    // Nếu comment drawer đang mở, update URL sang video mới
+                    const currentUrl = new URL(window.location.href);
+                    if (currentUrl.searchParams.has('video')) {
+                        window.history.replaceState(null, '', `/?video=${post.id}`);
+                    }
+                } else {
+                    video.pause();
+                }
             },
             { threshold: 0.5 },
         );
@@ -79,9 +103,15 @@ function PostMain({ post }: PostMainProps) {
                             <PlusIcon size={12} />
                         </button>
                     </Link>
-                    <PostMainLikes post={post} />
+                    <PostMainLikes post={post} onOpenComments={handleToggleComments} />
                 </div>
             </div>
+
+            <CommentDrawer
+                post={post}
+                isOpen={showComments}
+                onClose={handleToggleComments}
+            />
         </div>
     );
 }

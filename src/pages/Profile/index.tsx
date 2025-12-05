@@ -11,6 +11,7 @@ function Profile() {
     const [, params] = useRoute('/:nickname');
     const { user } = useCurrentUser();
     const [showEditProfile, setShowEditProfile] = useState(false);
+    const [activeTab, setActiveTab] = useState<'videos' | 'liked'>('videos');
 
     const nickname = params?.nickname?.replace('@', '').trim() || '';
     const { data: profileData, status, error } = useProfileData(nickname);
@@ -92,20 +93,54 @@ function Profile() {
                     {profileData?.bio}
                 </p>
 
-                <ul className="w-full flex items-center pt-4 border-b">
-                    <li className="w-60 text-center py-2 text-[17px] font-semibold border-b-2 border-b-black">
+                <ul className="w-full flex items-center pt-4 border-b relative">
+                    <li
+                        onClick={() => setActiveTab('videos')}
+                        className={`w-60 text-center py-2 text-[17px] font-semibold cursor-pointer transition-colors duration-200 ${
+                            activeTab === 'videos'
+                                ? 'text-black'
+                                : 'text-gray-500 hover:text-gray-700'
+                        }`}
+                    >
                         Videos
                     </li>
-                    <li className="w-60 text-gray-500 text-center py-2 text-[17px] font-semibold">
+                    <li
+                        onClick={() => setActiveTab('liked')}
+                        className={`w-60 text-center py-2 text-[17px] font-semibold cursor-pointer transition-colors duration-200 ${
+                            activeTab === 'liked'
+                                ? 'text-black'
+                                : 'text-gray-500 hover:text-gray-700'
+                        }`}
+                    >
                         Liked
                     </li>
+                    <div
+                        className="absolute bottom-0 left-0 h-[2px] bg-black transition-all duration-300 ease-in-out w-60"
+                        style={{
+                            transform: `translateX(${
+                                activeTab === 'videos' ? '0%' : '100%'
+                            })`,
+                        }}
+                    />
                 </ul>
 
-                <div className="mt-4 grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3">
-                    {profileData?.videos?.map((video: any) => (
-                        <ProfilePost key={video.id} post={video} />
-                    ))}
-                </div>
+                {activeTab === 'videos' ? (
+                    <div className="mt-4 grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3">
+                        {profileData?.videos?.map((video: any) => (
+                            <ProfilePost key={video.id} post={video} />
+                        ))}
+                    </div>
+                ) : profileData?.liked_videos?.length > 0 ? (
+                    <div className="mt-4 grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3">
+                        {profileData.liked_videos.map((video: any) => (
+                            <ProfilePost key={video.id} post={video} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-12 text-gray-500">
+                        <p className="text-lg">Chưa có video được thích</p>
+                    </div>
+                )}
             </div>
         </>
     );
