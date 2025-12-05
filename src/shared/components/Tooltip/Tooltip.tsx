@@ -15,6 +15,7 @@ import './Tooltip.scss';
 interface TooltipProps {
     children: React.ReactNode;
     visible?: boolean;
+    onVisibleChange?: (visible: boolean) => void;
     content?: React.ReactNode;
     render?: () => React.ReactNode;
     delay?: number | [number, number];
@@ -28,6 +29,7 @@ interface TooltipProps {
 function Tooltip({
     children,
     visible,
+    onVisibleChange,
     content,
     render,
     delay = 0,
@@ -49,7 +51,11 @@ function Tooltip({
     const { x, y, refs, context, middlewareData } = useFloating({
         open: showTooltip,
         onOpenChange: (open) => {
-            !isControlled && setIsOpen(open);
+            if (isControlled) {
+                onVisibleChange?.(open);
+            } else {
+                setIsOpen(open);
+            }
             !open && onHide?.();
         },
         placement,
@@ -67,15 +73,17 @@ function Tooltip({
         ? { delay: { open: delay[0], close: delay[1] } }
         : { delay };
 
-    const { getReferenceProps } = useInteractions([
-        useHover(context, { ...hoverConfig, enabled: !isControlled }),
-    ]);
+    const { getReferenceProps } = useInteractions([useHover(context, hoverConfig)]);
 
-    // Effects
+    // Set reference element when wrapper or children change
     useEffect(() => {
-        const firstChild = wrapperRef.current?.firstElementChild;
-        firstChild && refs.setReference(firstChild as HTMLElement);
-    }, []);
+        if (wrapperRef.current) {
+            const firstChild = wrapperRef.current.firstElementChild;
+            if (firstChild) {
+                refs.setReference(firstChild as HTMLElement);
+            }
+        }
+    }, [children, refs]);
 
     useEffect(() => {
         if (!showTooltip) return;
@@ -121,7 +129,7 @@ function Tooltip({
         <div
             ref={wrapperRef}
             className={classNames('wrapper', className)}
-            {...(!isControlled ? getReferenceProps() : {})}
+            {...getReferenceProps()}
         >
             {children}
             {showTooltip && renderContent}

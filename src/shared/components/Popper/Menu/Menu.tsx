@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useState } from 'preact/hooks';
+import { useState, useEffect } from 'preact/hooks';
 
 import Tooltip from '~/shared/components/Tooltip/Tooltip';
 import PopperWrapper from '~/shared/components/Popper/Wrapper';
@@ -13,8 +13,18 @@ const cx = classNames.bind(styles);
 const defaultFn = () => {};
 
 function Menu({ children, items = [], onChange = defaultFn }: MenuProps) {
-    const [history, setHistory] = useState<MenuLevel[]>([{ data: items }]);
-    const currentMenu = history[history.length - 1];
+    const [history, setHistory] = useState<MenuLevel[]>([]);
+    const [isOpen, setIsOpen] = useState(false);
+
+    // Always use current items for first level, history for deeper levels
+    const currentMenu =
+        history.length > 0 ? history[history.length - 1] : { data: items };
+
+    // Reset history and close menu when items change
+    useEffect(() => {
+        setHistory([]);
+        setIsOpen(false);
+    }, [items.length, items[0]?.title]);
 
     const renderItems = () => {
         return currentMenu.data.map((item: MenuItemData, index: number) => {
@@ -26,6 +36,7 @@ function Menu({ children, items = [], onChange = defaultFn }: MenuProps) {
                         if (item.children) {
                             setHistory((prev) => [...prev, item.children as MenuLevel]);
                         } else {
+                            setIsOpen(false);
                             onChange(item);
                         }
                     }}
@@ -51,9 +62,9 @@ function Menu({ children, items = [], onChange = defaultFn }: MenuProps) {
         );
     };
 
-    // Reset to first page
-    const handleReset = () => {
-        setHistory((prev) => prev.slice(0, 1));
+    const handleHide = () => {
+        setHistory([]);
+        setIsOpen(false);
     };
 
     return (
@@ -61,7 +72,9 @@ function Menu({ children, items = [], onChange = defaultFn }: MenuProps) {
             delay={[0, 700]}
             placement="bottom-end"
             render={renderResult}
-            onHide={handleReset}
+            onHide={handleHide}
+            visible={isOpen}
+            onVisibleChange={setIsOpen}
         >
             {children}
         </Tooltip>

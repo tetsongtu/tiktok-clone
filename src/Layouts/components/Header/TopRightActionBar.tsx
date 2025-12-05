@@ -117,7 +117,6 @@ function TopRightActionBar() {
                 {isLoggedIn ? renderLoggedInActions() : renderGuestActions()}
 
                 <Menu
-                    key={isLoggedIn ? 'user' : 'guest'}
                     items={isLoggedIn ? userMenu : MENU_ITEMS}
                     onChange={(item) => item.title === 'Log out' && handleLogout()}
                 >

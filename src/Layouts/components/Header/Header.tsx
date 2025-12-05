@@ -6,19 +6,19 @@ import { images, Image, GUEST_USER } from '~/shared';
 import { useCurrentUser } from '~/shared/hooks';
 
 function Header() {
-    const { user, setUser } = useCurrentUser();
+    const { setUser } = useCurrentUser();
 
     useEffect(() => {
         const handleKeyPress = (e: KeyboardEvent) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
                 e.preventDefault();
-                setUser(user ? null : GUEST_USER);
+                setUser((currentUser: any) => (currentUser ? null : GUEST_USER));
             }
         };
 
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
-    }, [user, setUser]);
+    }, [setUser]);
 
     return (
         <>
