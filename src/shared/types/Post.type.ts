@@ -16,6 +16,12 @@ export interface Post {
     comments_count?: number;
     shares_count?: number;
     user?: PostAuthor;
+    meta: {
+        video: {
+            resolution_x: number;
+            resolution_y: number;
+        };
+    };
 }
 
 export interface PostMainProps {

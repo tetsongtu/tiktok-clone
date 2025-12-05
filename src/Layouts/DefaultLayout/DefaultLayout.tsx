@@ -24,9 +24,9 @@ function DefaultLayout({ children }: { children: any }) {
                 id="MainContent"
                 className="bg-gradient-to-b from-gray-200 to-yellow-200 relative"
             >
-                <div className="h-[100dvh] overflow-y-auto">
+                <div className="h-[100dvh] overflow-y-auto snap-y snap-mandatory">
                     <article className="h-full w-full py-2 px-4 flex justify-center items-center">
-                        <div className={`${isHome ? 'aspect-[9/16]' : 'w-full'} h-full`}>
+                        <div className={`${isHome ? '' : 'w-full'} h-full`}>
                             {children}
                         </div>
                     </article>

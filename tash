@@ -1,0 +1,113 @@
+[1mdiff --git a/src/Layouts/components/PostMain/PostMain.tsx b/src/Layouts/components/PostMain/PostMain.tsx[m
+[1mindex c91e22d..ad0206e 100644[m
+[1m--- a/src/Layouts/components/PostMain/PostMain.tsx[m
+[1m+++ b/src/Layouts/components/PostMain/PostMain.tsx[m
+[36m@@ -1,4 +1,4 @@[m
+[31m-import { useEffect } from 'preact/hooks';[m
+[32m+[m[32mimport { useEffect, useState } from 'preact/hooks';[m
+ [m
+ import PostMainLikes from './PostMainLikes';[m
+ import { UserAvatar } from '~/features';[m
+[36m@@ -7,6 +7,8 @@[m [mimport { PlusIcon } from '@phosphor-icons/react';[m
+ import type { PostMainProps } from '~/shared/types';[m
+ [m
+ function PostMain({ post }: PostMainProps) {[m
+[32m+[m[32m    const [aspectRatio, setAspectRatio] = useState<string>('aspect-[9/16]');[m
+[32m+[m
+     useEffect(() => {[m
+         if (!post) return;[m
+ [m
+[36m@@ -15,6 +17,28 @@[m [mfunction PostMain({ post }: PostMainProps) {[m
+ [m
+         if (!postMainElement) return;[m
+ [m
+[32m+[m[32m        // Auto-detect aspect ratio from video metadata[m
+[32m+[m[32m        const handleLoadedMetadata = () => {[m
+[32m+[m[32m            const width = video.videoWidth;[m
+[32m+[m[32m            const height = video.videoHeight;[m
+[32m+[m[32m            const ratio = width / height;[m
+[32m+[m
+[32m+[m[32m            console.log('Video dimensions:', width, 'x', height, 'ratio:', ratio);[m
+[32m+[m
+[32m+[m[32m            if (Math.abs(ratio - 1) < 0.15) {[m
+[32m+[m[32m                // 1:1 (ratio ≈ 1)[m
+[32m+[m[32m                setAspectRatio('aspect-square');[m
+[32m+[m[32m            } else if (ratio > 1.3) {[m
+[32m+[m[32m                // 16:9 (ratio ≈ 1.78) hoặc ngang hơn[m
+[32m+[m[32m                setAspectRatio('aspect-video');[m
+[32m+[m[32m            } else {[m
+[32m+[m[32m                // 9:16 (ratio ≈ 0.56) hoặc dọc hơn[m
+[32m+[m[32m                setAspectRatio('aspect-[9/16]');[m
+[32m+[m[32m            }[m
+[32m+[m[32m        };[m
+[32m+[m
+[32m+[m[32m        video.addEventListener('loadedmetadata', handleLoadedMetadata);[m
+[32m+[m
+         const observer = new IntersectionObserver([m
+             (entries) => {[m
+                 entries[0].isIntersecting ? video.play().catch(() => {}) : video.pause();[m
+[36m@@ -24,31 +48,37 @@[m [mfunction PostMain({ post }: PostMainProps) {[m
+ [m
+         observer.observe(postMainElement);[m
+ [m
+[31m-        return () => observer.disconnect();[m
+[32m+[m[32m        return () => {[m
+[32m+[m[32m            observer.disconnect();[m
+[32m+[m[32m            video.removeEventListener('loadedmetadata', handleLoadedMetadata);[m
+[32m+[m[32m        };[m
+     }, [post?.id]);[m
+ [m
+     return ([m
+[31m-        <div className="pb-12" id={`post-main-${post?.id}`}>[m
+[31m-            <video[m
+[31m-                className="aspect-[9/16] rounded-2xl object-cover"[m
+[31m-                id={`video-${post?.id}`}[m
+[31m-                loop[m
+[31m-                controls[m
+[31m-                muted[m
+[31m-                src={post?.file_url}[m
+[31m-            />[m
+[31m-            <div className="relative">[m
+[31m-                <div className="absolute bottom-0 inset-x-0">[m
+[31m-                    <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50 rounded-b-3xl"></div>[m
+[32m+[m[32m        <div[m
+[32m+[m[32m            className="h-full flex items-center justify-center"[m
+[32m+[m[32m            id={`post-main-${post?.id}`}[m
+[32m+[m[32m        >[m
+[32m+[m[32m            <div className={`relative ${aspectRatio} h-[90vh]`}>[m
+[32m+[m[32m                <video[m
+[32m+[m[32m                    className="w-full h-full rounded-2xl object-cover"[m
+[32m+[m[32m                    id={`video-${post?.id}`}[m
+[32m+[m[32m                    loop[m
+[32m+[m[32m                    controls[m
+[32m+[m[32m                    muted[m
+[32m+[m[32m                    src={post?.file_url}[m
+[32m+[m[32m                />[m
+[32m+[m[32m                <div className="absolute bottom-0 left-0 right-0 pointer-events-none">[m
+[32m+[m[32m                    <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50 rounded-b-2xl"></div>[m
+ [m
+[31m-                    <div className=" p-5 text-white">[m
+[32m+[m[32m                    <div className="relative p-5 text-white">[m
+                         <p className="my-1">{post?.description}</p>[m
+                         <p className="text-gray-500 text-xl">#fun #cool #SuperAwesome</p>[m
+                     </div>[m
+                 </div>[m
+[31m-                <div className="absolute -right-22 bottom-0 flex items-center flex-col gap-2">[m
+[32m+[m[32m                <div className="absolute right-4 bottom-20 flex items-center flex-col gap-2 pointer-events-none">[m
+                     <Link[m
+[31m-                        className="flex justify-center mb-6"[m
+[32m+[m[32m                        className="flex justify-center mb-6 pointer-events-auto"[m
+                         to={`/@${post?.user?.nickname}`}[m
+                     >[m
+                         <UserAvatar user={post.user} size={18} />[m
+[36m@@ -56,7 +86,9 @@[m [mfunction PostMain({ post }: PostMainProps) {[m
+                             <PlusIcon size={12} />[m
+                         </button>[m
+                     </Link>[m
+[31m-                    <PostMainLikes post={post} />[m
+[32m+[m[32m                    <div className="pointer-events-auto">[m
+[32m+[m[32m                        <PostMainLikes post={post} />[m
+[32m+[m[32m                    </div>[m
+                 </div>[m
+             </div>[m
+         </div>[m
