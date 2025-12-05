@@ -1,4 +1,4 @@
-import { Button } from '~/shared';
+import { Button, GUEST_USER } from '~/shared';
 import { SOCIAL_BUTTONS } from './constants';
 
 interface OptionsProps {
@@ -35,7 +35,7 @@ function Options({ onLoginClick, onSuccess }: OptionsProps) {
                 className="h-[35px]"
                 size="small"
                 variant="outline"
-                onClick={onSuccess}
+                onClick={() => onSuccess(GUEST_USER)}
             >
                 Continue as Guest
             </Button>

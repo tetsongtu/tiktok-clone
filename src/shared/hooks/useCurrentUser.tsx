@@ -1,7 +1,6 @@
 import { createContext } from 'preact';
-import { useContext, useState, useEffect } from 'preact/hooks';
+import { useContext, useState, useEffect, useMemo } from 'preact/hooks';
 import type { ComponentChildren } from 'preact';
-import { GUEST_USER } from '../constants/guestUser';
 
 interface CurrentUserContextType {
     user: any;
@@ -13,7 +12,7 @@ const CurrentUserContext = createContext<CurrentUserContextType | undefined>(und
 export function CurrentUserProvider({ children }: { children: ComponentChildren }) {
     const [user, setUser] = useState<any>(() => {
         const saved = localStorage.getItem('user');
-        return saved ? JSON.parse(saved) : GUEST_USER;
+        return saved ? JSON.parse(saved) : null;
     });
 
     useEffect(() => {
@@ -22,8 +21,10 @@ export function CurrentUserProvider({ children }: { children: ComponentChildren 
             : localStorage.removeItem('user');
     }, [user]);
 
+    const value = useMemo(() => ({ user, setUser }), [user]);
+
     return (
-        <CurrentUserContext.Provider value={{ user, setUser }}>
+        <CurrentUserContext.Provider value={value}>
             {children}
         </CurrentUserContext.Provider>
     );
