@@ -21,9 +21,9 @@ function Header() {
 
     return (
         <>
-            <div className="fixed pl-3 pt-4 hidden lg:flex z-50">
+            <div className="fixed pl-3 pt-4 flex z-50">
                 <Link to={config.routes.home} onClick={handleLogoClick}>
-                    <div className="transition-transform hover:scale-105 active:scale-95 cursor-pointer">
+                    <div className="cursor-pointer">
                         <Image
                             className="h-[39px] px-[8px]"
                             src={images.logo}

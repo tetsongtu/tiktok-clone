@@ -74,16 +74,16 @@ export function Explore() {
                 </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-6 gap-4">
                 {categories.map((category) => (
                     <button
                         key={category.id}
                         onClick={() => setSelectedCategory(category.id)}
                         className={`${
                             category.color
-                        } rounded-xl p-6 transition-all duration-200 transform hover:scale-105 shadow-sm hover:shadow-md ${
+                        } rounded-xl p-6 shadow-sm hover:shadow-md ${
                             selectedCategory === category.id
-                                ? 'ring-2 ring-purple-500 scale-105'
+                                ? 'ring-2 ring-purple-500'
                                 : ''
                         }`}
                     >

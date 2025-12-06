@@ -60,7 +60,7 @@ function Login({ onSuccess }: LoginProps) {
                             value={formData[name as keyof typeof formData]}
                             onChange={handleChange}
                             placeholder={placeholder}
-                            className={`p-3 text-base border-2 rounded-lg transition-all outline-none w-full ${
+                            className={`p-3 text-base border-2 rounded-lg outline-none w-full ${
                                 errors[name]
                                     ? 'border-red-500'
                                     : 'border-gray-300 focus:border-[var(--primary)] focus:shadow-[0_0_0_3px_rgba(254,44,85,0.1)]'

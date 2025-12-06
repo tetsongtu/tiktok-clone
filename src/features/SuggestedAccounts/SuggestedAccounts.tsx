@@ -18,16 +18,12 @@ export function SuggestedAccounts({
 }: SuggestedAccountsProps) {
     return (
         <>
-            <div className="border-t border-gray-400 w-[50px] lg:w-[90%]"></div>
+            <div className="border-t border-gray-400 w-[90%]"></div>
             <p className={cx('label', 'text-gray-700')}>{label}</p>
 
             <div className="max-h-[250px] overflow-y-auto">
                 {data.map((account, index) => (
-                    <div
-                        key={account.id}
-                        className="animate-fadeIn"
-                        style={{ animationDelay: `${index * 50}ms` }}
-                    >
+                    <div key={account.id}>
                         <AccountItem user={account} />
                     </div>
                 ))}

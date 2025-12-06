@@ -18,15 +18,11 @@ export function Profile() {
 
     if (status !== 'success' || !profileData) {
         return (
-            <div className="px-4 md:px-10 min-h-screen flex items-center justify-center">
+            <div className="px-10 min-h-screen flex items-center justify-center">
                 <div className="text-center">
                     {status === 'loading' ? (
                         <div className="flex flex-col items-center gap-4">
-                            <SpinnerGapIcon
-                                className="animate-spin"
-                                size={48}
-                                color="#F02C56"
-                            />
+                            <SpinnerGapIcon size={48} color="#F02C56" />
                             <p className="text-gray-600 text-lg">Đang tải hồ sơ...</p>
                         </div>
                     ) : (
@@ -48,11 +44,11 @@ export function Profile() {
             {showEditProfile && (
                 <EditProfileModal onClose={() => setShowEditProfile(false)} />
             )}
-            <div className="pt-[90px] px-4 md:px-10 animate-fadeIn">
+            <div className="pt-[90px] px-10">
                 {/* Profile Header */}
-                <div className="flex flex-col md:flex-row md:gap-8">
+                <div className="flex flex-row gap-8">
                     {/* Avatar */}
-                    <div className="flex justify-center md:justify-start">
+                    <div className="flex justify-start">
                         <UserAvatar
                             size={30}
                             className="ring-4 ring-purple-200 shadow-lg"
@@ -61,12 +57,12 @@ export function Profile() {
                     </div>
 
                     {/* Profile Info */}
-                    <div className="flex-1 text-center md:text-left">
+                    <div className="flex-1 text-left">
                         <div className="mb-3">
-                            <h1 className="text-3xl md:text-4xl font-bold truncate text-gray-900">
+                            <h1 className="text-4xl font-bold truncate text-gray-900">
                                 {profileData.nickname}
                             </h1>
-                            <p className="text-lg md:text-xl text-gray-600 truncate mt-1">
+                            <p className="text-xl text-gray-600 truncate mt-1">
                                 {profileData.first_name} {profileData.last_name}
                             </p>
                         </div>
@@ -74,13 +70,13 @@ export function Profile() {
                         {isOwnProfile ? (
                             <button
                                 onClick={() => setShowEditProfile(true)}
-                                className="inline-flex items-center justify-center rounded-lg py-2.5 px-4 font-semibold border-2 border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200"
+                                className="inline-flex items-center justify-center rounded-lg py-2.5 px-4 font-semibold border-2 border-gray-300 hover:bg-gray-50 hover:border-gray-400"
                             >
                                 <PencilIcon className="mr-2" size="18" />
                                 <span>Edit profile</span>
                             </button>
                         ) : (
-                            <button className="inline-flex items-center justify-center rounded-lg py-2.5 px-6 text-base text-white font-semibold bg-[#F02C56] hover:bg-[#d02648] transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
+                            <button className="inline-flex items-center justify-center rounded-lg py-2.5 px-6 text-base text-white font-semibold bg-[#F02C56] hover:bg-[#d02648] shadow-md hover:shadow-lg">
                                 Theo dõi
                             </button>
                         )}
@@ -88,8 +84,8 @@ export function Profile() {
                 </div>
 
                 {/* Stats */}
-                <div className="flex items-center justify-center md:justify-start gap-6 pt-6">
-                    <div className="text-center md:text-left">
+                <div className="flex items-center justify-start gap-6 pt-6">
+                    <div className="text-left">
                         <span className="text-2xl font-bold text-gray-900 block">
                             {profileData?.followings_count || 0}
                         </span>
@@ -99,7 +95,7 @@ export function Profile() {
                     </div>
 
                     <div className="w-px h-8 bg-gray-300" />
-                    <div className="text-center md:text-left">
+                    <div className="text-left">
                         <span className="text-2xl font-bold text-gray-900 block">
                             {profileData?.likes_count || 0}
                         </span>
@@ -109,7 +105,7 @@ export function Profile() {
 
                 {/* Bio */}
                 {profileData?.bio && (
-                    <p className="pt-6 text-gray-700 text-base max-w-[600px] leading-relaxed text-center md:text-left">
+                    <p className="pt-6 text-gray-700 text-base max-w-[600px] leading-relaxed text-left">
                         {profileData.bio}
                     </p>
                 )}
@@ -118,7 +114,7 @@ export function Profile() {
                 <ul className="w-full flex items-center pt-8 border-b-2 border-gray-200 relative">
                     <li
                         onClick={() => setActiveTab('videos')}
-                        className={`flex-1 md:w-60 md:flex-none text-center py-3 text-lg font-semibold cursor-pointer transition-all duration-200 ${
+                        className={`w-60 text-center py-3 text-lg font-semibold cursor-pointer ${
                             activeTab === 'videos'
                                 ? 'text-black'
                                 : 'text-gray-500 hover:text-gray-700'
@@ -128,7 +124,7 @@ export function Profile() {
                     </li>
                     <li
                         onClick={() => setActiveTab('liked')}
-                        className={`flex-1 md:w-60 md:flex-none text-center py-3 text-lg font-semibold cursor-pointer transition-all duration-200 ${
+                        className={`w-60 text-center py-3 text-lg font-semibold cursor-pointer ${
                             activeTab === 'liked'
                                 ? 'text-black'
                                 : 'text-gray-500 hover:text-gray-700'
@@ -137,9 +133,9 @@ export function Profile() {
                         Đã thích
                     </li>
                     <div
-                        className="absolute bottom-0 left-0 h-[3px] bg-black transition-all duration-300 ease-in-out"
+                        className="absolute bottom-0 left-0 h-[3px] bg-black"
                         style={{
-                            width: window.innerWidth < 768 ? '50%' : '240px',
+                            width: '240px',
                             transform: `translateX(${
                                 activeTab === 'videos' ? '0%' : '100%'
                             })`,
@@ -151,15 +147,9 @@ export function Profile() {
                 <div className="mt-6">
                     {activeTab === 'videos' ? (
                         profileData?.videos?.length > 0 ? (
-                            <div className="grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3 md:gap-4">
+                            <div className="grid grid-cols-6 gap-4">
                                 {profileData.videos.map((video: any, index: number) => (
-                                    <div
-                                        key={video.id}
-                                        className="animate-fadeIn"
-                                        style={{
-                                            animationDelay: `${index * 50}ms`,
-                                        }}
-                                    >
+                                    <div key={video.id}>
                                         <ProfilePost post={video} />
                                     </div>
                                 ))}
@@ -180,15 +170,9 @@ export function Profile() {
                             </div>
                         )
                     ) : profileData?.liked_videos?.length > 0 ? (
-                        <div className="grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3 md:gap-4">
+                        <div className="grid grid-cols-6 gap-4">
                             {profileData.liked_videos.map((video: any, index: number) => (
-                                <div
-                                    key={video.id}
-                                    className="animate-fadeIn"
-                                    style={{
-                                        animationDelay: `${index * 50}ms`,
-                                    }}
-                                >
+                                <div key={video.id}>
                                     <ProfilePost post={video} />
                                 </div>
                             ))}

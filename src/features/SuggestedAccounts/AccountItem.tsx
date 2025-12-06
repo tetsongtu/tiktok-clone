@@ -29,7 +29,7 @@ export function AccountItem({ user }: AccountItemProps) {
         >
             <Link to={`/@${user.nickname}`} className={cx('account-item')}>
                 <UserAvatar user={user} />
-                <section className={cx('ml-3 hidden lg:block')}>
+                <section className={cx('ml-3')}>
                     <p className={cx('text-base flex items-center')}>
                         <strong>{user?.nickname}</strong>
                         {user?.tick && (

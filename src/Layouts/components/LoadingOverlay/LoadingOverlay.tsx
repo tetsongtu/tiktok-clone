@@ -7,9 +7,9 @@ export function LoadingOverlay() {
                        bg-gradient-to-r from-purple-600 to-pink-600 
                        text-white px-8 py-4 rounded-full z-[60]
                        text-base font-semibold shadow-2xl backdrop-blur-sm
-                       flex items-center gap-3 animate-fadeInOut"
+                       flex items-center gap-3"
         >
-            <SpinnerIcon className="animate-spin w-5 h-5" />
+            <SpinnerIcon className="w-5 h-5" />
             <span>Đang tải video mới...</span>
         </div>
     );

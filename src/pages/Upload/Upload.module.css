@@ -6,12 +6,6 @@
     padding: 16px 40px;
 }
 
-@media (max-width: 768px) {
-    .container {
-        padding: 1.5rem 1rem;
-    }
-}
-
 .title {
     font-size: 23px;
     font-weight: 600;
@@ -26,12 +20,6 @@
     margin-top: 8px;
     display: flex;
     gap: 1.5rem;
-}
-
-@media (max-width: 768px) {
-    .content {
-        flex-direction: column;
-    }
 }
 
 /* Upload Area */
@@ -49,18 +37,15 @@
     border: 2px dashed #d1d5db;
     border-radius: 0.5rem;
     cursor: pointer;
-    transition: background-color 0.2s;
 }
 
 .uploadContainer:hover {
     background-color: #f3f4f6;
 }
 
-@media (min-width: 768px) {
-    .uploadContainer {
-        margin-left: 0;
-        margin-right: 0;
-    }
+.uploadContainer {
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .uploadIcon {
@@ -100,7 +85,6 @@
     background-color: #f12b56;
     border-radius: 0.125rem;
     cursor: pointer;
-    transition: background-color 0.2s;
 }
 
 .uploadButton:hover {
@@ -120,19 +104,8 @@
     border-radius: 1rem;
     cursor: pointer;
     position: relative;
-}
-
-@media (min-width: 768px) {
-    .previewContainer {
-        margin-left: 0;
-        margin-right: 0;
-    }
-}
-
-@media (max-width: 768px) {
-    .previewContainer {
-        margin-bottom: 4rem;
-    }
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .uploadingOverlay {

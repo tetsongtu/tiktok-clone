@@ -207,7 +207,7 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
                         >
                             {isSubmitting ? (
                                 <>
-                                    <SpinnerGapIcon className="animate-spin" size={20} />
+                                    <SpinnerGapIcon size={20} />
                                     Processing...
                                 </>
                             ) : (

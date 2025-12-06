@@ -5,7 +5,6 @@ export function useHomeReset() {
         // Hide comment drawer
         const drawer = document.querySelector('[data-comment-drawer]') as HTMLElement;
         if (drawer) {
-            drawer.style.transition = 'none';
             drawer.style.transform = 'translateX(100%)';
         }
 

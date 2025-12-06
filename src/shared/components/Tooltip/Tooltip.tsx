@@ -81,10 +81,10 @@ export function Tooltip({
     ]);
 
     const { isMounted, styles: transitionStyles } = useTransitionStyles(context, {
-        duration: animation ? animationDuration : 0,
-        initial: { opacity: 0, transform: 'scale(0.95)' },
+        duration: 0,
+        initial: { opacity: 1, transform: 'scale(1)' },
         open: { opacity: 1, transform: 'scale(1)' },
-        close: { opacity: 0, transform: 'scale(0.95)' },
+        close: { opacity: 1, transform: 'scale(1)' },
     });
 
     useEffect(() => {

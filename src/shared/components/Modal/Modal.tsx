@@ -28,7 +28,7 @@ export function Modal({
     }
 
     return (
-        <div className="fixed flex justify-center pt-14 md:pt-[70px] z-50 top-0 left-0 w-full h-full bg-black/50 overflow-auto">
+        <div className="fixed flex justify-center pt-[70px] z-50 top-0 left-0 w-full h-full bg-black/50 overflow-auto">
             <div className="relative bg-white w-full p-8 rounded-lg" style={style}>
                 <header className="absolute flex justify-between items-center w-full p-5 left-0 top-0">
                     {onBack ? (

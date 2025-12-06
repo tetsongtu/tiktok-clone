@@ -26,7 +26,7 @@ export function ActionButton({
                     isActive ? 'bg-red-100' : 'bg-gray-200',
                 )}
             >
-                {isLoading ? <SpinnerGapIcon size={20} className="animate-spin" /> : icon}
+                {isLoading ? <SpinnerGapIcon size={20} /> : icon}
             </div>
             <span className="text-sm font-medium">{count}</span>
         </BaseButton>

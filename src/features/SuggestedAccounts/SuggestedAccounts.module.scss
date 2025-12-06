@@ -1,9 +1,6 @@
 .label,
 .more-btn {
-    display: none;
-    @media (min-width: 1024px) {
-        display: block;
-    }
+    display: block;
 }
 
 .label {

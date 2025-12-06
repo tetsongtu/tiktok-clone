@@ -12,7 +12,7 @@ function MenuItem({ title, to, icon, actionIcon }: MenuItemProps) {
         <Link href={to} className={cx('menu-item', { active: isActive })}>
             <span className={cx('icon')}>{icon}</span>
             <span className={cx('action-icon')}>{actionIcon}</span>
-            <span className={cx('title', 'hidden lg:flex')}>{title}</span>
+            <span className={cx('title')}>{title}</span>
         </Link>
     );
 }

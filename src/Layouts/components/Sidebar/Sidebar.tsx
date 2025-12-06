@@ -34,10 +34,7 @@ function Sidebar() {
     };
 
     return (
-        <aside
-            id="Sidebar"
-            className="fixed top-[70px] bottom-0 w-[60px] lg:w-[280px] px-[2px] lg:px-2.5 z-40"
-        >
+        <aside id="Sidebar" className="fixed top-[70px] bottom-0 w-[280px] px-2.5 z-40">
             <Menu>
                 <Search />
                 <nav className="my-[12px]">
@@ -56,7 +53,7 @@ function Sidebar() {
             <section>
                 <SuggestedAccounts label="Following" />
             </section>
-            <footer className="hidden lg:block py-4 w-full">
+            <footer className="py-4 w-full">
                 <hr className="border-gray-400 w-[90%]"></hr>
                 <section className="text-sm font-semibold text-gray-700 w-full">
                     <p>Following accounts</p>

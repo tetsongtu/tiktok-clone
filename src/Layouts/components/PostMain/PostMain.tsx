@@ -78,20 +78,14 @@ function PostMain({ post }: PostMainProps) {
                 isAnyCommentOpen ? 'pr-[150px]' : ''
             }`}
             id={`post-main-${post?.id}`}
-            style={{
-                transition: 'padding 700ms cubic-bezier(0.33, 1, 0.68, 1)',
-            }}
         >
-            <div className="relative flex items-center justify-center animate-fadeIn">
+            <div className="relative flex items-center justify-center">
                 <video
                     className={`${aspectRatio} rounded-2xl object-cover ${
                         isAnyCommentOpen && isWide
                             ? 'h-[85vh] max-w-[50vw]'
                             : 'h-[95vh] max-w-[60vw]'
                     }`}
-                    style={{
-                        transition: 'all 700ms cubic-bezier(0.33, 1, 0.68, 1)',
-                    }}
                     id={`video-${post?.id}`}
                     loop
                     controls
@@ -111,9 +105,9 @@ function PostMain({ post }: PostMainProps) {
                         className="flex justify-center mb-4 group"
                         to={`/@${post?.user?.nickname}`}
                     >
-                        <div className="flex justify-center transition-transform group-hover:scale-110 ">
+                        <div className="flex justify-center">
                             <UserAvatar user={post.user} size={18} />
-                            <button className="text-white flex justify-center items-center absolute size-8 rounded-full top-14 bg-[var(--primary)] hover:bg-[#d02648] transition-all  active:scale-95">
+                            <button className="text-white flex justify-center items-center absolute size-8 rounded-full top-14 bg-[var(--primary)] hover:bg-[#d02648]">
                                 <PlusIcon size={12} />
                             </button>
                         </div>

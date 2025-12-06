@@ -21,11 +21,7 @@ export function ProfilePost({ post }: ProfilePostProps) {
         <div className="relative brightness-90 hover:brightness-[1.1] cursor-pointer">
             {!post.video_url ? (
                 <div className="absolute flex items-center justify-center top-0 left-0 aspect-[3/4] w-full object-cover rounded-md bg-black">
-                    <SpinnerIcon
-                        className="animate-spin ml-1"
-                        size="80"
-                        color="#FFFFFF"
-                    />
+                    <SpinnerIcon className="ml-1" size="80" color="#FFFFFF" />
                 </div>
             ) : (
                 <Link to={`/post/${post.id}/${post.user_id}`}>

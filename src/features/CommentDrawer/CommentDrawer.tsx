@@ -79,10 +79,6 @@ export function CommentDrawer({ post, isOpen, onClose }: CommentDrawerProps) {
             className="fixed top-0 right-0 h-full w-[450px] bg-white shadow-2xl z-50 flex flex-col"
             style={{
                 transform: isOpen && shouldRender ? 'translateX(0)' : 'translateX(100%)',
-                transition: shouldRender
-                    ? 'transform 700ms cubic-bezier(0.33, 1, 0.68, 1)'
-                    : 'none',
-                willChange: 'transform',
             }}
         >
             {/* Header */}
@@ -132,7 +128,7 @@ export function CommentDrawer({ post, isOpen, onClose }: CommentDrawerProps) {
                                     {c.likes > 0 && <span>{c.likes} lượt thích</span>}
                                 </div>
                             </div>
-                            <button className="text-gray-400 hover:text-red-500 transition-colors">
+                            <button className="text-gray-400 hover:text-red-500">
                                 <HeartIcon size={16} />
                             </button>
                         </div>
@@ -143,10 +139,10 @@ export function CommentDrawer({ post, isOpen, onClose }: CommentDrawerProps) {
             {/* Actions & Input */}
             <div className="border-t p-4">
                 <div className="flex items-center gap-4 mb-3">
-                    <button className="hover:text-red-500 transition-colors">
+                    <button className="hover:text-red-500">
                         <HeartIcon size={28} weight="fill" />
                     </button>
-                    <button className="hover:text-gray-600 transition-colors">
+                    <button className="hover:text-gray-600">
                         <ShareIcon size={28} />
                     </button>
                 </div>
@@ -160,12 +156,12 @@ export function CommentDrawer({ post, isOpen, onClose }: CommentDrawerProps) {
                         value={comment}
                         onInput={(e) => setComment((e.target as HTMLInputElement).value)}
                         placeholder="Thêm bình luận..."
-                        className="flex-1 border rounded-full px-4 py-2 text-sm outline-none focus:border-gray-400 transition-colors"
+                        className="flex-1 border rounded-full px-4 py-2 text-sm outline-none focus:border-gray-400"
                     />
                     <button
                         type="submit"
                         disabled={!comment.trim()}
-                        className="text-blue-500 font-semibold text-sm px-4 disabled:opacity-50 disabled:cursor-not-allowed hover:text-blue-600 transition-colors"
+                        className="text-blue-500 font-semibold text-sm px-4 disabled:opacity-50 disabled:cursor-not-allowed hover:text-blue-600"
                     >
                         Đăng
                     </button>

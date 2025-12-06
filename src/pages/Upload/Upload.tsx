@@ -75,11 +75,7 @@ export function Upload() {
                         {isUploading && (
                             <div className={styles.uploadingOverlay}>
                                 <div className={styles.uploadingContent}>
-                                    <SpinnerGapIcon
-                                        className="animate-spin"
-                                        size={30}
-                                        color="#F12B56"
-                                    />
+                                    <SpinnerGapIcon size={30} color="#F12B56" />
                                     <span className={styles.uploadingText}>
                                         Uploading...
                                     </span>
@@ -155,11 +151,7 @@ export function Upload() {
                             onClick={createNewPost}
                         >
                             {isUploading ? (
-                                <SpinnerGapIcon
-                                    className="animate-spin"
-                                    size={25}
-                                    color="#fff"
-                                />
+                                <SpinnerGapIcon size={25} color="#fff" />
                             ) : (
                                 'Post'
                             )}

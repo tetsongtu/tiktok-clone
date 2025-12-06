@@ -87,7 +87,7 @@ function Search() {
             render={renderAccounts}
             onClickOutside={handleHideResult}
         >
-            <div className="top-[16px] w-[208px] h-[40px] flex items-center justify-between gap-2 hidden lg:flex bg-gray-100 p-1 rounded-full">
+            <div className="top-[16px] w-[208px] h-[40px] flex items-center justify-between gap-2 bg-gray-100 p-1 rounded-full">
                 <LinkButton
                     className={classNames(
                         'h-full border-r border-r-gray-300',
@@ -107,7 +107,7 @@ function Search() {
                 />
                 {showClear && (
                     <BaseButton
-                        className="mr-2 hover:bg-gray-300 rounded-full p-1 transition-colors"
+                        className="mr-2 hover:bg-gray-300 rounded-full p-1"
                         onClick={handleClear}
                     >
                         <XIcon size="12" weight="light" />
@@ -116,7 +116,7 @@ function Search() {
 
                 {loading && (
                     <BaseButton className="mr-3">
-                        <SpinnerGapIcon size={12} className="animate-spin" />
+                        <SpinnerGapIcon size={12} />
                     </BaseButton>
                 )}
             </div>
