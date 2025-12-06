@@ -50,34 +50,34 @@ function Login({ onSuccess }: LoginProps) {
 
     return (
         <form onSubmit={handleSubmit} className="text-left">
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-4">
                 {FORM_FIELDS.map(({ name, label, placeholder, type }) => (
                     <div key={name}>
-                        <p className="font-semibold mb-1 text-base">{label}</p>
+                        <p className="font-normal mb-4 text-base">{label}</p>
                         <input
                             type={type}
                             name={name}
                             value={formData[name as keyof typeof formData]}
                             onChange={handleChange}
                             placeholder={placeholder}
-                            className={`p-3 text-base border-2 rounded-lg outline-none w-full ${
+                            className={`p-4 text-base border-2 rounded-lg outline-none w-full ${
                                 errors[name]
                                     ? 'border-red-500'
-                                    : 'border-gray-300 focus:border-[var(--primary)] focus:shadow-[0_0_0_3px_rgba(254,44,85,0.1)]'
+                                    : 'border-gray-300'
                             }`}
                         />
                         {errors[name] && (
-                            <span className="text-red-500 text-sm">{errors[name]}</span>
+                            <span className="text-red-500 text-base">{errors[name]}</span>
                         )}
                     </div>
                 ))}
                 <a
                     href="#"
-                    className="text-gray-500 hover:underline hover:text-black text-sm"
+                    className="text-gray-500 text-base"
                 >
                     Forgot password?
                 </a>
-                <Button className="w-full mt-2" type="submit" variant="primary">
+                <Button className="w-full mt-4" type="submit" variant="primary">
                     Đăng nhập
                 </Button>
             </div>

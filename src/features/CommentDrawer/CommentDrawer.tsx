@@ -83,13 +83,13 @@ export function CommentDrawer({ post, isOpen, onClose }: CommentDrawerProps) {
         >
             {/* Header */}
             <div className="p-4 border-b">
-                <h2 className="text-lg font-semibold">
+                <h2 className="text-base font-normal">
                     {post.comments_count || 0} bình luận
                 </h2>
             </div>
 
             {/* Post Info */}
-            <div className="p-4 border-b flex items-center gap-3">
+            <div className="p-4 border-b flex items-center gap-4">
                 <Link to={`/@${post.user?.nickname}`} onClick={onClose}>
                     <UserAvatar user={post.user} size={10} />
                 </Link>
@@ -97,11 +97,11 @@ export function CommentDrawer({ post, isOpen, onClose }: CommentDrawerProps) {
                     <Link
                         to={`/@${post.user?.nickname}`}
                         onClick={onClose}
-                        className="font-semibold hover:underline"
+                        className="font-normal"
                     >
                         {post.user?.nickname}
                     </Link>
-                    <p className="text-sm text-gray-600 line-clamp-2">
+                    <p className="text-base text-gray-600 line-clamp-4">
                         {post.description}
                     </p>
                 </div>
@@ -112,23 +112,21 @@ export function CommentDrawer({ post, isOpen, onClose }: CommentDrawerProps) {
                 {comments.length === 0 ? (
                     <div className="text-center py-8 text-gray-500">
                         <p>Chưa có bình luận nào</p>
-                        <p className="text-sm mt-1">Hãy là người đầu tiên bình luận!</p>
+                        <p className="text-base mt-4">Hãy là người đầu tiên bình luận!</p>
                     </div>
                 ) : (
                     comments.map((c) => (
-                        <div key={c.id} className="flex gap-3">
+                        <div key={c.id} className="flex gap-4">
                             <UserAvatar user={c.user} size={8} />
                             <div className="flex-1">
-                                <p className="font-semibold text-sm">{c.user.nickname}</p>
-                                <p className="text-sm text-gray-700 mt-1">{c.text}</p>
-                                <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
-                                    <button className="hover:text-gray-700">
-                                        Trả lời
-                                    </button>
+                                <p className="font-normal text-base">{c.user.nickname}</p>
+                                <p className="text-base text-gray-700 mt-4">{c.text}</p>
+                                <div className="flex items-center gap-4 mt-4 text-base text-gray-500">
+                                    <button className="">Trả lời</button>
                                     {c.likes > 0 && <span>{c.likes} lượt thích</span>}
                                 </div>
                             </div>
-                            <button className="text-gray-400 hover:text-red-500">
+                            <button className="text-gray-400">
                                 <HeartIcon size={16} />
                             </button>
                         </div>
@@ -138,30 +136,30 @@ export function CommentDrawer({ post, isOpen, onClose }: CommentDrawerProps) {
 
             {/* Actions & Input */}
             <div className="border-t p-4">
-                <div className="flex items-center gap-4 mb-3">
-                    <button className="hover:text-red-500">
+                <div className="flex items-center gap-4 mb-4">
+                    <button className="">
                         <HeartIcon size={28} weight="fill" />
                     </button>
-                    <button className="hover:text-gray-600">
+                    <button className="">
                         <ShareIcon size={28} />
                     </button>
                 </div>
-                <p className="font-semibold text-sm mb-3">
+                <p className="font-normal text-base mb-4">
                     {post.likes_count?.toLocaleString() || 0} lượt thích
                 </p>
 
-                <form onSubmit={handleSubmit} className="flex gap-2 items-center">
+                <form onSubmit={handleSubmit} className="flex gap-4 items-center">
                     <input
                         type="text"
                         value={comment}
                         onInput={(e) => setComment((e.target as HTMLInputElement).value)}
                         placeholder="Thêm bình luận..."
-                        className="flex-1 border rounded-full px-4 py-2 text-sm outline-none focus:border-gray-400"
+                        className="flex-1 border rounded-full px-4 py-2 text-base outline-none"
                     />
                     <button
                         type="submit"
                         disabled={!comment.trim()}
-                        className="text-blue-500 font-semibold text-sm px-4 disabled:opacity-50 disabled:cursor-not-allowed hover:text-blue-600"
+                        className="text-blue-500 font-normal text-base px-4 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         Đăng
                     </button>

@@ -86,22 +86,20 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
             <div>
                 {!previewImageUrl ? (
                     // Edit Form
-                    <div className="space-y-6">
-                        <div className="flex flex-col border-b pb-6">
-                            <h3 className="font-semibold text-base text-gray-700 mb-4">
-                                Profile photo
-                            </h3>
+                    <div>
+                        <div className="flex flex-col border-b">
+                            <h3 className="font-normal text-gray-700">Profile photo</h3>
                             <div className="flex justify-center">
                                 <label
                                     htmlFor="profile-photo-input"
                                     className="relative cursor-pointer"
                                 >
-                                    <UserAvatar size={28} user={GUEST_USER} />
+                                    <UserAvatar size={16} user={GUEST_USER} />
                                     <button
                                         type="button"
-                                        className="absolute bottom-0 right-0 rounded-full bg-white shadow-xl border p-1 border-gray-300 w-8 h-8"
+                                        className="absolute bottom-0 right-0 rounded-full bg-white shadow-xl border border-gray-300 w-4 h-4"
                                     >
-                                        <PencilIcon className="mx-auto" size={17} />
+                                        <PencilIcon className="mx-auto" size={16} />
                                     </button>
                                 </label>
                                 <input
@@ -115,8 +113,8 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
                         </div>
 
                         {/* Name */}
-                        <div className="flex flex-col border-b pb-6">
-                            <h3 className="font-semibold text-gray-700 mb-4">Name</h3>
+                        <div className="flex flex-col border-b">
+                            <h3 className="font-normal text-gray-700">Name</h3>
                             <div className="flex justify-center">
                                 <div className="w-full max-w-md">
                                     <TextInput
@@ -132,7 +130,7 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
 
                         {/* Bio */}
                         <div className="flex flex-col">
-                            <h3 className="font-semibold text-gray-700 mb-4">Bio</h3>
+                            <h3 className="font-normal text-gray-700">Bio</h3>
                             <div className="flex justify-center">
                                 <div className="w-full max-w-md">
                                     <textarea
@@ -141,9 +139,9 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
                                         value={bio}
                                         onChange={(e) => setBio(e.currentTarget.value)}
                                         maxLength={BIO_MAX_LENGTH}
-                                        className="resize-none w-full bg-[#F1F1F2] text-gray-800 border border-gray-300 rounded-md py-2.5 px-3 focus:outline-none"
+                                        className="resize-none w-full bg-[#F1F1F2] text-gray-800 border border-gray-300 rounded-md"
                                     />
-                                    <p className="text-xs text-gray-500 mt-1">
+                                    <p className="text-gray-500">
                                         {bio.length}/{BIO_MAX_LENGTH}
                                     </p>
                                 </div>
@@ -169,7 +167,7 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
                                 />
                             </ReactCrop>
                         </div>
-                        <div className="text-center mt-4 text-gray-600 text-sm">
+                        <div className="text-center text-gray-600">
                             🔹 Kéo các điểm để thay đổi kích thước vùng chọn
                         </div>
                     </div>
@@ -177,9 +175,9 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
             </div>
 
             {/* Footer Buttons */}
-            <div className="mt-8 pt-5 border-t border-t-gray-300">
+            <div className="border-t border-t-gray-300">
                 {!previewImageUrl ? (
-                    <div className="flex justify-end gap-3">
+                    <div className="flex justify-end">
                         <Button
                             variant="outline"
                             disabled={isSubmitting}
@@ -192,22 +190,22 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
                         </Button>
                     </div>
                 ) : (
-                    <div className="flex justify-end gap-3">
+                    <div className="flex justify-end">
                         <button
                             onClick={handleCancelCrop}
                             disabled={isSubmitting}
-                            className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
+                            className="border border-gray-300 rounded-md disabled:opacity-50"
                         >
                             Cancel
                         </button>
                         <button
                             onClick={handleApplyCrop}
                             disabled={isSubmitting}
-                            className="px-4 py-2 bg-[#F02C56] text-white rounded-md disabled:opacity-50 flex items-center gap-2"
+                            className="bg-[#F02C56] text-white rounded-md disabled:opacity-50 flex items-center"
                         >
                             {isSubmitting ? (
                                 <>
-                                    <SpinnerGapIcon size={20} />
+                                    <SpinnerGapIcon size={16} />
                                     Processing...
                                 </>
                             ) : (

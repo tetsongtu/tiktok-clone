@@ -7,7 +7,7 @@ interface RegisterProps {
 
 function Register({ onSuccess }: RegisterProps) {
     return (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
             {SOCIAL_BUTTONS.map((btn, idx) => (
                 <Button
                     key={idx}

@@ -55,13 +55,13 @@ function Sidebar() {
             </section>
             <footer className="py-4 w-full">
                 <hr className="border-gray-400 w-[90%]"></hr>
-                <section className="text-sm font-semibold text-gray-700 w-full">
+                <section className="text-base font-normal text-gray-700 w-full">
                     <p>Following accounts</p>
                     <p>Accounts you follow will appear here</p>
                 </section>
                 <hr className="border-gray-400 w-[90%]"></hr>
 
-                <ul className="text-sm font-medium text-gray-500 w-full space-y-1">
+                <ul className="text-base font-normal text-gray-500 w-full space-y-1">
                     <li>Company</li>
                     <li>Program</li>
                     <li>Terms & Policies</li>

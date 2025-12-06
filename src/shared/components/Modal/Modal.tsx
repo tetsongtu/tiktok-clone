@@ -30,11 +30,11 @@ export function Modal({
     return (
         <div className="fixed flex justify-center pt-[70px] z-50 top-0 left-0 w-full h-full bg-black/50 overflow-auto">
             <div className="relative bg-white w-full p-8 rounded-lg" style={style}>
-                <header className="absolute flex justify-between items-center w-full p-5 left-0 top-0">
+                <header className="absolute flex justify-between items-center w-full p-4 left-0 top-0">
                     {onBack ? (
                         <button
                             onClick={onBack}
-                            className="hover:bg-gray-200 p-2 rounded-full relative top-1"
+                            className=" p-4 rounded-full relative top-4"
                         >
                             <CaretLeftIcon size="20" weight="bold" />
                         </button>
@@ -43,14 +43,14 @@ export function Modal({
                     )}
                     <button
                         onClick={onClose}
-                        className="hover:bg-gray-200 p-2 rounded-full"
+                        className=" p-4 rounded-full"
                     >
                         <XIcon size="28" />
                     </button>
                 </header>
 
                 <div className="max-w-md mx-auto text-center pt-7">
-                    {title && <h1 className="pb-4 text-3xl">{title}</h1>}
+                    {title && <h1 className="pb-4 text-base">{title}</h1>}
                     {children}
                 </div>
             </div>

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
 import { useLocation } from 'wouter-preact';
 import { useZoomDetection } from '~/shared/hooks/useZoomDetection';
-import styles from './ZoomWarning.module.css';
 
 export const ZoomWarning = () => {
     const isZoomCorrect = useZoomDetection();
@@ -27,9 +26,11 @@ export const ZoomWarning = () => {
     if (!showWarning) return null;
 
     return (
-        <div className={styles.zoomWarning}>
-            <h1 className={styles.warningTitle}>⚠️ Cảnh báo: Zoom không đúng 100%</h1>
-            <p className={styles.warningText}>
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] max-w-[90%] px-10 py-5 rounded-xl shadow-2xl text-center text-white bg-gradient-to-br from-red-400 to-red-500">
+            <h1 className="m-0 mb-4.5 text-base font-normal">
+                ⚠️ Cảnh báo: Zoom không đúng 100%
+            </h1>
+            <p className="m-0 text-base opacity-95">
                 Vui lòng đặt zoom trình duyệt về 100% để có trải nghiệm tốt nhất
             </p>
         </div>

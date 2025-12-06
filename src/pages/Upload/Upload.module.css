@@ -24,8 +24,6 @@
 
 /* Upload Area */
 .uploadContainer {
-    margin: 1rem auto 1.5rem;
-    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,19 +31,12 @@
     width: 100%;
     max-width: 260px;
     height: 470px;
+    margin: 1rem 0 1.5rem;
     padding: 0.75rem;
     border: 2px dashed #d1d5db;
     border-radius: 0.5rem;
+    text-align: center;
     cursor: pointer;
-}
-
-.uploadContainer:hover {
-    background-color: #f3f4f6;
-}
-
-.uploadContainer {
-    margin-left: 0;
-    margin-right: 0;
 }
 
 .uploadIcon {
@@ -77,46 +68,40 @@
 }
 
 .uploadButton {
-    padding: 0.375rem 0.5rem;
-    margin-top: 2rem;
-    color: white;
-    font-size: 15px;
     width: 80%;
-    background-color: #f12b56;
+    margin-top: 2rem;
+    padding: 0.375rem 0.5rem;
     border-radius: 0.125rem;
+    font-size: 15px;
+    color: white;
+    background-color: #f12b56;
     cursor: pointer;
-}
-
-.uploadButton:hover {
-    background-color: rgba(241, 43, 86, 0.8);
 }
 
 /* Preview Area */
 .previewContainer {
-    margin: 1rem auto 3rem;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     max-width: 260px;
     height: 540px;
+    margin: 1rem 0 3rem;
     padding: 0.75rem;
     border-radius: 1rem;
     cursor: pointer;
-    position: relative;
-    margin-left: 0;
-    margin-right: 0;
 }
 
 .uploadingOverlay {
     position: absolute;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 20;
-    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 0.75rem;
-    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .uploadingContent {
@@ -132,24 +117,24 @@
 
 .video {
     position: absolute;
-    border-radius: 0.75rem;
-    object-fit: cover;
     z-index: 10;
     width: 100%;
     height: 100%;
+    border-radius: 0.75rem;
+    object-fit: cover;
 }
 
 .cancelButton {
     position: absolute;
     bottom: -3rem;
+    z-index: 50;
     display: flex;
     justify-content: center;
     gap: 8rem;
-    z-index: 50;
-    border-radius: 0.75rem;
-    border: 1px solid #d1d5db;
     width: 100%;
     padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.75rem;
 }
 
 .fileInfo {
@@ -161,18 +146,18 @@
 }
 
 .fileName {
-    font-weight: 600;
-    font-size: 11px;
     padding-left: 0.25rem;
     overflow: hidden;
+    font-size: 11px;
+    font-weight: 600;
     text-overflow: ellipsis;
 }
 
 .cancelText {
-    color: #f12b56;
-    font-size: 11px;
     margin-left: 0.5rem;
+    font-size: 11px;
     font-weight: 600;
+    color: #f12b56;
 }
 
 /* Edit Section */
@@ -211,8 +196,8 @@
 .editButtonWrapper {
     display: flex;
     justify-content: flex-end;
-    max-width: 130px;
     width: 100%;
+    max-width: 130px;
     margin: auto 0;
 }
 
@@ -242,10 +227,6 @@
     border: 1px solid #d1d5db;
     padding: 0.625rem;
     border-radius: 0.375rem;
-}
-
-.captionInput:focus {
-    outline: none;
 }
 
 /* Action Buttons */

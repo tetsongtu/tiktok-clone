@@ -1,9 +1,4 @@
-import classNames from 'classnames/bind';
-
-import styles from './SuggestedAccounts.module.scss';
 import { AccountItem } from './AccountItem';
-
-const cx = classNames.bind(styles);
 
 interface SuggestedAccountsProps {
     label: string;
@@ -19,17 +14,20 @@ export function SuggestedAccounts({
     return (
         <>
             <div className="border-t border-gray-400 w-[90%]"></div>
-            <p className={cx('label', 'text-gray-700')}>{label}</p>
+            <p className="block px-2 pt-2 text-base font-normal text-gray-700">{label}</p>
 
             <div className="max-h-[250px] overflow-y-auto">
-                {data.map((account, index) => (
+                {data.map((account) => (
                     <div key={account.id}>
                         <AccountItem user={account} />
                     </div>
                 ))}
             </div>
 
-            <p className={cx('more-btn')} onClick={onSeeAll}>
+            <p
+                className="block px-2 pb-2 text-base font-normal text-[#fe2c55] cursor-pointer"
+                onClick={onSeeAll}
+            >
                 See all
             </p>
         </>

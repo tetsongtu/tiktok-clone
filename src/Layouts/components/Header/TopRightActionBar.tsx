@@ -1,5 +1,3 @@
-import classNames from 'classnames/bind';
-import styles from './Header.module.css';
 import { useState } from 'preact/hooks';
 
 import {
@@ -16,8 +14,6 @@ import type { MenuItemData } from '~/shared/types';
 import { useCurrentUser } from '~/shared/hooks';
 import { AuthModal } from '~/features/Modals';
 import { UserAvatar } from '~/features';
-
-const cx = classNames.bind(styles);
 
 const MENU_ITEMS: MenuItemData[] = [
     {
@@ -36,22 +32,14 @@ const MENU_ITEMS: MenuItemData[] = [
 ];
 
 function TopRightActionBar() {
-    // Hooks
     const { user, setUser } = useCurrentUser();
-
-    // State
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-
-    // Derived
     const isLoggedIn = user !== null;
 
-    // Handlers
     const handleLogout = () => setUser(null);
-
     const openAuthModal = () => setIsAuthModalOpen(true);
     const closeAuthModal = () => setIsAuthModalOpen(false);
 
-    // Menu items
     const userMenu: MenuItemData[] = [
         {
             icon: '',
@@ -70,7 +58,6 @@ function TopRightActionBar() {
         },
     ];
 
-    // Render
     const renderLoggedInActions = () => (
         <>
             <LinkButton
@@ -103,7 +90,7 @@ function TopRightActionBar() {
                     fallback="https://yt3.ggpht.com/Pa8wyxqTOkhu5DW_RvkiQIS7Bsa7OW7gSen-2WpaQsC2EqUAkgubAg1_QPc951pzpN2F2Q4_TA=s88-c-k-c0x00ffffff-no-rj"
                 />
             ) : (
-                <button className={cx('more-btn')}>
+                <button className="flex ml-1 rounded-full cursor-pointer">
                     <DotsThreeVerticalIcon size={25} weight="bold" />
                 </button>
             )}
@@ -113,7 +100,7 @@ function TopRightActionBar() {
     return (
         <>
             <AuthModal isOpen={isAuthModalOpen} onClose={closeAuthModal} />
-            <nav className={cx('flex items-center')}>
+            <nav className="flex items-center">
                 {isLoggedIn ? renderLoggedInActions() : renderGuestActions()}
 
                 <Menu

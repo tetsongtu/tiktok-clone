@@ -95,19 +95,19 @@ function PostMain({ post }: PostMainProps) {
                 <div className="absolute bottom-0 left-0 right-0 pointer-events-none">
                     <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50 rounded-b-2xl"></div>
 
-                    <div className="relative p-5 text-white">
-                        <p className="my-1 text-lg">{post?.description}</p>
+                    <div className="relative p-4 text-white">
+                        <p className="my-1 text-base">{post?.description}</p>
                         <p className="text-gray-300">#fun #cool #SuperAwesome</p>
                     </div>
                 </div>
-                <div className="absolute -right-22 bottom-0 flex items-center flex-col gap-3">
+                <div className="absolute -right-22 bottom-0 flex items-center flex-col gap-4">
                     <Link
                         className="flex justify-center mb-4 group"
                         to={`/@${post?.user?.nickname}`}
                     >
                         <div className="flex justify-center">
                             <UserAvatar user={post.user} size={18} />
-                            <button className="text-white flex justify-center items-center absolute size-8 rounded-full top-14 bg-[var(--primary)] hover:bg-[#d02648]">
+                            <button className="text-white flex justify-center items-center absolute size-8 rounded-full top-14 bg-[var(--primary)]">
                                 <PlusIcon size={12} />
                             </button>
                         </div>

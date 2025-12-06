@@ -1,9 +1,6 @@
-import classNames from 'classnames/bind';
+import classNames from 'classnames';
 import { useState } from 'preact/hooks';
 import images from '~/shared/assets/images';
-import styles from './Image.module.scss';
-
-const cx = classNames.bind(styles);
 
 interface ImageProps {
     src: string;
@@ -28,13 +25,13 @@ export function Image({
         setFallback(customFallback);
     };
 
-    const classes = cx('wrapper', 'select-none pointer-events-none', className, {
-        rounded,
-    });
-
     return (
         <img
-            className={classes}
+            className={classNames(
+                'overflow-hidden select-none pointer-events-none',
+                rounded && 'rounded-full object-cover',
+                className,
+            )}
             src={fallback || src}
             alt={alt}
             {...props}

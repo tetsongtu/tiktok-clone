@@ -16,7 +16,7 @@ export function ActionButton({
             onClick={onClick}
             disabled={disabled}
             className={classNames(
-                'flex flex-col items-center gap-1 p-2 bg-transparent',
+                'flex flex-col items-center gap-4 p-4 bg-transparent',
                 disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
             )}
         >
@@ -28,7 +28,7 @@ export function ActionButton({
             >
                 {isLoading ? <SpinnerGapIcon size={20} /> : icon}
             </div>
-            <span className="text-sm font-medium">{count}</span>
+            <span className="text-base font-normal">{count}</span>
         </BaseButton>
     );
 }

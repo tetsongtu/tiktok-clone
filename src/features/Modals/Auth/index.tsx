@@ -67,11 +67,11 @@ function AuthModal({ isOpen, onClose, initialView = 'options' }: AuthModalProps)
     };
 
     const renderFooter = () => (
-        <p className="flex items-center justify-center gap-1">
+        <p className="flex items-center justify-center gap-4">
             <span>{config.footerText}</span>
             <button
                 onClick={() => setView(config.footerView)}
-                className="text-[var(--primary)] font-semibold hover:underline"
+                className="text-[var(--primary)] font-normal"
             >
                 {config.footerAction}
             </button>

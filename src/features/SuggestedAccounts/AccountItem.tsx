@@ -1,14 +1,9 @@
-import classNames from 'classnames/bind';
-import styles from './SuggestedAccounts.module.scss';
 import { CheckCircleIcon } from '@phosphor-icons/react';
-
 import type { AccountItemProps } from '~/shared/types';
 import { PopperWrapper, Tooltip } from '~/shared';
 import { AccountPreview } from './AccountPreview/AccountPreview';
 import { UserAvatar } from '~/features';
 import { Link } from 'wouter-preact';
-
-const cx = classNames.bind(styles);
 
 export function AccountItem({ user }: AccountItemProps) {
     const renderReview = () => {
@@ -27,10 +22,13 @@ export function AccountItem({ user }: AccountItemProps) {
             placement="bottom"
             render={renderReview}
         >
-            <Link to={`/@${user.nickname}`} className={cx('account-item')}>
+            <Link
+                to={`/@${user.nickname}`}
+                className="flex items-center px-2 py-1 rounded"
+            >
                 <UserAvatar user={user} />
-                <section className={cx('ml-3')}>
-                    <p className={cx('text-base flex items-center')}>
+                <section className="ml-3">
+                    <p className="text-base flex items-center">
                         <strong>{user?.nickname}</strong>
                         {user?.tick && (
                             <CheckCircleIcon
@@ -39,7 +37,7 @@ export function AccountItem({ user }: AccountItemProps) {
                             />
                         )}
                     </p>
-                    <p className={cx('text-sm')}>
+                    <p className="text-base">
                         {user?.first_name + ' ' + user?.last_name}
                     </p>
                 </section>

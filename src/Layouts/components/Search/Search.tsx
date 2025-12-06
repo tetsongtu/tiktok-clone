@@ -67,7 +67,7 @@ function Search() {
     const renderAccounts = () => {
         return (
             <PopperWrapper className="min-w-[208px]">
-                <h4 className="px-3 py-1 text-base font-semibold text-gray-500">
+                <h4 className="px-3 py-1 text-base font-normal text-gray-500">
                     Accounts
                 </h4>
                 {searchResult.map((result: Account) => (
@@ -87,7 +87,7 @@ function Search() {
             render={renderAccounts}
             onClickOutside={handleHideResult}
         >
-            <div className="top-[16px] w-[208px] h-[40px] flex items-center justify-between gap-2 bg-gray-100 p-1 rounded-full">
+            <div className="top-[16px] w-[208px] h-[40px] flex items-center justify-between gap-4 bg-gray-100 p-4 rounded-full">
                 <LinkButton
                     className={classNames(
                         'h-full border-r border-r-gray-300',
@@ -103,13 +103,10 @@ function Search() {
                     spellcheck={false}
                     onChange={handleChange}
                     onFocus={() => setShowResult(true)}
-                    className="w-full p-1 bg-transparent placeholder:text-gray-400 text-sm focus:outline-none focus:caret-[var(--primary)]"
+                    className="w-full p-4 bg-transparent placeholder:text-gray-400 text-base"
                 />
                 {showClear && (
-                    <BaseButton
-                        className="mr-2 hover:bg-gray-300 rounded-full p-1"
-                        onClick={handleClear}
-                    >
+                    <BaseButton className="mr-2 rounded-full p-4" onClick={handleClear}>
                         <XIcon size="12" weight="light" />
                     </BaseButton>
                 )}

@@ -47,7 +47,7 @@ function ScrollButtons() {
 
     return (
         <div className="fixed top-0 right-0 h-screen w-24 flex items-center justify-center pointer-events-none z-30">
-            <div className="flex flex-col gap-3 pointer-events-auto">
+            <div className="flex flex-col gap-4 pointer-events-auto">
                 {BUTTONS.map(({ Icon, direction }) => (
                     <button
                         key={direction}

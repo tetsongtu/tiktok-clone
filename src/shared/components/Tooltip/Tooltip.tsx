@@ -13,7 +13,7 @@ import {
     type Placement,
 } from '@floating-ui/react';
 import Arrow from './Arrow';
-import './Tooltip.scss';
+import './Tooltip.css';
 
 interface TooltipProps {
     children: React.ReactNode;
@@ -139,7 +139,7 @@ export function Tooltip({
                         }}
                         className={
                             content
-                                ? 'text-white font-bold bg-black px-2 py-1 rounded text-sm select-none'
+                                ? 'text-white font-normal bg-black px-2 py-1 rounded text-base select-none'
                                 : ''
                         }
                         {...getFloatingProps()}

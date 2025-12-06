@@ -12,53 +12,53 @@ const categories: Category[] = [
         id: 'trending',
         name: 'Thịnh hành',
         icon: '🔥',
-        color: 'bg-red-100 hover:bg-red-200',
+        color: 'bg-red-100',
     },
     {
         id: 'music',
         name: 'Âm nhạc',
         icon: '🎵',
-        color: 'bg-purple-100 hover:bg-purple-200',
+        color: 'bg-purple-100',
     },
-    { id: 'dance', name: 'Nhảy múa', icon: '💃', color: 'bg-pink-100 hover:bg-pink-200' },
+    { id: 'dance', name: 'Nhảy múa', icon: '💃', color: 'bg-pink-100' },
     {
         id: 'comedy',
         name: 'Hài hước',
         icon: '😂',
-        color: 'bg-yellow-100 hover:bg-yellow-200',
+        color: 'bg-yellow-100',
     },
     {
         id: 'food',
         name: 'Ẩm thực',
         icon: '🍜',
-        color: 'bg-orange-100 hover:bg-orange-200',
+        color: 'bg-orange-100',
     },
     {
         id: 'sports',
         name: 'Thể thao',
         icon: '⚽',
-        color: 'bg-green-100 hover:bg-green-200',
+        color: 'bg-green-100',
     },
-    { id: 'gaming', name: 'Game', icon: '🎮', color: 'bg-blue-100 hover:bg-blue-200' },
-    { id: 'beauty', name: 'Làm đẹp', icon: '💄', color: 'bg-pink-100 hover:bg-pink-200' },
+    { id: 'gaming', name: 'Game', icon: '🎮', color: 'bg-blue-100' },
+    { id: 'beauty', name: 'Làm đẹp', icon: '💄', color: 'bg-pink-100' },
     {
         id: 'fashion',
         name: 'Thời trang',
         icon: '👗',
-        color: 'bg-indigo-100 hover:bg-indigo-200',
+        color: 'bg-indigo-100',
     },
-    { id: 'travel', name: 'Du lịch', icon: '✈️', color: 'bg-cyan-100 hover:bg-cyan-200' },
+    { id: 'travel', name: 'Du lịch', icon: '✈️', color: 'bg-cyan-100' },
     {
         id: 'education',
         name: 'Giáo dục',
         icon: '📚',
-        color: 'bg-teal-100 hover:bg-teal-200',
+        color: 'bg-teal-100',
     },
     {
         id: 'pets',
         name: 'Thú cưng',
         icon: '🐶',
-        color: 'bg-amber-100 hover:bg-amber-200',
+        color: 'bg-amber-100',
     },
 ];
 
@@ -68,7 +68,7 @@ export function Explore() {
     return (
         <div className="max-w-7xl mx-auto py-6 px-4">
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-gray-800 mb-2">Khám phá</h1>
+                <h1 className="text-base font-normal text-gray-800 mb-4">Khám phá</h1>
                 <p className="text-gray-600">
                     Tìm kiếm nội dung theo danh mục yêu thích của bạn
                 </p>
@@ -81,14 +81,14 @@ export function Explore() {
                         onClick={() => setSelectedCategory(category.id)}
                         className={`${
                             category.color
-                        } rounded-xl p-6 shadow-sm hover:shadow-md ${
+                        } rounded-xl p-4 shadow-sm ${
                             selectedCategory === category.id
                                 ? 'ring-2 ring-purple-500'
                                 : ''
                         }`}
                     >
-                        <div className="text-4xl mb-3">{category.icon}</div>
-                        <div className="text-sm font-semibold text-gray-800">
+                        <div className="text-base mb-4">{category.icon}</div>
+                        <div className="text-base font-normal text-gray-800">
                             {category.name}
                         </div>
                     </button>
@@ -96,8 +96,8 @@ export function Explore() {
             </div>
 
             {selectedCategory && (
-                <div className="mt-8 p-6 bg-white rounded-xl shadow-sm">
-                    <h2 className="text-xl font-bold text-gray-800 mb-4">
+                <div className="mt-8 p-4 bg-white rounded-xl shadow-sm">
+                    <h2 className="text-base font-normal text-gray-800 mb-4">
                         {categories.find((c) => c.id === selectedCategory)?.name}
                     </h2>
                     <p className="text-gray-600">Nội dung đang được cập nhật...</p>
