@@ -4,13 +4,13 @@ import { CheckCircleIcon } from '@phosphor-icons/react';
 
 import type { AccountItemProps } from '~/shared/types';
 import { PopperWrapper, Tooltip } from '~/shared';
-import AccountPreview from './AccountPreview/AccountPreview';
+import { AccountPreview } from './AccountPreview/AccountPreview';
 import { UserAvatar } from '~/features';
 import { Link } from 'wouter-preact';
 
 const cx = classNames.bind(styles);
 
-function AccountItem({ user }: AccountItemProps) {
+export function AccountItem({ user }: AccountItemProps) {
     const renderReview = () => {
         return (
             <PopperWrapper className="min-w-[308px]">
@@ -47,5 +47,3 @@ function AccountItem({ user }: AccountItemProps) {
         </Tooltip>
     );
 }
-
-export default AccountItem;

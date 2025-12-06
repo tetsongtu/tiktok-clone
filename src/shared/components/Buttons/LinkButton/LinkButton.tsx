@@ -2,8 +2,8 @@
 import classNames from 'classnames/bind';
 import React from 'react';
 
-import Tooltip from '~/shared/components/Tooltip/Tooltip';
-import BaseButton from '~/shared/components/Buttons/BaseButton';
+import { Tooltip } from '~/shared/components/Tooltip/Tooltip';
+import { BaseButton } from '~/shared/components/Buttons/BaseButton';
 import styles from './LinkButton.module.scss';
 
 const cx = classNames.bind(styles);
@@ -17,7 +17,13 @@ interface LinkButtonProps {
     className?: string;
 }
 
-function LinkButton({ icon, tooltip, badge, className, ...props }: LinkButtonProps) {
+export function LinkButton({
+    icon,
+    tooltip,
+    badge,
+    className,
+    ...props
+}: LinkButtonProps) {
     return (
         <Tooltip content={tooltip}>
             <BaseButton {...props} className={cx('action-btn', className)}>
@@ -27,5 +33,3 @@ function LinkButton({ icon, tooltip, badge, className, ...props }: LinkButtonPro
         </Tooltip>
     );
 }
-
-export default LinkButton;

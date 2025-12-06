@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 
 import styles from './SuggestedAccounts.module.scss';
-import AccountItem from './AccountItem';
+import { AccountItem } from './AccountItem';
 
 const cx = classNames.bind(styles);
 
@@ -11,7 +11,11 @@ interface SuggestedAccountsProps {
     onSeeAll?: () => void;
 }
 
-function SuggestedAccounts({ label, data = [], onSeeAll }: SuggestedAccountsProps) {
+export function SuggestedAccounts({
+    label,
+    data = [],
+    onSeeAll,
+}: SuggestedAccountsProps) {
     return (
         <>
             <div className="border-t border-gray-400 w-[50px] lg:w-[90%]"></div>
@@ -35,5 +39,3 @@ function SuggestedAccounts({ label, data = [], onSeeAll }: SuggestedAccountsProp
         </>
     );
 }
-
-export default SuggestedAccounts;

@@ -1,6 +1,6 @@
 import { SpinnerGapIcon } from '@phosphor-icons/react';
 import type { ActionButtonProps } from '~/shared/types';
-import BaseButton from '~/shared/components/Buttons/BaseButton';
+import { BaseButton } from '~/shared/components/Buttons/BaseButton';
 import classNames from 'classnames';
 
 export function ActionButton({
@@ -32,5 +32,3 @@ export function ActionButton({
         </BaseButton>
     );
 }
-
-export default ActionButton;

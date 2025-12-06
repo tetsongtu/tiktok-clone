@@ -1,16 +1,16 @@
 import classNames from 'classnames/bind';
 import { useState, useEffect } from 'preact/hooks';
 
-import Tooltip from '~/shared/components/Tooltip/Tooltip';
-import PopperWrapper from '~/shared/components/Popper/Wrapper';
-import MenuItem from './MenuItem';
-import Header from './Header';
+import { Tooltip } from '~/shared/components/Tooltip/Tooltip';
+import { Wrapper as PopperWrapper } from '~/shared/components/Popper/Wrapper';
+import { MenuItem } from './MenuItem';
+import { Header } from './Header';
 import styles from './Menu.module.scss';
 import type { MenuProps, MenuItemData, MenuLevel } from '~/shared/types';
 
 const cx = classNames.bind(styles);
 
-function Menu({ children, items = [], onChange = () => {} }: MenuProps) {
+export function Menu({ children, items = [], onChange = () => {} }: MenuProps) {
     const [history, setHistory] = useState<MenuLevel[]>([]);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -70,5 +70,3 @@ function Menu({ children, items = [], onChange = () => {} }: MenuProps) {
         </Tooltip>
     );
 }
-
-export default Menu;

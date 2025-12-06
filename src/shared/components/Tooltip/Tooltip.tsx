@@ -30,7 +30,7 @@ interface TooltipProps {
     className?: string;
 }
 
-function Tooltip({
+export function Tooltip({
     children,
     visible,
     onVisibleChange,
@@ -160,5 +160,3 @@ function Tooltip({
         </>
     );
 }
-
-export default Tooltip;

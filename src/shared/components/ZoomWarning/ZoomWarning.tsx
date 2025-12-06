@@ -3,7 +3,7 @@ import { useLocation } from 'wouter-preact';
 import { useZoomDetection } from '~/shared/hooks/useZoomDetection';
 import styles from './ZoomWarning.module.css';
 
-const ZoomWarning = () => {
+export const ZoomWarning = () => {
     const isZoomCorrect = useZoomDetection();
     const [location] = useLocation();
     const [showWarning, setShowWarning] = useState(false);
@@ -35,5 +35,3 @@ const ZoomWarning = () => {
         </div>
     );
 };
-
-export default ZoomWarning;

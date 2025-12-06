@@ -3,7 +3,7 @@ import { SpinnerIcon, ChartBarIcon, WarningCircleIcon } from '@phosphor-icons/re
 import { Link } from 'wouter-preact';
 import type { ProfilePostProps } from '~/shared/types';
 
-function ProfilePost({ post }: ProfilePostProps) {
+export function ProfilePost({ post }: ProfilePostProps) {
     useEffect(() => {
         const video = document.getElementById(`video${post?.id}`) as HTMLVideoElement;
 
@@ -49,5 +49,3 @@ function ProfilePost({ post }: ProfilePostProps) {
         </div>
     );
 }
-
-export default ProfilePost;

@@ -1,15 +1,15 @@
 export { default as images } from './assets/images';
 export { GUEST_USER } from './constants/guestUser';
-export { default as Image } from './components/Image/Image';
-export { default as Button } from './components/Buttons/Button/Button';
-export { default as LinkButton } from './components/Buttons/LinkButton/LinkButton';
-export { default as ActionButton } from './components/Buttons/ActionButton/ActionButton';
-export { default as BaseButton } from './components/Buttons/BaseButton';
-export { default as Menu } from './components/Popper/Menu/Menu';
-export { default as Tooltip } from './components/Tooltip/Tooltip';
-export { default as PopperWrapper } from './components/Popper/Wrapper';
-export { default as TextInput } from './components/TextInput/TextInput';
-export { default as Modal } from './components/Modal/Modal';
+export { Image } from './components/Image/Image';
+export { Button } from './components/Buttons/Button/Button';
+export { LinkButton } from './components/Buttons/LinkButton/LinkButton';
+export { ActionButton } from './components/Buttons/ActionButton/ActionButton';
+export { BaseButton } from './components/Buttons/BaseButton';
+export { Menu } from './components/Popper/Menu/Menu';
+export { Tooltip } from './components/Tooltip/Tooltip';
+export { Wrapper as PopperWrapper } from './components/Popper/Wrapper';
+export { TextInput } from './components/TextInput/TextInput';
+export { Modal } from './components/Modal/Modal';
 export {
     GoogleIcon,
     FacebookIcon,

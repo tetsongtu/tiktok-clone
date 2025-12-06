@@ -6,7 +6,7 @@ import { UserAvatar } from '~/features';
 
 const wrapper = `w-[250px] flex items-center cursor-pointer hover:bg-[var(--primary)] p-1 px-2 transition-all duration-200 group`;
 
-function AccountItem({ user }: AccountItemProps) {
+export function AccountItem({ user }: AccountItemProps) {
     return (
         <Link to={`/@${user.nickname}`} className={wrapper}>
             <div className="transition-transform group-hover:scale-110">
@@ -26,5 +26,3 @@ function AccountItem({ user }: AccountItemProps) {
         </Link>
     );
 }
-
-export default AccountItem;

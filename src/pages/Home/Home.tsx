@@ -5,7 +5,7 @@ import { useRandomVideoFeed } from '~/shared/hooks';
 import { useCommentContext } from '~/shared/contexts/CommentContext';
 import { resetToHome } from '~/shared/utils/urlHelper';
 
-function Home() {
+export function Home() {
     const [refreshKey, setRefreshKey] = useState(0);
     const videos = useRandomVideoFeed(refreshKey);
     const { activeVideoId, setActiveVideoId } = useCommentContext();
@@ -45,5 +45,3 @@ function Home() {
         </div>
     );
 }
-
-export default Home;

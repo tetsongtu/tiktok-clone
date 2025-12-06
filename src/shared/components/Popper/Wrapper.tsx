@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-function Wrapper({
+export function Wrapper({
     children,
     className,
 }: {
@@ -11,5 +11,3 @@ function Wrapper({
         'flex flex-col w-full z-20 top-0 left-0 border border-gray-300 rounded-lg bg-white shadow-md';
     return <div className={classNames(classes, className)}>{children}</div>;
 }
-
-export default Wrapper;

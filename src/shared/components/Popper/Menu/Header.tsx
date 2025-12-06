@@ -3,7 +3,7 @@ import styles from './Menu.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Header({ title, onBack }: { title?: string; onBack: () => void }) {
+export function Header({ title, onBack }: { title?: string; onBack: () => void }) {
     return (
         <header className={cx('header')}>
             <button className={cx('back-btn')} onClick={onBack}>
@@ -13,5 +13,3 @@ function Header({ title, onBack }: { title?: string; onBack: () => void }) {
         </header>
     );
 }
-
-export default Header;

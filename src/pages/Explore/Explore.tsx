@@ -62,7 +62,7 @@ const categories: Category[] = [
     },
 ];
 
-function Explore() {
+export function Explore() {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
     return (
@@ -106,5 +106,3 @@ function Explore() {
         </div>
     );
 }
-
-export default Explore;

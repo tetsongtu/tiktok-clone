@@ -1,10 +1,16 @@
 import classNames from 'classnames/bind';
-import Button from '~/shared/components/Buttons/Button/Button';
+import { Button } from '~/shared/components/Buttons/Button/Button';
 import styles from './Menu.module.scss';
 
 const cx = classNames.bind(styles);
 
-function MenuItem({ data, onClick }: { data: Record<string, any>; onClick: () => void }) {
+export function MenuItem({
+    data,
+    onClick,
+}: {
+    data: Record<string, any>;
+    onClick: () => void;
+}) {
     const classes = cx('menu-item', {
         separate: data.separate,
     });
@@ -14,5 +20,3 @@ function MenuItem({ data, onClick }: { data: Record<string, any>; onClick: () =>
         </Button>
     );
 }
-
-export default MenuItem;

@@ -4,13 +4,7 @@ import config from '~/core/config';
 import { HeaderOnly } from '~/Layouts';
 
 // Pages
-import Home from '~/pages/Home';
-import Following from '~/pages/Following';
-import Explore from '~/pages/Explore';
-import Profile from '~/pages/Profile';
-import Upload from '~/pages/Upload';
-import Search from '~/pages/Search';
-import Live from '~/pages/Live';
+import { Home, Following, Explore, Profile, Upload, Search, Live } from '~/pages';
 
 // Public routes
 const publicRoutes = [

@@ -8,7 +8,7 @@ interface UserAvatarProps {
     className?: string;
 }
 
-function UserAvatar({ user, size = 13, fallback, className }: UserAvatarProps) {
+export function UserAvatar({ user, size = 13, fallback, className }: UserAvatarProps) {
     return (
         <Image
             style={{
@@ -23,5 +23,3 @@ function UserAvatar({ user, size = 13, fallback, className }: UserAvatarProps) {
         />
     );
 }
-
-export default UserAvatar;

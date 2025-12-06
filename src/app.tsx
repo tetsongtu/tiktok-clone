@@ -2,7 +2,7 @@ import { Fragment } from 'preact';
 import { Switch, Route } from 'wouter-preact';
 import { publicRoutes } from './core/routes';
 import DefaultLayout from './Layouts';
-import ZoomWarning from './shared/components/ZoomWarning/ZoomWarning';
+import { ZoomWarning } from './shared/components/ZoomWarning/ZoomWarning';
 import { CommentProvider } from './shared/contexts/CommentContext';
 
 function App() {

@@ -10,7 +10,7 @@ import {
 import type { UploadError } from '~/shared/types';
 import { Button } from '~/shared';
 
-function Upload() {
+export function Upload() {
     const [fileDisplay, setFileDisplay] = useState('');
     const [caption, setCaption] = useState('');
     const [file, setFile] = useState<File | null>(null);
@@ -172,5 +172,3 @@ function Upload() {
         </div>
     );
 }
-
-export default Upload;

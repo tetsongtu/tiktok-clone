@@ -1,13 +1,12 @@
 import { useState } from 'preact/hooks';
 import { useRoute } from 'wouter-preact';
-import { Image } from '~/shared';
 import { PencilIcon, SpinnerGapIcon, UserCircleIcon } from '@phosphor-icons/react';
 import { ProfilePost, UserAvatar } from '~/features';
 import { EditProfileModal } from '~/features/Modals';
 import { useCurrentUser } from '~/shared/hooks';
 import { useProfileData } from './useProfileData';
 
-function Profile() {
+export function Profile() {
     const [, params] = useRoute('/:nickname');
     const { user } = useCurrentUser();
     const [showEditProfile, setShowEditProfile] = useState(false);
@@ -216,5 +215,3 @@ function Profile() {
         </>
     );
 }
-
-export default Profile;

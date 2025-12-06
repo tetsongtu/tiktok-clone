@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import BaseButton from '~/shared/components/Buttons/BaseButton';
+import { BaseButton } from '~/shared/components/Buttons/BaseButton';
 import styles from './Button.module.css';
 
 const cx = classNames.bind(styles);
@@ -17,7 +17,7 @@ interface ButtonProps {
     [key: string]: any;
 }
 
-function Button({
+export function Button({
     variant,
     size,
     rounded,
@@ -41,5 +41,3 @@ function Button({
         </BaseButton>
     );
 }
-
-export default Button;

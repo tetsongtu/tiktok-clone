@@ -14,7 +14,7 @@ interface ImageProps {
     style?: Record<string, string | number>;
 }
 
-function Image({
+export function Image({
     src,
     alt,
     className,
@@ -42,5 +42,3 @@ function Image({
         />
     );
 }
-
-export default Image;

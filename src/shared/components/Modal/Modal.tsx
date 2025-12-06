@@ -11,7 +11,7 @@ interface ModalProps {
     maxHeight?: string;
 }
 
-function Modal({
+export function Modal({
     isOpen,
     onClose,
     onBack,
@@ -57,5 +57,3 @@ function Modal({
         </div>
     );
 }
-
-export default Modal;

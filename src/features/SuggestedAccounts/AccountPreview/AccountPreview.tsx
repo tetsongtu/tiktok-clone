@@ -12,7 +12,7 @@ interface AccountPreviewProps {
     user: Account;
 }
 
-function AccountPreview({ user }: AccountPreviewProps) {
+export function AccountPreview({ user }: AccountPreviewProps) {
     return (
         <div className={cx('w-full p-5')}>
             <Link to={`/@${user.nickname}`}>
@@ -40,5 +40,3 @@ function AccountPreview({ user }: AccountPreviewProps) {
         </div>
     );
 }
-
-export default AccountPreview;

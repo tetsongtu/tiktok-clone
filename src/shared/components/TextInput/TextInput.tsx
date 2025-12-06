@@ -1,6 +1,12 @@
 import type { TextInputProps } from './TextInput.type';
 
-function TextInput({ string, inputType, placeholder, error, onUpdate }: TextInputProps) {
+export function TextInput({
+    string,
+    inputType,
+    placeholder,
+    error,
+    onUpdate,
+}: TextInputProps) {
     return (
         <>
             <input
@@ -17,5 +23,3 @@ function TextInput({ string, inputType, placeholder, error, onUpdate }: TextInpu
         </>
     );
 }
-
-export default TextInput;
