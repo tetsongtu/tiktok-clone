@@ -1,17 +1,7 @@
-import { defineConfig } from 'vite';
-import preact from '@preact/preset-vite';
+import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
-import { fileURLToPath } from 'url';
-import path from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { defineConfig } from 'vite';
 
 export default defineConfig({
-    plugins: [preact(), tailwindcss()],
-    resolve: {
-        alias: {
-            '~': path.resolve(__dirname, 'src'),
-        },
-    },
+    plugins: [sveltekit(), tailwindcss()],
 });
