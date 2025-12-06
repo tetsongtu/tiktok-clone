@@ -1,8 +1,7 @@
 @reference "tailwindcss";
 
 .btn {
-    @apply inline-flex items-center justify-center font-semibold select-none rounded min-w-[100px] px-4 py-3 border border-transparent;
-    font-size: 1.6rem;
+    @apply inline-flex items-center justify-center font-semibold select-none rounded min-w-[100px] px-4 py-3 border border-transparent text-base;
     font-family: var(--font-family);
 
     &.disabled {
@@ -48,9 +47,9 @@
 
 /* Sizes */
 .small {
-    @apply text-[13px] min-w-[55px] px-4 py-1;
+    @apply text-sm leading-[1.5] min-w-[55px] p-1;
 }
 
 .large {
-    @apply min-w-[140px] px-4 py-3;
+    @apply text-lg min-w-[140px] px-4 py-3;
 }

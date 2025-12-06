@@ -13,7 +13,7 @@ function TextInput({ string, inputType, placeholder, error, onUpdate }: TextInpu
                 type={inputType}
                 autoComplete="off"
             />
-            <div className="text-red-500 text-[14px] font-semibold">{error && error}</div>
+            <div className="text-red-500 text-sm font-semibold">{error && error}</div>
         </>
     );
 }

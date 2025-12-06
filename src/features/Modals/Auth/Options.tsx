@@ -9,11 +9,11 @@ interface OptionsProps {
 function Options({ onLoginClick, onSuccess }: OptionsProps) {
     return (
         <div className="flex flex-col gap-3">
-            <Button className="h-[35px]" size="small" variant="outline">
+            <Button className="h-[44px]" size="small" variant="outline">
                 Use QR code
             </Button>
             <Button
-                className="h-[35px]"
+                className="h-[44px]"
                 size="small"
                 variant="outline"
                 onClick={onLoginClick}
@@ -23,7 +23,7 @@ function Options({ onLoginClick, onSuccess }: OptionsProps) {
             {SOCIAL_BUTTONS.map((btn, idx) => (
                 <Button
                     key={idx}
-                    className="h-[35px]"
+                    className="h-[44px]"
                     size="small"
                     variant="outline"
                     leftIcon={btn.icon}
@@ -32,7 +32,7 @@ function Options({ onLoginClick, onSuccess }: OptionsProps) {
                 </Button>
             ))}
             <Button
-                className="h-[35px]"
+                className="h-[44px]"
                 size="small"
                 variant="outline"
                 onClick={() => onSuccess(GUEST_USER)}

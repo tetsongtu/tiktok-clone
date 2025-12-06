@@ -23,7 +23,7 @@ function AuthLayout({
             {children}
 
             <footer>
-                <p className="max-w-md mx-auto pt-5 pb-5 text-center text-neutral-400 text-[10px]">
+                <p className="max-w-md mx-auto pt-5 pb-5 text-center text-neutral-400 text-xs">
                     By continuing with an account located in{' '}
                     <a className="text-[var(--black)]">Vietnam</a>, you agree to our{' '}
                     <a className="text-[var(--black)]">Terms of Service</a> and

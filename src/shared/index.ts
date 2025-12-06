@@ -1,10 +1,5 @@
-// Assets
 export { default as images } from './assets/images';
-
-// Constants
 export { GUEST_USER } from './constants/guestUser';
-
-// Components
 export { default as Image } from './components/Image/Image';
 export { default as Button } from './components/Buttons/Button/Button';
 export { default as LinkButton } from './components/Buttons/LinkButton/LinkButton';

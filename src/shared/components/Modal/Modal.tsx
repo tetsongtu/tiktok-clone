@@ -49,8 +49,8 @@ function Modal({
                     </button>
                 </header>
 
-                <div className="max-w-md mx-auto text-center pt-13">
-                    {title && <h1 className="pb-6">{title}</h1>}
+                <div className="max-w-md mx-auto text-center pt-7">
+                    {title && <h1 className="pb-4 text-3xl">{title}</h1>}
                     {children}
                 </div>
             </div>

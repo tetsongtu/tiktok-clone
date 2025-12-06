@@ -5,7 +5,7 @@ const getScrollContainer = () =>
     document.getElementById('MainContent')?.querySelector('.overflow-y-auto');
 
 const BUTTON_CLASS =
-    'flex justify-center items-center size-18 rounded-full bg-white/80 hover:bg-white shadow-lg transition-opacity duration-300 disabled:opacity-30 disabled:cursor-not-allowed';
+    'flex justify-center items-center rounded-full bg-white/90 transition-all duration-300 disabled:cursor-not-allowed hover:scale-110 action:scale-95';
 
 const BUTTONS = [
     { Icon: CaretCircleUpIcon, direction: 'up' as const },
@@ -47,7 +47,7 @@ function ScrollButtons() {
 
     return (
         <div className="fixed top-0 right-0 h-screen w-24 flex items-center justify-center pointer-events-none z-30">
-            <div className="hidden lg:flex flex-col gap-4 pointer-events-auto">
+            <div className="hidden lg:flex flex-col gap-3 pointer-events-auto">
                 {BUTTONS.map(({ Icon, direction }) => (
                     <button
                         key={direction}
@@ -55,7 +55,7 @@ function ScrollButtons() {
                         disabled={!state[direction]}
                         className={BUTTON_CLASS}
                     >
-                        <Icon size={52} weight="light" />
+                        <Icon className="text-purple-600" size={50} weight="light" />
                     </button>
                 ))}
             </div>

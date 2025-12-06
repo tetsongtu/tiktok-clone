@@ -82,7 +82,7 @@ function PostMain({ post }: PostMainProps) {
                 transition: 'padding 700ms cubic-bezier(0.33, 1, 0.68, 1)',
             }}
         >
-            <div className="relative flex items-center justify-center">
+            <div className="relative flex items-center justify-center animate-fadeIn">
                 <video
                     className={`${aspectRatio} rounded-2xl object-cover ${
                         isAnyCommentOpen && isWide
@@ -102,19 +102,21 @@ function PostMain({ post }: PostMainProps) {
                     <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50 rounded-b-2xl"></div>
 
                     <div className="relative p-5 text-white">
-                        <p className="my-1">{post?.description}</p>
-                        <p className="text-gray-500 text-xl">#fun #cool #SuperAwesome</p>
+                        <p className="my-1 text-lg">{post?.description}</p>
+                        <p className="text-gray-300">#fun #cool #SuperAwesome</p>
                     </div>
                 </div>
-                <div className="absolute -right-22 bottom-0 flex items-center flex-col gap-2">
+                <div className="absolute -right-22 bottom-0 flex items-center flex-col gap-3">
                     <Link
-                        className="flex justify-center mb-6"
+                        className="flex justify-center mb-4 group"
                         to={`/@${post?.user?.nickname}`}
                     >
-                        <UserAvatar user={post.user} size={18} />
-                        <button className="text-white flex justify-center items-center absolute size-8 rounded-full top-14 bg-[var(--primary)]">
-                            <PlusIcon size={12} />
-                        </button>
+                        <div className="flex justify-center transition-transform group-hover:scale-110 ">
+                            <UserAvatar user={post.user} size={18} />
+                            <button className="text-white flex justify-center items-center absolute size-8 rounded-full top-14 bg-[var(--primary)] hover:bg-[#d02648] transition-all  active:scale-95">
+                                <PlusIcon size={12} />
+                            </button>
+                        </div>
                     </Link>
                     <PostMainLikes post={post} onOpenComments={handleToggleComments} />
                 </div>

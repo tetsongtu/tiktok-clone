@@ -80,17 +80,15 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
             isOpen={true}
             onClose={onClose}
             onBack={previewImageUrl ? handleCancelCrop : undefined}
-            title={previewImageUrl ? 'Crop Profile Photo' : 'Edit Profile'}
             maxWidth="700px"
             maxHeight="80vh"
         >
-            <div className="mt-8">
+            <div>
                 {!previewImageUrl ? (
                     // Edit Form
                     <div className="space-y-6">
-                        {/* Profile Photo */}
                         <div className="flex flex-col border-b pb-6">
-                            <h3 className="font-semibold text-[15px] text-gray-700 mb-4">
+                            <h3 className="font-semibold text-base text-gray-700 mb-4">
                                 Profile photo
                             </h3>
                             <div className="flex justify-center">
@@ -118,9 +116,7 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
 
                         {/* Name */}
                         <div className="flex flex-col border-b pb-6">
-                            <h3 className="font-semibold text-[15px] text-gray-700 mb-4">
-                                Name
-                            </h3>
+                            <h3 className="font-semibold text-gray-700 mb-4">Name</h3>
                             <div className="flex justify-center">
                                 <div className="w-full max-w-md">
                                     <TextInput
@@ -136,9 +132,7 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
 
                         {/* Bio */}
                         <div className="flex flex-col">
-                            <h3 className="font-semibold text-[15px] text-gray-700 mb-4">
-                                Bio
-                            </h3>
+                            <h3 className="font-semibold text-gray-700 mb-4">Bio</h3>
                             <div className="flex justify-center">
                                 <div className="w-full max-w-md">
                                     <textarea
@@ -149,7 +143,7 @@ function EditProfileModal({ onClose }: EditProfileModalProps) {
                                         maxLength={BIO_MAX_LENGTH}
                                         className="resize-none w-full bg-[#F1F1F2] text-gray-800 border border-gray-300 rounded-md py-2.5 px-3 focus:outline-none"
                                     />
-                                    <p className="text-[11px] text-gray-500 mt-1">
+                                    <p className="text-xs text-gray-500 mt-1">
                                         {bio.length}/{BIO_MAX_LENGTH}
                                     </p>
                                 </div>

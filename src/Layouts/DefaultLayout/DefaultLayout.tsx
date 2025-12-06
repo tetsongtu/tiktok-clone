@@ -2,8 +2,8 @@ import { Header, TopRightActionBar, Sidebar, ScrollButtons } from '~/Layouts/com
 
 function DefaultLayout({ children }: { children: any }) {
     return (
-        <div className="relative grid grid-cols-[auto_1fr] min-h-[100dvh]">
-            <aside className="w-[60px] lg:w-[250px] bg-gradient-to-b from-purple-100 via-purple-300 z-10">
+        <div className="relative grid grid-cols-[auto_1fr] min-h-[100dvh] ">
+            <aside className="w-[60px] lg:w-[250px] bg-gradient-to-b from-purple-100 via-purple-300  z-10">
                 <Header />
                 <Sidebar />
             </aside>

@@ -36,7 +36,7 @@ function Sidebar() {
     return (
         <aside
             id="Sidebar"
-            className="fixed top-[70px] bottom-0 w-[60px] lg:w-[250px] px-[2px] lg:px-2.5 z-40"
+            className="fixed top-[70px] bottom-0 w-[60px] lg:w-[280px] px-[2px] lg:px-2.5 z-40"
         >
             <Menu>
                 <Search />
@@ -56,15 +56,15 @@ function Sidebar() {
             <section>
                 <SuggestedAccounts label="Following" />
             </section>
-            <footer className="hidden lg:block py-4">
-                <hr className="border-[#ccc] w-[85%]"></hr>
-                <section className="text-[13px] font-semibold opacity-72 w-full">
+            <footer className="hidden lg:block py-4 w-full">
+                <hr className="border-gray-400 w-[90%]"></hr>
+                <section className="text-sm font-semibold text-gray-700 w-full">
                     <p>Following accounts</p>
                     <p>Accounts you follow will appear here</p>
                 </section>
-                <hr className="border-[#ccc] w-[85%]"></hr>
+                <hr className="border-gray-400 w-[90%]"></hr>
 
-                <ul className="text-[13px] font-semibold opacity-50 w-full">
+                <ul className="text-sm font-medium text-gray-500 w-full space-y-1">
                     <li>Company</li>
                     <li>Program</li>
                     <li>Terms & Policies</li>

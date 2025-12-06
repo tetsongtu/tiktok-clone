@@ -11,7 +11,7 @@ function Register({ onSuccess }: RegisterProps) {
             {SOCIAL_BUTTONS.map((btn, idx) => (
                 <Button
                     key={idx}
-                    className="h-[35px]"
+                    className="h-[44px]"
                     size="small"
                     variant="outline"
                     leftIcon={btn.icon}
@@ -20,7 +20,7 @@ function Register({ onSuccess }: RegisterProps) {
                 </Button>
             ))}
             <Button
-                className="h-[35px]"
+                className="h-[44px]"
                 size="small"
                 variant="outline"
                 onClick={onSuccess}

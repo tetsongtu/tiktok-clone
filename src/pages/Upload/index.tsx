@@ -45,7 +45,7 @@ function Upload() {
 
     return (
         <div className={styles.container}>
-            <header className={styles.header}>
+            <header>
                 <h1 className={styles.title}>Upload video</h1>
                 <h2 className={styles.subtitle}>Post a video to your account</h2>
             </header>

@@ -67,7 +67,7 @@ function Search() {
     const renderAccounts = () => {
         return (
             <PopperWrapper className="min-w-[208px]">
-                <h4 className="px-3 py-[5px] text-[1.4rem] font-semibold text-[rgba(22,24,35,0.5)]">
+                <h4 className="px-3 py-1 text-base font-semibold text-gray-500">
                     Accounts
                 </h4>
                 {searchResult.map((result: Account) => (
@@ -87,7 +87,7 @@ function Search() {
             render={renderAccounts}
             onClickOutside={handleHideResult}
         >
-            <div className="top-[16px] w-[208px] h-[40px] flex items-center justify-between gap-2 hidden lg:flex bg-[#F1F1F2] p-1 rounded-full">
+            <div className="top-[16px] w-[208px] h-[40px] flex items-center justify-between gap-2 hidden lg:flex bg-gray-100 p-1 rounded-full">
                 <LinkButton
                     className={classNames(
                         'h-full border-r border-r-gray-300',
@@ -99,20 +99,23 @@ function Search() {
                 <input
                     ref={inputRef}
                     value={searchValue}
-                    placeholder="Search"
+                    placeholder="Tìm kiếm..."
                     spellcheck={false}
                     onChange={handleChange}
                     onFocus={() => setShowResult(true)}
-                    className="w-full p-1 bg-transparent placeholder:text-[#838383] text-[1.4rem] focus:outline-none focus:caret-[var(--primary)]"
+                    className="w-full p-1 bg-transparent placeholder:text-gray-400 text-sm focus:outline-none focus:caret-[var(--primary)]"
                 />
                 {showClear && (
-                    <BaseButton className="mr-3" onClick={handleClear}>
+                    <BaseButton
+                        className="mr-2 hover:bg-gray-300 rounded-full p-1 transition-colors"
+                        onClick={handleClear}
+                    >
                         <XIcon size="12" weight="light" />
                     </BaseButton>
                 )}
 
                 {loading && (
-                    <BaseButton className="mr-3 animate-spin">
+                    <BaseButton className="mr-3">
                         <SpinnerGapIcon size={12} className="animate-spin" />
                     </BaseButton>
                 )}

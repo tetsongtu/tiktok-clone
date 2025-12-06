@@ -7,15 +7,16 @@
 }
 
 .label {
-    padding: 8px;
-    font-size: 1.3em;
+    padding: 8px 8px 0px;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 .account-item {
     border-radius: 4px;
     display: flex;
     align-items: center;
-    padding: 8px;
+    padding: 4px 8px;
 
     &:hover {
         background: rgba(22, 24, 35, 0.03);
@@ -23,8 +24,9 @@
 }
 
 .more-btn {
-    padding: 8px;
-    font-size: 1.4em;
+    padding: 0px 8px 8px;
+    font-size: 18px;
+    font-weight: 600;
     color: #fe2c55;
     cursor: pointer;
 }

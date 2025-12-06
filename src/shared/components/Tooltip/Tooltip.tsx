@@ -139,7 +139,7 @@ function Tooltip({
                         }}
                         className={
                             content
-                                ? 'text-white font-bold bg-black px-2 py-1 rounded text-[1.4rem] select-none'
+                                ? 'text-white font-bold bg-black px-2 py-1 rounded text-sm select-none'
                                 : ''
                         }
                         {...getFloatingProps()}
@@ -151,6 +151,7 @@ function Tooltip({
                                 placement={placement}
                                 arrowX={arrowX}
                                 arrowY={arrowY}
+                                hasContent={true}
                             />
                         )}
                     </div>

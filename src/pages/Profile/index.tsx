@@ -1,8 +1,8 @@
 import { useState } from 'preact/hooks';
 import { useRoute } from 'wouter-preact';
 import { Image } from '~/shared';
-import { PencilIcon } from '@phosphor-icons/react';
-import { ProfilePost } from '~/features';
+import { PencilIcon, SpinnerGapIcon, UserCircleIcon } from '@phosphor-icons/react';
+import { ProfilePost, UserAvatar } from '~/features';
 import { EditProfileModal } from '~/features/Modals';
 import { useCurrentUser } from '~/shared/hooks';
 import { useProfileData } from './useProfileData';
@@ -19,14 +19,27 @@ function Profile() {
 
     if (status !== 'success' || !profileData) {
         return (
-            <div className="pt-[90px] px-10 text-center">
-                <p
-                    className={
-                        status === 'loading' ? 'text-gray-500' : 'text-red-500 text-xl'
-                    }
-                >
-                    {status === 'loading' ? 'Loading...' : error}
-                </p>
+            <div className="px-4 md:px-10 min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    {status === 'loading' ? (
+                        <div className="flex flex-col items-center gap-4">
+                            <SpinnerGapIcon
+                                className="animate-spin"
+                                size={48}
+                                color="#F02C56"
+                            />
+                            <p className="text-gray-600 text-lg">Đang tải hồ sơ...</p>
+                        </div>
+                    ) : (
+                        <div className="flex flex-col items-center gap-4">
+                            <UserCircleIcon size={64} color="#9CA3AF" />
+                            <p className="text-red-500 text-xl font-semibold">{error}</p>
+                            <p className="text-gray-500">
+                                Không tìm thấy người dùng @{nickname}
+                            </p>
+                        </div>
+                    )}
+                </div>
             </div>
         );
     }
@@ -36,22 +49,25 @@ function Profile() {
             {showEditProfile && (
                 <EditProfileModal onClose={() => setShowEditProfile(false)} />
             )}
-            <div className="pt-[90px] px-10">
-                <div className="flex">
-                    {profileData?.avatar ? (
-                        <Image
-                            className="w-[120px] h-[120px] min-w-[120px] rounded-full"
-                            src={profileData.avatar}
+            <div className="pt-[90px] px-4 md:px-10 animate-fadeIn">
+                {/* Profile Header */}
+                <div className="flex flex-col md:flex-row md:gap-8">
+                    {/* Avatar */}
+                    <div className="flex justify-center md:justify-start">
+                        <UserAvatar
+                            size={30}
+                            className="ring-4 ring-purple-200 shadow-lg"
+                            user={profileData.avatar}
                         />
-                    ) : (
-                        <div className="min-w-[150px] h-[120px] bg-gray-200 rounded-full" />
-                    )}
-                    <div className="ml-5 w-full">
-                        <div>
-                            <p className="text-[30px] font-bold truncate">
+                    </div>
+
+                    {/* Profile Info */}
+                    <div className="flex-1 text-center md:text-left">
+                        <div className="mb-3">
+                            <h1 className="text-3xl md:text-4xl font-bold truncate text-gray-900">
                                 {profileData.nickname}
-                            </p>
-                            <p className="text-[18px] truncate">
+                            </h1>
+                            <p className="text-lg md:text-xl text-gray-600 truncate mt-1">
                                 {profileData.first_name} {profileData.last_name}
                             </p>
                         </div>
@@ -59,64 +75,72 @@ function Profile() {
                         {isOwnProfile ? (
                             <button
                                 onClick={() => setShowEditProfile(true)}
-                                className="flex item-center rounded-md py-1.5 px-3.5 mt-3 text-[15px] font-semibold border hover:bg-gray-100"
+                                className="inline-flex items-center justify-center rounded-lg py-2.5 px-4 font-semibold border-2 border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200"
                             >
-                                <PencilIcon className="mt-0.5 mr-1" size="18" />
+                                <PencilIcon className="mr-2" size="18" />
                                 <span>Edit profile</span>
                             </button>
                         ) : (
-                            <button className="flex item-center rounded-md py-1.5 px-8 mt-3 text-[15px] text-white font-semibold bg-[#F02C56] hover:bg-[#d02648]">
-                                Follow
+                            <button className="inline-flex items-center justify-center rounded-lg py-2.5 px-6 text-base text-white font-semibold bg-[#F02C56] hover:bg-[#d02648] transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
+                                Theo dõi
                             </button>
                         )}
                     </div>
                 </div>
 
-                <div className="flex items-center pt-4">
-                    <div className="mr-4">
-                        <span className="font-bold">
+                {/* Stats */}
+                <div className="flex items-center justify-center md:justify-start gap-6 pt-6">
+                    <div className="text-center md:text-left">
+                        <span className="text-2xl font-bold text-gray-900 block">
                             {profileData?.followings_count || 0}
                         </span>
-                        <span className="text-gray-500 font-light text-[15px] pl-1.5">
-                            Following
+                        <span className="text-gray-500 font-medium text-base">
+                            Đang theo dõi
                         </span>
                     </div>
-                    <div className="mr-4">
-                        <span className="font-bold">{profileData?.likes_count || 0}</span>
-                        <span className="text-gray-500 font-light text-[15px] pl-1.5">
-                            Likes
+
+                    <div className="w-px h-8 bg-gray-300" />
+                    <div className="text-center md:text-left">
+                        <span className="text-2xl font-bold text-gray-900 block">
+                            {profileData?.likes_count || 0}
                         </span>
+                        <span className="text-gray-500 font-medium text-base">Thích</span>
                     </div>
                 </div>
 
-                <p className="pt-4 mr-4 text-gray-500 font-light text-[15px] pl-1.5 max-w-[500px]">
-                    {profileData?.bio}
-                </p>
+                {/* Bio */}
+                {profileData?.bio && (
+                    <p className="pt-6 text-gray-700 text-base max-w-[600px] leading-relaxed text-center md:text-left">
+                        {profileData.bio}
+                    </p>
+                )}
 
-                <ul className="w-full flex items-center pt-4 border-b relative">
+                {/* Tabs */}
+                <ul className="w-full flex items-center pt-8 border-b-2 border-gray-200 relative">
                     <li
                         onClick={() => setActiveTab('videos')}
-                        className={`w-60 text-center py-2 text-[17px] font-semibold cursor-pointer transition-colors duration-200 ${
+                        className={`flex-1 md:w-60 md:flex-none text-center py-3 text-lg font-semibold cursor-pointer transition-all duration-200 ${
                             activeTab === 'videos'
                                 ? 'text-black'
                                 : 'text-gray-500 hover:text-gray-700'
                         }`}
                     >
-                        Videos
+                        Video
                     </li>
                     <li
                         onClick={() => setActiveTab('liked')}
-                        className={`w-60 text-center py-2 text-[17px] font-semibold cursor-pointer transition-colors duration-200 ${
+                        className={`flex-1 md:w-60 md:flex-none text-center py-3 text-lg font-semibold cursor-pointer transition-all duration-200 ${
                             activeTab === 'liked'
                                 ? 'text-black'
                                 : 'text-gray-500 hover:text-gray-700'
                         }`}
                     >
-                        Liked
+                        Đã thích
                     </li>
                     <div
-                        className="absolute bottom-0 left-0 h-[2px] bg-black transition-all duration-300 ease-in-out w-60"
+                        className="absolute bottom-0 left-0 h-[3px] bg-black transition-all duration-300 ease-in-out"
                         style={{
+                            width: window.innerWidth < 768 ? '50%' : '240px',
                             transform: `translateX(${
                                 activeTab === 'videos' ? '0%' : '100%'
                             })`,
@@ -124,23 +148,70 @@ function Profile() {
                     />
                 </ul>
 
-                {activeTab === 'videos' ? (
-                    <div className="mt-4 grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3">
-                        {profileData?.videos?.map((video: any) => (
-                            <ProfilePost key={video.id} post={video} />
-                        ))}
-                    </div>
-                ) : profileData?.liked_videos?.length > 0 ? (
-                    <div className="mt-4 grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3">
-                        {profileData.liked_videos.map((video: any) => (
-                            <ProfilePost key={video.id} post={video} />
-                        ))}
-                    </div>
-                ) : (
-                    <div className="text-center py-12 text-gray-500">
-                        <p className="text-lg">Chưa có video được thích</p>
-                    </div>
-                )}
+                {/* Content */}
+                <div className="mt-6">
+                    {activeTab === 'videos' ? (
+                        profileData?.videos?.length > 0 ? (
+                            <div className="grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3 md:gap-4">
+                                {profileData.videos.map((video: any, index: number) => (
+                                    <div
+                                        key={video.id}
+                                        className="animate-fadeIn"
+                                        style={{
+                                            animationDelay: `${index * 50}ms`,
+                                        }}
+                                    >
+                                        <ProfilePost post={video} />
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-16 text-gray-500">
+                                <UserCircleIcon
+                                    size={64}
+                                    color="#D1D5DB"
+                                    className="mx-auto mb-4"
+                                />
+                                <p className="text-xl font-medium">Chưa có video nào</p>
+                                <p className="text-base mt-2">
+                                    {isOwnProfile
+                                        ? 'Hãy tải lên video đầu tiên của bạn!'
+                                        : 'Người dùng này chưa đăng video nào'}
+                                </p>
+                            </div>
+                        )
+                    ) : profileData?.liked_videos?.length > 0 ? (
+                        <div className="grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3 md:gap-4">
+                            {profileData.liked_videos.map((video: any, index: number) => (
+                                <div
+                                    key={video.id}
+                                    className="animate-fadeIn"
+                                    style={{
+                                        animationDelay: `${index * 50}ms`,
+                                    }}
+                                >
+                                    <ProfilePost post={video} />
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-16 text-gray-500">
+                            <UserCircleIcon
+                                size={64}
+                                color="#D1D5DB"
+                                className="mx-auto mb-4"
+                            />
+                            <p className="text-lg font-medium">
+                                Chưa có video được thích
+                            </p>
+                            <p className="text-sm mt-2">
+                                {isOwnProfile
+                                    ? 'Các video bạn thích sẽ xuất hiện ở đây'
+                                    : 'Video được thích của người dùng này là riêng tư'}
+                            </p>
+                        </div>
+                    )}
+                </div>
             </div>
         </>
     );

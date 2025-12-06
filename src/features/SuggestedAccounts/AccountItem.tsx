@@ -8,8 +8,6 @@ import AccountPreview from './AccountPreview/AccountPreview';
 import { UserAvatar } from '~/features';
 import { Link } from 'wouter-preact';
 
-// item-info avatar nickname name
-
 const cx = classNames.bind(styles);
 
 function AccountItem({ user }: AccountItemProps) {
@@ -31,17 +29,17 @@ function AccountItem({ user }: AccountItemProps) {
         >
             <Link to={`/@${user.nickname}`} className={cx('account-item')}>
                 <UserAvatar user={user} />
-                <section className={cx('ml-5 hidden lg:block')}>
-                    <p className={cx('text-4xl flex items-center')}>
+                <section className={cx('ml-3 hidden lg:block')}>
+                    <p className={cx('text-base flex items-center')}>
                         <strong>{user?.nickname}</strong>
                         {user?.tick && (
                             <CheckCircleIcon
                                 weight="fill"
-                                className="ml-1 text-green-500"
+                                className="ml-1 text-blue-500"
                             />
                         )}
                     </p>
-                    <p className={cx('text-2xl')}>
+                    <p className={cx('text-sm')}>
                         {user?.first_name + ' ' + user?.last_name}
                     </p>
                 </section>

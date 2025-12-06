@@ -14,12 +14,18 @@ interface SuggestedAccountsProps {
 function SuggestedAccounts({ label, data = [], onSeeAll }: SuggestedAccountsProps) {
     return (
         <>
-            <div className="border-t border-[#ccc] w-[50px] lg:w-[85%]"></div>
-            <p className={cx('label')}>{label}</p>
+            <div className="border-t border-gray-400 w-[50px] lg:w-[90%]"></div>
+            <p className={cx('label', 'text-gray-700')}>{label}</p>
 
             <div className="max-h-[250px] overflow-y-auto">
-                {data.map((account) => (
-                    <AccountItem key={account.id} user={account} />
+                {data.map((account, index) => (
+                    <div
+                        key={account.id}
+                        className="animate-fadeIn"
+                        style={{ animationDelay: `${index * 50}ms` }}
+                    >
+                        <AccountItem user={account} />
+                    </div>
                 ))}
             </div>
 
