@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { commentStore } from '~/lib/stores/commentStore';
-	import { goto, replaceState } from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import type { Video } from '~/lib/types/user';
 	import VideoPlayer from './post/VideoPlayer.svelte';
 	import VideoInfo from './post/VideoInfo.svelte';
 	import VideoActions from './post/VideoActions.svelte';
 	import VideoUserProfile from './post/VideoUserProfile.svelte';
 	import { useVideoObserver } from './post/useVideoObserver.svelte';
+	import { useAspectRatio } from './post/useAspectRatio.svelte';
 
 	interface Props {
 		video: Video;
@@ -19,31 +20,12 @@
 	let videoEl = $state<HTMLVideoElement>();
 	let containerEl = $state<HTMLDivElement>();
 
-	const showComments = $derived(activeVideoId === video.id);
 	const isAnyCommentOpen = $derived(activeVideoId !== null);
-	const aspectRatio = $derived.by(() => {
-		const width = video?.meta?.video?.resolution_x;
-		const height = video?.meta?.video?.resolution_y;
-		if (!width || !height) return { class: 'aspect-[9/16]', isWide: false };
-		const ratio = width / height;
-		if (Math.abs(ratio - 1) < 0.15) return { class: 'aspect-square', isWide: true };
-		if (ratio > 1.3) return { class: 'aspect-video', isWide: true };
-		return { class: 'aspect-[9/16]', isWide: false };
-	});
+	const aspectRatio = $derived(useAspectRatio(video));
 
 	$effect(() => {
 		activeVideoId = $commentStore.activeVideoId;
 	});
-
-	const handleToggleComments = () => {
-		const username = video?.user?.nickname;
-		if (showComments) {
-			commentStore.setActiveVideoId(null);
-		} else {
-			commentStore.setActiveVideoId(video.id);
-		}
-		replaceState(showComments ? '/' : `/@${username}/video/${video.id}`, {});
-	};
 
 	const handleUserClick = () => {
 		if (video?.user) {
@@ -78,13 +60,9 @@
 			/>
 
 			<VideoActions
-				videoId={video.id}
-				likesCount={video.likes_count}
-				commentsCount={video.comments_count}
-				sharesCount={video.shares_count}
+				{video}
 				{hasClickedLike}
 				onLike={() => hasClickedLike = true}
-				onComment={handleToggleComments}
 				onShare={() => {}}
 			/>
 		</div>
