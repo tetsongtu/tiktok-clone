@@ -34,16 +34,16 @@
 		const scrollEl = (mainEl?.querySelector('.overflow-y-auto') as HTMLElement) || mainEl;
 		const cleanup = feed.setupScrollHandler(scrollEl);
 
-		(window as any).refreshVideoFeed = () => {
+		window.refreshVideoFeed = () => {
 			commentStore.close();
 			refreshKey++;
 		};
-		(window as any).closeCommentDrawer = () => commentStore.close();
+		window.closeCommentDrawer = () => commentStore.close();
 
 		return () => {
 			cleanup?.();
-			delete (window as any).refreshVideoFeed;
-			delete (window as any).closeCommentDrawer;
+			delete window.refreshVideoFeed;
+			delete window.closeCommentDrawer;
 		};
 	});
 

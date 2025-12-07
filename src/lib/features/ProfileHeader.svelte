@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { IconPencil } from '$lib/components/icons';
-	import { UserAvatar } from '$lib/components';
+	import { IconPencil, IconCheckCircle } from '$lib/components/icons';
+	import { UserAvatar, Button } from '$lib/components';
 	import type { User, SuggestedUser } from '$lib/types';
 
 	interface Props {
@@ -10,37 +10,59 @@
 	}
 
 	let { profileData, isOwnProfile, onEditProfile }: Props = $props();
+
+	let isFollowing = $state(false);
+
+	const fullName = $derived(
+		[profileData.first_name, profileData.last_name].filter(Boolean).join(' ') || profileData.nickname
+	);
+
+	function handleFollow() {
+		isFollowing = !isFollowing;
+		// TODO: Call API to follow/unfollow
+	}
 </script>
 
-<div class="flex flex-row gap-4">
-	<div class="flex justify-start">
+<header class="flex flex-row gap-6">
+	<div class="flex-shrink-0">
 		<UserAvatar size={30} class="ring-4 ring-purple-200 shadow-lg" user={profileData} />
 	</div>
 
-	<div class="flex-1 text-left">
+	<div class="flex-1 min-w-0">
 		<div class="mb-4">
-			<h1 class="text-base font-normal truncate text-gray-900">
-				{profileData.nickname}
+			<h1 class="text-2xl font-bold flex items-center gap-2 text-gray-900">
+				<span class="truncate">@{profileData.nickname}</span>
+				{#if profileData.tick}
+					<span title="Verified account">
+						<IconCheckCircle class="w-5 h-5 text-blue-500 flex-shrink-0" />
+					</span>
+				{/if}
 			</h1>
-			<p class="text-base text-gray-600 truncate mt-4">
-				{profileData.first_name} {profileData.last_name}
+			<p class="text-lg text-gray-600 truncate mt-1">
+				{fullName}
 			</p>
 		</div>
 
 		{#if isOwnProfile}
-			<button
-				onclick={onEditProfile}
-				class="inline-flex items-center justify-center rounded-lg py-2.5 px-4 font-normal border-2 border-gray-300"
-			>
-				<IconPencil class="w-4 h-4 mr-2" />
-				<span>Edit profile</span>
-			</button>
+			<Button variant="outline" onclick={onEditProfile}>
+				{#snippet children()}
+					<IconPencil class="w-4 h-4 mr-2" />
+					Edit profile
+				{/snippet}
+			</Button>
 		{:else}
-			<button
-				class="inline-flex items-center justify-center rounded-lg py-2.5 px-6 text-base text-white font-normal bg-primary shadow-md"
+			<Button
+				variant={isFollowing ? 'outline' : 'primary'}
+				onclick={handleFollow}
 			>
-				Theo dõi
-			</button>
+				{#snippet children()}
+					{isFollowing ? 'Đang theo dõi' : 'Theo dõi'}
+				{/snippet}
+			</Button>
+		{/if}
+
+		{#if profileData.bio}
+			<p class="mt-4 text-gray-700 whitespace-pre-wrap">{profileData.bio}</p>
 		{/if}
 	</div>
-</div>
+</header>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { formatCount } from '$lib/utils';
 	import type { User, SuggestedUser } from '$lib/types';
 
 	interface Props {
@@ -6,23 +7,24 @@
 	}
 
 	let { profileData }: Props = $props();
+
+	const stats = $derived([
+		{ value: formatCount(profileData?.followings_count || 0), label: 'Đang theo dõi' },
+		{ value: formatCount(profileData?.followers_count || 0), label: 'Follower' },
+		{ value: formatCount(profileData?.likes_count || 0), label: 'Thích' }
+	]);
 </script>
 
-<div class="flex items-center justify-start gap-4 pt-6">
-	<div class="text-left">
-		<span class="text-base font-normal text-gray-900 block">
-			{profileData?.followings_count || 0}
-		</span>
-		<span class="text-gray-500 font-normal text-base">Đang theo dõi</span>
-	</div>
-
-	<div class="w-px h-8 bg-gray-300"></div>
-	<div class="text-left">
-		<span class="text-base font-normal text-gray-900 block">
-			{profileData?.likes_count || 0}
-		</span>
-		<span class="text-gray-500 font-normal text-base">Thích</span>
-	</div>
+<div class="flex items-center justify-start gap-6 pt-6">
+	{#each stats as stat, i}
+		{#if i > 0}
+			<div class="w-px h-8 bg-gray-300"></div>
+		{/if}
+		<div class="text-left">
+			<span class="text-lg font-semibold text-gray-900 block">{stat.value}</span>
+			<span class="text-gray-500 text-sm">{stat.label}</span>
+		</div>
+	{/each}
 </div>
 
 {#if profileData?.bio}

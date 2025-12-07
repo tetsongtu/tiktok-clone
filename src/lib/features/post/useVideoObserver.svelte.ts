@@ -5,7 +5,7 @@ import type { Video } from '$lib/types';
 export function useVideoObserver(
 	video: Video,
 	videoEl: HTMLVideoElement | undefined,
-	containerEl: HTMLDivElement | undefined,
+	containerEl: HTMLElement | undefined,
 	activeVideoId: number | null
 ) {
 	if (!video || !videoEl || !containerEl) return;

@@ -4,7 +4,7 @@
 	import { IconSpinner } from '$lib/components/icons';
 
 	interface Props {
-		count?: number;
+		count?: number | string;
 		onclick?: () => void;
 		disabled?: boolean;
 		isActive?: boolean;

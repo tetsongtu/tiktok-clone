@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import classNames from 'classnames';
 	import { IconSearch, IconClose, IconCheckCircle, IconSpinner } from '$lib/components/icons';
-	import { Tooltip } from '$lib/components';
 	import { searchService } from '$lib/services';
 	import { UI } from '$lib/constants';
 	import type { User } from '$lib/types';
@@ -11,8 +9,13 @@
 	let searchResult = $state<User[]>([]);
 	let showResult = $state(false);
 	let loading = $state(false);
-	let inputRef: HTMLInputElement;
+	let selectedIndex = $state(-1);
+	let inputRef = $state<HTMLInputElement>();
 	let debounceTimer: ReturnType<typeof setTimeout>;
+
+	const hasText = $derived(searchValue.trim().length > 0);
+	const showClear = $derived(hasText && !loading);
+	const showDropdown = $derived(showResult && (searchResult.length > 0 || loading));
 
 	async function searchAccounts(query: string) {
 		if (!query.trim()) {
@@ -23,6 +26,7 @@
 		loading = true;
 		try {
 			searchResult = await searchService.search(query);
+			selectedIndex = -1;
 		} catch (error) {
 			console.error('Search error:', error);
 			searchResult = [];
@@ -43,16 +47,41 @@
 
 		searchValue = value;
 
-		// Debounce
 		clearTimeout(debounceTimer);
 		debounceTimer = setTimeout(() => {
 			searchAccounts(searchValue);
 		}, UI.DEBOUNCE_DELAY + 200);
 	}
 
+	function handleKeyDown(e: KeyboardEvent) {
+		if (!showDropdown || searchResult.length === 0) return;
+
+		switch (e.key) {
+			case 'ArrowDown':
+				e.preventDefault();
+				selectedIndex = Math.min(selectedIndex + 1, searchResult.length - 1);
+				break;
+			case 'ArrowUp':
+				e.preventDefault();
+				selectedIndex = Math.max(selectedIndex - 1, -1);
+				break;
+			case 'Enter':
+				e.preventDefault();
+				if (selectedIndex >= 0 && searchResult[selectedIndex]) {
+					window.location.href = `/@${searchResult[selectedIndex].nickname}`;
+				}
+				break;
+			case 'Escape':
+				showResult = false;
+				selectedIndex = -1;
+				break;
+		}
+	}
+
 	function handleClear() {
 		searchValue = '';
 		searchResult = [];
+		selectedIndex = -1;
 		inputRef?.focus();
 	}
 
@@ -70,76 +99,94 @@
 			clearTimeout(debounceTimer);
 		};
 	});
-
-	const hasText = $derived(searchValue.trim().length > 0);
-	const showClear = $derived(hasText && !loading);
-	const showTooltip = $derived(showResult && searchResult.length > 0);
 </script>
 
-<div class="relative search-container">
+<search class="relative search-container" role="search">
 	<div
-		class="top-[16px] w-[208px] h-[40px] flex items-center justify-between gap-4 bg-gray-100 p-4 rounded-full"
+		class="w-[208px] h-[40px] flex items-center gap-2 bg-gray-100 px-3 rounded-full focus-within:ring-2 focus-within:ring-primary/50 transition-shadow"
 	>
-		<Tooltip content="Search">
-			<button
-				aria-label="Search"
-				class={classNames(
-					'h-full border-r border-r-gray-300 pr-2',
-					hasText ? 'text-[rgba(22,24,35,0.75)]' : 'opacity-50'
-				)}
-			>
-				<IconSearch class="w-5 h-5" />
-			</button>
-		</Tooltip>
+		<IconSearch class="w-5 h-5 flex-shrink-0 {hasText ? 'text-gray-700' : 'text-gray-400'}" />
+
 		<input
 			bind:this={inputRef}
 			bind:value={searchValue}
 			oninput={handleInput}
+			onkeydown={handleKeyDown}
 			onfocus={() => (showResult = true)}
 			placeholder="Tìm kiếm..."
 			spellcheck="false"
-			class="w-full p-4 bg-transparent placeholder:text-gray-400 text-base outline-none"
+			autocomplete="off"
+			role="combobox"
+			aria-expanded={showDropdown}
+			aria-controls="search-results"
+			aria-activedescendant={selectedIndex >= 0 ? `search-result-${selectedIndex}` : undefined}
+			class="flex-1 bg-transparent placeholder:text-gray-400 text-base outline-none"
 		/>
+
 		{#if showClear}
-			<button aria-label="Clear search" class="mr-2 rounded-full p-1 hover:bg-gray-200" onclick={handleClear}>
+			<button
+				type="button"
+				aria-label="Clear search"
+				class="rounded-full p-1 hover:bg-gray-200 transition-colors"
+				onclick={handleClear}
+			>
 				<IconClose class="w-3 h-3" />
 			</button>
 		{/if}
 
 		{#if loading}
-			<div class="mr-3">
-				<IconSpinner class="w-3 h-3 animate-spin" />
-			</div>
+			<IconSpinner class="w-4 h-4 animate-spin text-gray-500" />
 		{/if}
 	</div>
 
-	{#if showTooltip}
+	{#if showDropdown}
 		<div
-			class="absolute top-full mt-2 left-0 min-w-[208px] bg-white rounded-lg shadow-xl border border-gray-200 z-50"
+			id="search-results"
+			role="listbox"
+			class="absolute top-full mt-2 left-0 w-full min-w-[280px] bg-white rounded-lg shadow-xl border border-gray-200 z-50 overflow-hidden"
 		>
-			<h4 class="px-3 py-1 text-base font-normal text-gray-500">Accounts</h4>
-			{#each searchResult as result (result.id)}
-				<a
-					href="/@{result.nickname}"
-					class="flex items-center px-2 py-1 rounded hover:bg-gray-50"
-					onclick={() => (showResult = false)}
-				>
-					<img
-						src={result.avatar}
-						alt={result.nickname}
-						class="w-10 h-10 rounded-full object-cover"
-					/>
-					<div class="ml-3">
-						<p class="text-base flex items-center">
-							<strong>{result.nickname}</strong>
-							{#if result.tick}
-								<IconCheckCircle class="w-4 h-4 ml-1 text-blue-500" />
-							{/if}
-						</p>
-						<p class="text-base text-gray-600">{result.first_name} {result.last_name}</p>
-					</div>
-				</a>
-			{/each}
+			{#if loading}
+				<div class="flex items-center justify-center py-4">
+					<IconSpinner class="w-5 h-5 animate-spin text-primary" />
+				</div>
+			{:else if searchResult.length > 0}
+				<h4 class="px-3 py-2 text-sm font-medium text-gray-500 border-b">Accounts</h4>
+				<ul>
+					{#each searchResult as result, index (result.id)}
+						<li>
+							<a
+								id="search-result-{index}"
+								href="/@{result.nickname}"
+								role="option"
+								aria-selected={selectedIndex === index}
+								class="flex items-center px-3 py-2 hover:bg-gray-50 transition-colors {selectedIndex === index
+									? 'bg-gray-100'
+									: ''}"
+								onclick={() => (showResult = false)}
+							>
+								<img
+									src={result.avatar}
+									alt=""
+									class="w-10 h-10 rounded-full object-cover flex-shrink-0"
+								/>
+								<div class="ml-3 min-w-0">
+									<p class="text-sm font-medium flex items-center gap-1">
+										<span class="truncate">{result.nickname}</span>
+										{#if result.tick}
+											<IconCheckCircle class="w-4 h-4 text-blue-500 flex-shrink-0" />
+										{/if}
+									</p>
+									<p class="text-sm text-gray-500 truncate">
+										{result.first_name} {result.last_name}
+									</p>
+								</div>
+							</a>
+						</li>
+					{/each}
+				</ul>
+			{:else if hasText}
+				<p class="px-3 py-4 text-sm text-gray-500 text-center">No results found</p>
+			{/if}
 		</div>
 	{/if}
-</div>
+</search>

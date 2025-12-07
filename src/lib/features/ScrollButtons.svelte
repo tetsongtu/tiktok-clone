@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { IconArrowUp, IconArrowDown } from '$lib/components/icons';
 
+	const SCROLL_THRESHOLD = 5;
+	const INIT_DELAY = 300;
+
 	let ready = $state(false);
 	let canScrollUp = $state(false);
 	let canScrollDown = $state(false);
 
-	function getScrollContainer() {
-		return document.getElementById('MainContent')?.querySelector('.overflow-y-auto');
+	function getScrollContainer(): Element | null {
+		return document.getElementById('MainContent')?.querySelector('.overflow-y-auto') ?? null;
 	}
 
 	function checkScroll() {
@@ -15,23 +18,33 @@
 
 		const { scrollTop, scrollHeight, clientHeight } = container;
 		ready = true;
-		canScrollUp = scrollTop > 5;
-		canScrollDown = scrollTop + clientHeight < scrollHeight - 5;
+		canScrollUp = scrollTop > SCROLL_THRESHOLD;
+		canScrollDown = scrollTop + clientHeight < scrollHeight - SCROLL_THRESHOLD;
 	}
 
 	function handleScroll(direction: 'up' | 'down') {
-		getScrollContainer()?.scrollBy({
+		const container = getScrollContainer();
+		if (!container) return;
+
+		container.scrollBy({
 			top: direction === 'down' ? window.innerHeight : -window.innerHeight,
-			behavior: 'smooth'
+			behavior: 'smooth',
 		});
+	}
+
+	function handleKeyDown(e: KeyboardEvent, direction: 'up' | 'down') {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault();
+			handleScroll(direction);
+		}
 	}
 
 	$effect(() => {
 		const container = getScrollContainer();
 		if (!container) return;
 
-		const timer = setTimeout(checkScroll, 300);
-		container.addEventListener('scroll', checkScroll);
+		const timer = setTimeout(checkScroll, INIT_DELAY);
+		container.addEventListener('scroll', checkScroll, { passive: true });
 
 		return () => {
 			clearTimeout(timer);
@@ -41,26 +54,29 @@
 </script>
 
 {#if ready}
-	<div
+	<nav
 		class="fixed top-0 right-0 h-screen w-24 flex items-center justify-center pointer-events-none z-30"
+		aria-label="Page scroll controls"
 	>
-		<div class="flex flex-col gap-4 pointer-events-auto">
+		<div class="flex flex-col gap-4 pointer-events-auto" role="group">
 			<button
 				onclick={() => handleScroll('up')}
+				onkeydown={(e) => handleKeyDown(e, 'up')}
 				disabled={!canScrollUp}
-				aria-label="Scroll up"
-				class="w-12 h-12 flex justify-center items-center rounded-full bg-white/90 disabled:cursor-not-allowed disabled:opacity-50"
+				aria-label="Scroll to previous video"
+				class="w-12 h-12 flex justify-center items-center rounded-full bg-white/90 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-50 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
 			>
-				<IconArrowUp class="w-8 h-8 text-purple-600" />
+				<IconArrowUp class="w-8 h-8 text-primary" />
 			</button>
 			<button
 				onclick={() => handleScroll('down')}
+				onkeydown={(e) => handleKeyDown(e, 'down')}
 				disabled={!canScrollDown}
-				aria-label="Scroll down"
-				class="w-12 h-12 flex justify-center items-center rounded-full bg-white/90 disabled:cursor-not-allowed disabled:opacity-50"
+				aria-label="Scroll to next video"
+				class="w-12 h-12 flex justify-center items-center rounded-full bg-white/90 shadow-md hover:bg-white disabled:cursor-not-allowed disabled:opacity-50 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
 			>
-				<IconArrowDown class="w-8 h-8 text-purple-600" />
+				<IconArrowDown class="w-8 h-8 text-primary" />
 			</button>
 		</div>
-	</div>
+	</nav>
 {/if}

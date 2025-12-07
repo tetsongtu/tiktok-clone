@@ -1,9 +1,10 @@
 import { get, ApiError } from './http';
+import { API_ENDPOINTS } from '$lib/constants';
 import type { Video, ApiResponse } from '$lib/types';
 
 export async function getVideo(id: number): Promise<Video | null> {
 	try {
-		const response = await get<ApiResponse<Video>>(`videos/${id}`);
+		const response = await get<ApiResponse<Video>>(API_ENDPOINTS.VIDEO_BY_ID(id));
 		return response.data ?? null;
 	} catch (error) {
 		if (error instanceof ApiError) {

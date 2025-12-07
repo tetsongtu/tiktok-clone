@@ -60,7 +60,8 @@ export interface Comment {
 	user: string;
 	text: string;
 	likes: number;
-	created_at?: string;
+	createdAt?: Date | string;
+	replies?: Comment[];
 }
 
 // ============================================

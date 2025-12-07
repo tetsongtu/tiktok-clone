@@ -29,6 +29,11 @@
 	let wrapperEl = $state<HTMLDivElement>();
 	let hoverTimeout: ReturnType<typeof setTimeout>;
 
+	// Cleanup timeout on unmount
+	$effect(() => {
+		return () => clearTimeout(hoverTimeout);
+	});
+
 	const isVisible = $derived(visible !== undefined ? visible : showTooltip);
 
 	function handleMouseEnter() {

@@ -1,5 +1,8 @@
 import type { GuestUser } from '$lib/types';
 
+// Re-export API endpoints
+export * from './api';
+
 // ============================================
 // App Config
 // ============================================
@@ -89,4 +92,8 @@ export const GUEST_USER: GuestUser = {
 export const VALIDATION = {
 	NICKNAME_PATTERN: /^[a-zA-Z0-9_]+$/,
 	NICKNAME_MAX_LENGTH: 30,
+	EMAIL_PATTERN: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+	PASSWORD_MIN_LENGTH: 6,
+	PASSWORD_MAX_LENGTH: 50,
+	BIO_MAX_LENGTH: 80,
 } as const;
