@@ -10,19 +10,10 @@
 		e.preventDefault();
 		loading = true;
 
-		// Reset comment
 		commentStore.setActiveVideoId(null);
+		(window as any).closeCommentDrawer?.();
+		(window as any).refreshVideoFeed?.();
 
-		if ((window as any).closeCommentDrawer) {
-			(window as any).closeCommentDrawer();
-		}
-
-		// Refresh video feed
-		if ((window as any).refreshVideoFeed) {
-			(window as any).refreshVideoFeed();
-		}
-
-		// Reload page để reset URL về /
 		setTimeout(() => {
 			window.location.href = '/';
 		}, 300);
