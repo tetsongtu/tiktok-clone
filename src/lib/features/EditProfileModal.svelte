@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { IconPencil, IconSpinner } from '~/lib/components/icons';
 	import Modal from '~/lib/components/Modal.svelte';
 	import Button from '~/lib/components/Button.svelte';
 	import UserAvatar from '~/lib/components/UserAvatar.svelte';
@@ -69,11 +70,7 @@
 							aria-label="Edit profile photo"
 							class="absolute bottom-0 right-0 rounded-full bg-white shadow-xl border border-gray-300 w-8 h-8 flex items-center justify-center"
 						>
-							<svg class="w-4 h-4" viewBox="0 0 256 256" fill="currentColor">
-								<path
-									d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63Z"
-								></path>
-							</svg>
+							<IconPencil class="w-4 h-4" />
 						</button>
 					</label>
 					<input
@@ -132,11 +129,7 @@
 				<Button variant="primary" disabled={isSubmitting} onclick={handleApply}>
 					{#snippet children()}
 						{#if isSubmitting}
-							<svg class="w-5 h-5 animate-spin mr-2" viewBox="0 0 256 256" fill="currentColor">
-								<path
-									d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"
-								></path>
-							</svg>
+							<IconSpinner class="w-5 h-5 animate-spin mr-2" />
 							Saving...
 						{:else}
 							Apply

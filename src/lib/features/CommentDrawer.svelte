@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { IconHeart, IconShare } from '~/lib/components/icons';
 	import { onMount } from 'svelte';
 	import UserAvatar from '~/lib/components/UserAvatar.svelte';
 
@@ -112,11 +113,7 @@
 							</div>
 						</div>
 						<button aria-label="Like comment" class="text-gray-400">
-							<svg class="w-4 h-4" viewBox="0 0 256 256" fill="currentColor">
-								<path
-									d="M240,94c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,220.66,16,164,16,94A62.07,62.07,0,0,1,78,32c20.65,0,38.73,8.88,50,23.89C139.27,40.88,157.35,32,178,32A62.07,62.07,0,0,1,240,94Z"
-								></path>
-							</svg>
+							<IconHeart class="w-4 h-4" />
 						</button>
 					</div>
 				{/each}
@@ -127,18 +124,10 @@
 		<div class="border-t p-4">
 			<div class="flex items-center gap-4 mb-4">
 				<button aria-label="Like video">
-					<svg class="w-7 h-7" viewBox="0 0 256 256" fill="currentColor">
-						<path
-							d="M240,94c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,220.66,16,164,16,94A62.07,62.07,0,0,1,78,32c20.65,0,38.73,8.88,50,23.89C139.27,40.88,157.35,32,178,32A62.07,62.07,0,0,1,240,94Z"
-						></path>
-					</svg>
+					<IconHeart class="w-7 h-7" />
 				</button>
 				<button aria-label="Share video">
-					<svg class="w-7 h-7" viewBox="0 0 256 256" fill="currentColor">
-						<path
-							d="M237.66,106.35l-80-80A8,8,0,0,0,144,32V72.35c-25.94,2.22-54.59,14.92-78.16,34.91-28.38,24.08-46.05,55.11-49.76,87.37a12,12,0,0,0,20.68,9.58c11-11.71,50.14-48.74,107.24-52V192a8,8,0,0,0,13.66,5.65l80-80A8,8,0,0,0,237.66,106.35Z"
-						></path>
-					</svg>
+					<IconShare class="w-7 h-7" />
 				</button>
 			</div>
 			<p class="font-normal text-base mb-4">

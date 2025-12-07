@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { IconSearch, IconClose, IconCheckCircle, IconSpinner } from '~/lib/components/icons';
 	import { onMount } from 'svelte';
 	import classNames from 'classnames';
 	import * as searchServices from '~/lib/services/searchService';
@@ -86,11 +87,7 @@
 					hasText ? 'text-[rgba(22,24,35,0.75)]' : 'opacity-50'
 				)}
 			>
-				<svg class="w-5 h-5" viewBox="0 0 256 256" fill="currentColor">
-					<path
-						d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
-					></path>
-				</svg>
+				<IconSearch class="w-5 h-5" />
 			</button>
 		</Tooltip>
 		<input
@@ -104,21 +101,13 @@
 		/>
 		{#if showClear}
 			<button aria-label="Clear search" class="mr-2 rounded-full p-1 hover:bg-gray-200" onclick={handleClear}>
-				<svg class="w-3 h-3" viewBox="0 0 256 256" fill="currentColor">
-					<path
-						d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"
-					></path>
-				</svg>
+				<IconClose class="w-3 h-3" />
 			</button>
 		{/if}
 
 		{#if loading}
 			<div class="mr-3">
-				<svg class="w-3 h-3 animate-spin" viewBox="0 0 256 256" fill="currentColor">
-					<path
-						d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"
-					></path>
-				</svg>
+				<IconSpinner class="w-3 h-3 animate-spin" />
 			</div>
 		{/if}
 	</div>
@@ -143,15 +132,7 @@
 						<p class="text-base flex items-center">
 							<strong>{result.nickname}</strong>
 							{#if result.tick}
-								<svg
-									class="w-4 h-4 ml-1 text-blue-500"
-									viewBox="0 0 256 256"
-									fill="currentColor"
-								>
-									<path
-										d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"
-									></path>
-								</svg>
+								<IconCheckCircle class="w-4 h-4 ml-1 text-blue-500" />
 							{/if}
 						</p>
 						<p class="text-base text-gray-600">{result.first_name} {result.last_name}</p>

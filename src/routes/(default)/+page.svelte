@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { IconClose, IconHeart, IconShare } from '~/lib/components/icons';
 	import PostMain from '~/lib/features/PostMain.svelte';
 	import * as videoService from '~/lib/services/videoService';
 	import { commentStore } from '~/lib/stores/commentStore';
@@ -17,10 +18,15 @@
 		if (isFetchingRef) return;
 		isFetchingRef = true;
 
-		const videoIds = Array.from(
-			{ length: VIDEOS_PER_BATCH },
-			() => Math.floor(Math.random() * MAX_VIDEO_ID) + 1
-		).filter((id) => !fetchedIdsRef.has(id));
+		const attempts = VIDEOS_PER_BATCH * 3;
+		const videoIds: number[] = [];
+		
+		for (let i = 0; i < attempts && videoIds.length < VIDEOS_PER_BATCH; i++) {
+			const id = Math.floor(Math.random() * MAX_VIDEO_ID) + 1;
+			if (!fetchedIdsRef.has(id)) {
+				videoIds.push(id);
+			}
+		}
 
 		const results = await Promise.allSettled(videoIds.map((id) => videoService.getVideo(id)));
 
@@ -39,19 +45,18 @@
 		isFetchingRef = false;
 	}
 
-	// useEffect(() => {...}, [resetKey]) - Reset when resetKey changes
 	$effect(() => {
 		if (refreshKey > 0) {
 			videos = [];
 			fetchedIdsRef.clear();
 			isFetchingRef = false;
-			fetchVideos();
 		}
 	});
 
-	// useEffect(() => {...}, []) - Run once on mount
 	$effect(() => {
-		fetchVideos();
+		if (videos.length === 0 && !isFetchingRef) {
+			fetchVideos();
+		}
 
 		const mainEl = document.getElementById('MainContent');
 		const scrollEl = (mainEl?.querySelector('.overflow-y-auto') as HTMLElement) || mainEl;
@@ -62,7 +67,7 @@
 			const isNearBottom =
 				scrollEl.scrollTop + scrollEl.clientHeight >= scrollEl.scrollHeight - SCROLL_THRESHOLD;
 
-			if (isNearBottom) {
+			if (isNearBottom && !isFetchingRef) {
 				fetchVideos();
 			}
 		};
@@ -112,9 +117,7 @@
 					}} 
 					class="text-gray-500 hover:text-gray-700"
 				>
-					<svg class="w-6 h-6" viewBox="0 0 256 256" fill="currentColor">
-						<path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
-					</svg>
+					<IconClose class="w-6 h-6" />
 				</button>
 			</div>
 
@@ -142,9 +145,7 @@
 						</div>
 					</div>
 					<button aria-label="Like comment" class="text-gray-400 hover:text-red-500">
-						<svg class="w-4 h-4" viewBox="0 0 256 256" fill="currentColor">
-							<path d="M240,94c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,220.66,16,164,16,94A62.07,62.07,0,0,1,78,32c20.65,0,38.73,8.88,50,23.89C139.27,40.88,157.35,32,178,32A62.07,62.07,0,0,1,240,94Z"></path>
-						</svg>
+						<IconHeart class="w-4 h-4" />
 					</button>
 				</div>
 
@@ -159,9 +160,7 @@
 						</div>
 					</div>
 					<button aria-label="Like comment" class="text-gray-400 hover:text-red-500">
-						<svg class="w-4 h-4" viewBox="0 0 256 256" fill="currentColor">
-							<path d="M240,94c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,220.66,16,164,16,94A62.07,62.07,0,0,1,78,32c20.65,0,38.73,8.88,50,23.89C139.27,40.88,157.35,32,178,32A62.07,62.07,0,0,1,240,94Z"></path>
-						</svg>
+						<IconHeart class="w-4 h-4" />
 					</button>
 				</div>
 			</div>
@@ -170,14 +169,10 @@
 			<div class="border-t p-4">
 				<div class="flex items-center gap-4 mb-4">
 					<button aria-label="Like video" class="hover:text-red-500">
-						<svg class="w-7 h-7" viewBox="0 0 256 256" fill="currentColor">
-							<path d="M240,94c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,220.66,16,164,16,94A62.07,62.07,0,0,1,78,32c20.65,0,38.73,8.88,50,23.89C139.27,40.88,157.35,32,178,32A62.07,62.07,0,0,1,240,94Z"></path>
-						</svg>
+						<IconHeart class="w-7 h-7" />
 					</button>
 					<button aria-label="Share video" class="hover:text-blue-500">
-						<svg class="w-7 h-7" viewBox="0 0 256 256" fill="currentColor">
-							<path d="M237.66,106.35l-80-80A8,8,0,0,0,144,32V72.35c-25.94,2.22-54.59,14.92-78.16,34.91-28.38,24.08-46.05,55.11-49.76,87.37a12,12,0,0,0,20.68,9.58c11-11.71,50.14-48.74,107.24-52V192a8,8,0,0,0,13.66,5.65l80-80A8,8,0,0,0,237.66,106.35Z"></path>
-						</svg>
+						<IconShare class="w-7 h-7" />
 					</button>
 				</div>
 				<p class="font-semibold text-sm mb-4">

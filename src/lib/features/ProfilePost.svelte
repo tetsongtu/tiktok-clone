@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { IconChartBar } from '~/lib/components/icons';
 
 	interface Props {
 		post: any;
@@ -7,61 +7,46 @@
 
 	let { post }: Props = $props();
 
-	onMount(() => {
-		const video = document.getElementById(`video${post?.id}`) as HTMLVideoElement;
-		if (!video) return;
+	function handleMouseEnter() {
+		const video = document.getElementById(`video${post.id}`) as HTMLVideoElement;
+		if (video) video.play();
+	}
 
-		const handleMouseEnter = () => video.play();
-		const handleMouseLeave = () => video.pause();
-
-		setTimeout(() => {
-			video.addEventListener('mouseenter', handleMouseEnter);
-			video.addEventListener('mouseleave', handleMouseLeave);
-		}, 50);
-
-		return () => {
-			video.removeEventListener('mouseenter', handleMouseEnter);
-			video.removeEventListener('mouseleave', handleMouseLeave);
-		};
-	});
+	function handleMouseLeave() {
+		const video = document.getElementById(`video${post.id}`) as HTMLVideoElement;
+		if (video) video.pause();
+	}
 </script>
 
-<div class="relative brightness-90 cursor-pointer">
-	{#if !post.video_url}
-		<div
-			class="absolute flex items-center justify-center top-0 left-0 aspect-[3/4] w-full object-cover rounded-md bg-black"
+<div class="relative cursor-pointer">
+	<a href="/post/{post.id}/{post.user_id}" aria-label="View video post">
+		<div 
+			role="button"
+			tabindex="0"
+			class="aspect-[3/4] bg-gray-200 rounded-md flex items-center justify-center"
+			onmouseenter={handleMouseEnter}
+			onmouseleave={handleMouseLeave}
 		>
-			<svg class="w-20 h-20 text-white animate-spin" viewBox="0 0 256 256" fill="currentColor">
-				<path
-					d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"
-				/>
-			</svg>
+			{#if post?.file_url}
+				<video
+					id="video{post.id}"
+					muted
+					loop
+					class="w-full h-full object-cover rounded-md"
+					src={post.file_url}
+				></video>
+			{:else}
+				<span class="text-gray-400 text-sm">No video</span>
+			{/if}
 		</div>
-	{:else}
-		<a href="/post/{post.id}/{post.user_id}" aria-label="View video post">
-			<video
-				id="video{post.id}"
-				muted
-				loop
-				class="aspect-[3/4] object-cover rounded-md"
-				src={post.video_url}
-			></video>
-		</a>
-	{/if}
-	<div class="px-1">
-		<p class="text-gray-700 text-[15px] pt-1 break-words">{post.text}</p>
-		<div class="flex items-center gap-4 -ml-1 text-gray-600 font-normal text-base">
-			<svg class="w-4 h-4" viewBox="0 0 256 256" fill="currentColor">
-				<path
-					d="M224,200h-8V40a8,8,0,0,0-8-8H152a8,8,0,0,0-8,8V80H96a8,8,0,0,0-8,8v40H48a8,8,0,0,0-8,8v64H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16Z"
-				/>
-			</svg>
-			3%
-			<svg class="w-4 h-4" viewBox="0 0 256 256" fill="currentColor">
-				<path
-					d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-8,56a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,104a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z"
-				/>
-			</svg>
+	</a>
+	<div class="px-1 mt-2">
+		<p class="text-gray-700 text-[15px] break-words line-clamp-2">
+			{post?.description || ''}
+		</p>
+		<div class="flex items-center gap-2 text-gray-600 text-sm mt-1">
+			<IconChartBar class="w-4 h-4" />
+			<span>{post?.likes_count || 0}</span>
 		</div>
 	</div>
 </div>

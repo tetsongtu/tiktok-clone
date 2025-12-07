@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { IconCheckCircle } from '~/lib/components/icons';
 	import UserAvatar from '~/lib/components/UserAvatar.svelte';
 	import AccountPreview from './AccountPreview.svelte';
 	import Tooltip from '~/lib/components/Tooltip.svelte';
@@ -28,11 +29,7 @@
 						<p class="text-base flex items-center">
 							<strong class="truncate">{account?.nickname}</strong>
 							{#if account?.tick}
-								<svg class="w-4 h-4 ml-1 text-blue-500 flex-shrink-0" viewBox="0 0 256 256" fill="currentColor">
-									<path
-										d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"
-									/>
-								</svg>
+								<IconCheckCircle class="w-4 h-4 ml-1 text-blue-500 flex-shrink-0" />
 							{/if}
 						</p>
 						<p class="text-base truncate">{account?.first_name} {account?.last_name}</p>

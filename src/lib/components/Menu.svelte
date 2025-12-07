@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { IconCaretRight } from '~/lib/components/icons';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import classNames from 'classnames';
@@ -132,11 +133,7 @@
 						{/if}
 						<span class="flex-1">{item.title}</span>
 						{#if item.children}
-							<svg class="w-4 h-4" viewBox="0 0 256 256" fill="currentColor">
-								<path
-									d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"
-								></path>
-							</svg>
+							<IconCaretRight class="w-4 h-4" />
 						{/if}
 					</button>
 				{/each}

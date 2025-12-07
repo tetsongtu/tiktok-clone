@@ -2,6 +2,7 @@
 	import { commentStore } from '~/lib/stores/commentStore';
 	import UserAvatar from '~/lib/components/UserAvatar.svelte';
 	import ActionButton from '~/lib/components/ActionButton.svelte';
+	import { IconPlay, IconMute, IconVolume, IconPlus, IconHeart, IconComment, IconShare } from '~/lib/components/icons';
 	import { goto } from '$app/navigation';
 
 	interface Props {
@@ -138,11 +139,7 @@
 		<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
 			{#if !isPlaying}
 				<div class="bg-black/50 rounded-full p-4">
-					<svg class="w-12 h-12 text-white" viewBox="0 0 256 256" fill="currentColor">
-						<path
-							d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"
-						></path>
-					</svg>
+					<IconPlay class="w-12 h-12 text-white" />
 				</div>
 			{/if}
 		</div>
@@ -154,17 +151,9 @@
 			class="absolute bottom-4 right-4 bg-black/50 hover:bg-black/70 rounded-full p-2 pointer-events-auto"
 		>
 			{#if isMuted}
-				<svg class="w-6 h-6 text-white" viewBox="0 0 256 256" fill="currentColor">
-					<path
-						d="M155.51,24.81a8,8,0,0,0-8.42.88L77.25,80H32A16,16,0,0,0,16,96v64a16,16,0,0,0,16,16H77.25l69.84,54.31A8,8,0,0,0,160,224V32A8,8,0,0,0,155.51,24.81ZM213.66,146.34l18.35,18.35a8,8,0,0,1-11.32,11.32L202.34,157.66l-18.35,18.35a8,8,0,0,1-11.32-11.32L191,146.34l-18.35-18.35a8,8,0,0,1,11.32-11.32L202.34,135l18.35-18.35a8,8,0,0,1,11.32,11.32Z"
-					></path>
-				</svg>
+				<IconMute class="w-6 h-6 text-white" />
 			{:else}
-				<svg class="w-6 h-6 text-white" viewBox="0 0 256 256" fill="currentColor">
-					<path
-						d="M155.51,24.81a8,8,0,0,0-8.42.88L77.25,80H32A16,16,0,0,0,16,96v64a16,16,0,0,0,16,16H77.25l69.84,54.31A8,8,0,0,0,160,224V32A8,8,0,0,0,155.51,24.81ZM224,104a8,8,0,0,1,0,16,48.05,48.05,0,0,0,0-96,8,8,0,0,1,0-16,64.07,64.07,0,0,1,0,128,8,8,0,0,1,0-16,48.05,48.05,0,0,0,0-96Z"
-					></path>
-				</svg>
+				<IconVolume class="w-6 h-6 text-white" />
 			{/if}
 		</button>
 		<div class="absolute bottom-0 left-0 right-0 pointer-events-none">
@@ -185,11 +174,7 @@
 						aria-label="Follow"
 						class="text-white flex justify-center items-center absolute size-8 rounded-full top-14 bg-[var(--primary)]"
 					>
-						<svg class="w-3 h-3" viewBox="0 0 256 256" fill="currentColor">
-							<path
-								d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"
-							></path>
-						</svg>
+						<IconPlus class="w-3 h-3" />
 					</button>
 				</div>
 			</a>
@@ -203,33 +188,17 @@
 					isActive={hasClickedLike}
 					isLoading={hasClickedLike}
 				>
-					<svg
-						class="w-6 h-6"
-						viewBox="0 0 256 256"
-						fill={hasClickedLike ? '#ff2626' : '#374151'}
-					>
-						<path
-							d="M240,94c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,220.66,16,164,16,94A62.07,62.07,0,0,1,78,32c20.65,0,38.73,8.88,50,23.89C139.27,40.88,157.35,32,178,32A62.07,62.07,0,0,1,240,94Z"
-						></path>
-					</svg>
+					<IconHeart class="w-6 h-6 {hasClickedLike ? 'text-[#ff2626]' : 'text-gray-700'}" />
 				</ActionButton>
 
 				<!-- Comment Button -->
 				<ActionButton count={post.comments_count} onclick={handleToggleComments}>
-					<svg class="w-6 h-6" viewBox="0 0 256 256" fill="#374151">
-						<path
-							d="M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Z"
-						></path>
-					</svg>
+					<IconComment class="w-6 h-6 text-gray-700" />
 				</ActionButton>
 
 				<!-- Share Button -->
 				<ActionButton count={post.shares_count} onclick={handleShare}>
-					<svg class="w-6 h-6" viewBox="0 0 256 256" fill="#374151">
-						<path
-							d="M237.66,106.35l-80-80A8,8,0,0,0,144,32V72.35c-25.94,2.22-54.59,14.92-78.16,34.91-28.38,24.08-46.05,55.11-49.76,87.37a12,12,0,0,0,20.68,9.58c11-11.71,50.14-48.74,107.24-52V192a8,8,0,0,0,13.66,5.65l80-80A8,8,0,0,0,237.66,106.35Z"
-						></path>
-					</svg>
+					<IconShare class="w-6 h-6 text-gray-700" />
 				</ActionButton>
 			</div>
 		</div>

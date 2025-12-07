@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { IconUserCircle, IconSmiley } from '~/lib/components/icons';
 	import { userStore } from '~/lib/stores/userStore';
 	import Modal from '~/lib/components/Modal.svelte';
 	import Button from '~/lib/components/Button.svelte';
@@ -96,11 +97,7 @@
 					onclick={() => (view = 'login')}
 					class="w-full p-4 border-2 border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-3"
 				>
-					<svg class="w-6 h-6" viewBox="0 0 256 256" fill="currentColor">
-						<path
-							d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm0-144a56,56,0,0,0-56,56,8,8,0,0,1-16,0,72,72,0,1,1,72,72,8,8,0,0,1,0-16A56,56,0,0,0,128,72Z"
-						></path>
-					</svg>
+					<IconUserCircle class="w-6 h-6" />
 					<span class="font-semibold">Use email / username</span>
 				</button>
 
@@ -108,11 +105,7 @@
 					onclick={() => handleSuccess(GUEST_USER)}
 					class="w-full p-4 border-2 border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-3"
 				>
-					<svg class="w-6 h-6" viewBox="0 0 256 256" fill="currentColor">
-						<path
-							d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm40-68a12,12,0,1,1-12-12A12,12,0,0,1,168,148Zm-56,0a12,12,0,1,1-12-12A12,12,0,0,1,112,148Zm76-28c0,35.82-29.47,52-68,52s-68-16.18-68-52a8,8,0,0,1,16,0c0,20.39,17.12,36,52,36s52-15.61,52-36a8,8,0,0,1,16,0Z"
-						></path>
-					</svg>
+					<IconSmiley class="w-6 h-6" />
 					<span class="font-semibold">Continue as Guest</span>
 				</button>
 			</div>

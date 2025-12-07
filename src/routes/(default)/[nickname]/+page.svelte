@@ -1,10 +1,12 @@
 <script lang="ts">
+	import { IconSpinner, IconPencil, IconUserCircle } from '~/lib/components/icons';
 	import { page } from '$app/state';
 	import { userStore } from '~/lib/stores/userStore';
 	import UserAvatar from '~/lib/components/UserAvatar.svelte';
 	import ProfilePost from '~/lib/features/ProfilePost.svelte';
 	import EditProfileModal from '~/lib/features/EditProfileModal.svelte';
 	import * as searchService from '~/lib/services/searchService';
+	import * as videoService from '~/lib/services/videoService';
 
 	type Status = 'idle' | 'loading' | 'success' | 'error' | 'not_found';
 
@@ -18,49 +20,100 @@
 	let error = $state<string>('');
 	let showEditProfile = $state(false);
 	let activeTab = $state<'videos' | 'liked'>('videos');
-
-	async function loadProfile() {
-		// Only load if nickname starts with @ or is a valid username
-		if (!rawNickname.startsWith('@') && rawNickname !== nickname) {
-			// This is not a profile route (e.g., /following, /explore)
-			return;
-		}
-
-		if (!nickname || !/^[a-zA-Z0-9_]+$/.test(nickname) || nickname.length > 30) {
-			status = 'error';
-			error = 'Invalid username';
-			return;
-		}
-
-		if (user?.nickname === nickname) {
-			profileData = user;
-			status = 'success';
-			return;
-		}
-
-		status = 'loading';
-		try {
-			const results = await searchService.search(nickname, 'less');
-			const foundUser = results?.find((u: any) => u.nickname === nickname);
-			
-			if (foundUser) {
-				profileData = foundUser;
-				status = 'success';
-			} else {
-				status = 'not_found';
-				error = 'User not found';
-			}
-		} catch (err) {
-			status = 'error';
-			error = 'Failed to load profile';
-		}
-	}
+	let userVideos = $state<any[]>([]);
+	let lastLoadedNickname = $state<string>('');
+	
+	// Cache profiles to avoid re-fetching
+	const profileCache = new Map<string, any>();
 
 	$effect(() => {
-		// Load profile when nickname or user changes
-		nickname;
-		user;
+		let timeoutId: ReturnType<typeof setTimeout>;
+		
+		async function loadProfile() {
+			// Reset when nickname changes
+			if (lastLoadedNickname !== nickname) {
+				profileData = null;
+				status = 'idle';
+				userVideos = [];
+			}
+
+			if (!rawNickname.startsWith('@') && rawNickname !== nickname) {
+				return;
+			}
+
+			if (!nickname || !/^[a-zA-Z0-9_]+$/.test(nickname) || nickname.length > 30) {
+				status = 'error';
+				error = 'Invalid username';
+				lastLoadedNickname = nickname;
+				return;
+			}
+
+			// If logged in and viewing own profile
+			if (user?.nickname === nickname) {
+				profileData = user;
+				status = 'success';
+				lastLoadedNickname = nickname;
+				return;
+			}
+
+			// Check cache only if not logged in user's profile
+			if (profileCache.has(nickname) && !user) {
+				profileData = profileCache.get(nickname);
+				status = 'success';
+				lastLoadedNickname = nickname;
+				return;
+			}
+
+			// Debounce API calls
+			clearTimeout(timeoutId);
+			status = 'loading';
+			lastLoadedNickname = nickname;
+			
+			timeoutId = setTimeout(async () => {
+				try {
+					const results = await searchService.search(nickname, 'less');
+					const foundUser = results?.find((u: any) => u.nickname === nickname);
+					
+					if (foundUser) {
+						profileData = foundUser;
+						profileCache.set(nickname, foundUser);
+						status = 'success';
+					} else {
+						status = 'not_found';
+						error = 'User not found';
+					}
+				} catch (err) {
+					status = 'error';
+					error = 'Failed to load profile';
+				}
+			}, 300);
+		}
+
 		loadProfile();
+		
+		return () => clearTimeout(timeoutId);
+	});
+
+	$effect(() => {
+		async function loadVideos() {
+			if (!profileData) return;
+
+			// TODO: Replace with real API endpoint to fetch user's videos
+			// For now, fetch 1 video as mock data
+			try {
+				const result = await videoService.getVideo(1);
+				if (result) {
+					userVideos = [result.data || result];
+				} else {
+					userVideos = [];
+				}
+			} catch (err) {
+				console.error('Error loading videos:', err);
+				userVideos = [];
+			}
+		}
+
+		loadVideos();
 	});
 </script>
 
@@ -69,16 +122,12 @@
 		<div class="text-center">
 			{#if status === 'loading'}
 				<div class="flex flex-col items-center gap-4">
-					<svg class="w-12 h-12 text-[#F02C56] animate-spin" viewBox="0 0 256 256" fill="currentColor">
-						<path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z" />
-					</svg>
+					<IconSpinner class="w-12 h-12 text-[#F02C56] animate-spin" />
 					<p class="text-gray-600 text-base">Đang tải hồ sơ...</p>
 				</div>
 			{:else}
 				<div class="flex flex-col items-center gap-4">
-					<svg class="w-16 h-16 text-gray-400" viewBox="0 0 256 256" fill="currentColor">
-						<path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm0-144a56,56,0,0,0-56,56,8,8,0,0,1-16,0,72,72,0,1,1,72,72,8,8,0,0,1,0-16A56,56,0,0,0,128,72Z" />
-					</svg>
+					<IconUserCircle class="w-16 h-16 text-gray-400" />
 					<p class="text-red-500 text-base font-normal">{error}</p>
 					<p class="text-gray-500">Không tìm thấy người dùng @{nickname}</p>
 				</div>
@@ -107,9 +156,7 @@
 						onclick={() => (showEditProfile = true)}
 						class="inline-flex items-center justify-center rounded-lg py-2.5 px-4 font-normal border-2 border-gray-300"
 					>
-						<svg class="w-4 h-4 mr-2" viewBox="0 0 256 256" fill="currentColor">
-							<path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63Z" />
-						</svg>
+						<IconPencil class="w-4 h-4 mr-2" />
 						<span>Edit profile</span>
 					</button>
 				{:else}
@@ -170,17 +217,15 @@
 
 		<div class="mt-6">
 			{#if activeTab === 'videos'}
-				{#if profileData?.videos?.length > 0}
+				{#if userVideos.length > 0}
 					<div class="grid grid-cols-6 gap-4">
-						{#each profileData.videos as video (video.id)}
+						{#each userVideos as video (video.id)}
 							<ProfilePost post={video} />
 						{/each}
 					</div>
 				{:else}
 					<div class="text-center py-16 text-gray-500">
-						<svg class="w-16 h-16 text-gray-300 mx-auto mb-4" viewBox="0 0 256 256" fill="currentColor">
-							<path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z" />
-						</svg>
+						<IconSpinner class="w-16 h-16 text-gray-300 mx-auto mb-4" />
 						<p class="text-base font-normal">Chưa có video nào</p>
 						<p class="text-base mt-4">
 							{isOwnProfile
@@ -189,17 +234,9 @@
 						</p>
 					</div>
 				{/if}
-			{:else if profileData?.liked_videos?.length > 0}
-				<div class="grid grid-cols-6 gap-4">
-					{#each profileData.liked_videos as video (video.id)}
-						<ProfilePost post={video} />
-					{/each}
-				</div>
 			{:else}
 				<div class="text-center py-16 text-gray-500">
-					<svg class="w-16 h-16 text-gray-300 mx-auto mb-4" viewBox="0 0 256 256" fill="currentColor">
-						<path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z" />
-					</svg>
+					<IconSpinner class="w-16 h-16 text-gray-300 mx-auto mb-4" />
 					<p class="text-base font-normal">Chưa có video được thích</p>
 					<p class="text-base mt-4">
 						{isOwnProfile

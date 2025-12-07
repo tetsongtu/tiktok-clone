@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { IconUpload, IconSpinner, IconCheckCircle, IconSplitVertical } from '~/lib/components/icons';
 	import Button from '~/lib/components/Button.svelte';
 
 	let fileDisplay = $state('');
@@ -43,11 +44,7 @@
 				for="fileInput"
 				class="flex flex-col items-center justify-center w-full max-w-[260px] h-[470px] my-4 mb-6 p-3 border-2 border-dashed border-gray-300 rounded-lg text-center cursor-pointer hover:border-gray-400"
 			>
-				<svg class="w-10 h-10 text-gray-400" viewBox="0 0 256 256" fill="currentColor">
-					<path
-						d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66-5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,113.37V24a8,8,0,0,0-16,0v89.37L93.66,87a8,8,0,0,0-11.32,11.32Z"
-					/>
-				</svg>
+				<IconUpload class="w-10 h-10 text-gray-400" />
 				<p class="mt-4 text-lg">Select video to upload</p>
 				<p class="mt-1.5 text-gray-600 text-sm">Or drag and drop a file</p>
 				<div class="mt-12 text-gray-400">
@@ -77,15 +74,7 @@
 						class="absolute inset-0 flex items-center justify-center z-20 rounded-xl bg-black/50"
 					>
 						<div class="flex items-center gap-1">
-							<svg
-								class="w-8 h-8 text-[#F02C56] animate-spin"
-								viewBox="0 0 256 256"
-								fill="currentColor"
-							>
-								<path
-									d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"
-								/>
-							</svg>
+							<IconSpinner class="w-8 h-8 text-[#F02C56] animate-spin" />
 							<span class="text-white font-bold">Uploading...</span>
 						</div>
 					</div>
@@ -102,11 +91,7 @@
 					class="absolute -bottom-12 z-50 flex justify-center gap-32 w-full p-2 border border-gray-300 rounded-xl"
 				>
 					<div class="flex items-center overflow-hidden text-ellipsis whitespace-nowrap">
-						<svg class="w-4 h-4 shrink-0 text-[#F02C56]" viewBox="0 0 256 256" fill="currentColor">
-							<path
-								d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"
-							/>
-						</svg>
+						<IconCheckCircle class="w-4 h-4 shrink-0 text-[#F02C56]" />
 						<span class="pl-1 overflow-hidden text-xs font-semibold text-ellipsis">
 							{file?.name}
 						</span>
@@ -118,11 +103,7 @@
 
 		<div class="mt-4 mb-6">
 			<div class="flex bg-gray-100 p-4 px-6">
-				<svg class="w-5 h-5 mr-4 mt-0.5" viewBox="0 0 256 256" fill="currentColor">
-					<path
-						d="M224,152a8,8,0,0,1-8,8H192v24a8,8,0,0,1-16,0V160H152a8,8,0,0,1,0-16h24V120a8,8,0,0,1,16,0v24h24A8,8,0,0,1,224,152ZM56,120H72v16a8,8,0,0,0,16,0V120h16a8,8,0,0,0,0-16H88V88a8,8,0,0,0-16,0v16H56a8,8,0,0,0,0,16ZM184,192H40V56H184a8,8,0,0,0,0-16H40A16,16,0,0,0,24,56V192a16,16,0,0,0,16,16H184a8,8,0,0,0,0-16Z"
-					/>
-				</svg>
+				<IconSplitVertical class="w-5 h-5 mr-4 mt-0.5" />
 				<div class="flex-1">
 					<div class="font-semibold text-base mb-1.5">Divide videos and edit</div>
 					<div class="font-semibold text-sm text-gray-400">
@@ -154,11 +135,7 @@
 				<Button variant="outline" disabled={!canPost} onclick={discard}>Discard</Button>
 				<Button variant="primary" disabled={!canPost} onclick={createNewPost}>
 					{#if isUploading}
-						<svg class="w-6 h-6 animate-spin" viewBox="0 0 256 256" fill="currentColor">
-							<path
-								d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"
-							/>
-						</svg>
+						<IconSpinner class="w-6 h-6 animate-spin" />
 					{:else}
 						Post
 					{/if}
