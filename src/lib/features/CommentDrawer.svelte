@@ -1,150 +1,104 @@
 <script lang="ts">
-	import { IconHeart, IconShare } from '~/lib/components/icons';
-	import { onMount } from 'svelte';
-	import UserAvatar from '~/lib/components/UserAvatar.svelte';
-
-	interface Comment {
-		id: number;
-		user: {
-			nickname: string;
-			avatar?: string;
-		};
-		text: string;
-		likes: number;
-	}
+	import { IconClose, IconHeart, IconShare } from '~/lib/components/icons';
+	import { commentStore } from '~/lib/stores/commentStore';
+	import { goto, replaceState } from '$app/navigation';
+	import type { Video } from '~/lib/types/user';
 
 	interface Props {
-		post: any;
+		post: Video | null;
 		isOpen: boolean;
-		onClose: () => void;
 	}
 
-	let { post, isOpen, onClose }: Props = $props();
+	let { post, isOpen }: Props = $props();
 
-	let comments = $state<Comment[]>([]);
-	let comment = $state('');
-	let shouldRender = $state(false);
-
-	onMount(() => {
-		shouldRender = true;
-	});
-
-	$effect(() => {
-		if (isOpen) {
-			comments = [
-				{
-					id: 1,
-					user: { nickname: 'user1', avatar: '' },
-					text: 'Great video!',
-					likes: 10
-				},
-				{
-					id: 2,
-					user: { nickname: 'user2', avatar: '' },
-					text: 'Amazing content 🔥',
-					likes: 5
-				}
-			];
-		}
-	});
-
-	function handleSubmit(e: Event) {
-		e.preventDefault();
-		if (!comment.trim()) return;
-
-		comments = [
-			...comments,
-			{
-				id: Date.now(),
-				user: { nickname: 'currentUser', avatar: '' },
-				text: comment,
-				likes: 0
-			}
-		];
-		comment = '';
-	}
+	const comments = [
+		{ user: 'user1', text: 'Great video!', likes: 10 },
+		{ user: 'user2', text: 'Amazing content 🔥', likes: 5 }
+	];
 </script>
 
-{#if !post}
-	<div class="fixed top-0 right-0 h-full w-[450px] z-50" style="transform: translateX(100%)"></div>
-{:else}
-	<div
-		data-comment-drawer
+{#if post}
+	<div 
 		class="fixed top-0 right-0 h-full w-[450px] bg-white shadow-2xl z-50 flex flex-col"
-		style="transform: {isOpen && shouldRender ? 'translateX(0)' : 'translateX(100%)'};"
+		style="transform: translateX({isOpen ? '0' : '100%'})"
 	>
 		<!-- Header -->
-		<div class="p-4 border-b">
-			<h2 class="text-base font-normal">{post.comments_count || 0} bình luận</h2>
+		<div class="p-4 border-b flex justify-between items-center">
+			<h2 class="text-lg font-semibold">{post.comments_count || 0} bình luận</h2>
+			<button 
+				aria-label="Close comments"
+				onclick={() => {
+					commentStore.setActiveVideoId(null);
+					replaceState('/', {});
+				}} 
+				class="text-gray-500 hover:text-gray-700"
+			>
+				<IconClose class="w-6 h-6" />
+			</button>
 		</div>
 
 		<!-- Post Info -->
-		<div class="p-4 border-b flex items-center gap-4">
-			<a href="/@{post.user?.nickname}" onclick={onClose}>
-				<UserAvatar user={post.user} size={10} />
-			</a>
+		<div class="p-4 border-b flex items-start gap-4">
+			<img src={post.user?.avatar || '/default-avatar.png'} alt={post.user?.nickname} class="w-10 h-10 rounded-full" />
 			<div class="flex-1">
-				<a href="/@{post.user?.nickname}" onclick={onClose} class="font-normal">
+				<button
+					type="button"
+					onclick={() => {
+						if (post.user) {
+							goto(`/@${post.user.nickname}`);
+						}
+					}}
+					class="font-semibold hover:underline text-left"
+				>
 					{post.user?.nickname}
-				</a>
-				<p class="text-base text-gray-600 line-clamp-4">{post.description}</p>
+				</button>
+				<p class="text-gray-600 text-sm mt-1">{post.description}</p>
 			</div>
 		</div>
 
 		<!-- Comments List -->
 		<div class="flex-1 overflow-y-auto p-4 space-y-4">
-			{#if comments.length === 0}
-				<div class="text-center py-8 text-gray-500">
-					<p>Chưa có bình luận nào</p>
-					<p class="text-base mt-4">Hãy là người đầu tiên bình luận!</p>
-				</div>
-			{:else}
-				{#each comments as c (c.id)}
-					<div class="flex gap-4">
-						<UserAvatar user={c.user} size={8} />
-						<div class="flex-1">
-							<p class="font-normal text-base">{c.user.nickname}</p>
-							<p class="text-base text-gray-700 mt-4">{c.text}</p>
-							<div class="flex items-center gap-4 mt-4 text-base text-gray-500">
-								<button>Trả lời</button>
-								{#if c.likes > 0}
-									<span>{c.likes} lượt thích</span>
-								{/if}
-							</div>
+			{#each comments as comment}
+				<div class="flex items-start gap-4">
+					<img src="/default-avatar.png" alt={comment.user} class="w-8 h-8 rounded-full" />
+					<div class="flex-1">
+						<p class="font-semibold text-sm">{comment.user}</p>
+						<p class="text-gray-700 text-sm mt-1">{comment.text}</p>
+						<div class="flex items-center gap-4 mt-2 text-xs text-gray-500">
+							<button class="hover:text-gray-700">Trả lời</button>
+							<span>{comment.likes} lượt thích</span>
 						</div>
-						<button aria-label="Like comment" class="text-gray-400">
-							<IconHeart class="w-4 h-4" />
-						</button>
 					</div>
-				{/each}
-			{/if}
+					<button aria-label="Like comment" class="text-gray-400 hover:text-red-500">
+						<IconHeart class="w-4 h-4" />
+					</button>
+				</div>
+			{/each}
 		</div>
 
 		<!-- Actions & Input -->
 		<div class="border-t p-4">
 			<div class="flex items-center gap-4 mb-4">
-				<button aria-label="Like video">
+				<button aria-label="Like video" class="hover:text-red-500">
 					<IconHeart class="w-7 h-7" />
 				</button>
-				<button aria-label="Share video">
+				<button aria-label="Share video" class="hover:text-blue-500">
 					<IconShare class="w-7 h-7" />
 				</button>
 			</div>
-			<p class="font-normal text-base mb-4">
+			<p class="font-semibold text-sm mb-4">
 				{post.likes_count?.toLocaleString() || 0} lượt thích
 			</p>
 
-			<form onsubmit={handleSubmit} class="flex gap-4 items-center">
-				<input
-					type="text"
-					bind:value={comment}
-					placeholder="Thêm bình luận..."
-					class="flex-1 border rounded-full px-4 py-2 text-base outline-none"
+			<form class="flex gap-2 items-center">
+				<input 
+					type="text" 
+					placeholder="Thêm bình luận..." 
+					class="flex-1 border rounded-full px-4 py-2 text-sm outline-none focus:border-blue-500"
 				/>
-				<button
-					type="submit"
-					disabled={!comment.trim()}
-					class="text-blue-500 font-normal text-base px-4 disabled:opacity-50 disabled:cursor-not-allowed"
+				<button 
+					type="submit" 
+					class="text-blue-500 font-semibold text-sm px-4 hover:text-blue-600"
 				>
 					Đăng
 				</button>

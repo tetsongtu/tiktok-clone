@@ -12,7 +12,6 @@
 
 		commentStore.setActiveVideoId(null);
 		(window as any).closeCommentDrawer?.();
-		(window as any).refreshVideoFeed?.();
 
 		setTimeout(() => {
 			window.location.href = '/';

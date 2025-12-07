@@ -82,12 +82,8 @@
 				if (!videoElement) return;
 				
 				if (entries[0].isIntersecting) {
-					videoElement.muted = false;
-					videoState.isMuted = false;
 					videoState.isPlaying = true;
 					videoElement.play().catch(() => {
-						videoElement.muted = true;
-						videoState.isMuted = true;
 						videoElement.play().catch(() => {});
 					});
 					
