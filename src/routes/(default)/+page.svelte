@@ -1,6 +1,6 @@
 <script lang="ts">
 	import PostMain from '~/lib/components/PostMain.svelte';
-	import * as videoService from '~/core/services/videoService';
+	import * as videoService from '~/lib/services/videoService';
 	import { commentStore } from '~/lib/stores/commentStore';
 	import { goto } from '$app/navigation';
 

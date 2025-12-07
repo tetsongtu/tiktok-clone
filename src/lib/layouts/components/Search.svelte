@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import classNames from 'classnames';
-	import * as searchServices from '~/core/services/searchService';
+	import * as searchServices from '~/lib/services/searchService';
 	import Tooltip from '~/lib/components/Tooltip.svelte';
 
 	let searchValue = $state('');

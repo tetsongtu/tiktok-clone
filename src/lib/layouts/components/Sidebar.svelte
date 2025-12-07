@@ -2,7 +2,7 @@
 	import MenuItem from './MenuItem.svelte';
 	import Search from './Search.svelte';
 	import SuggestedAccounts from '~/lib/features/SuggestedAccounts.svelte';
-	import * as userServices from '~/core/services/userService';
+	import * as userServices from '~/lib/services/userService';
 
 	const INIT_PAGE = 1;
 	const PER_PAGE = 5;

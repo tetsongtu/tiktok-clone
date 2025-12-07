@@ -4,7 +4,7 @@
 	import UserAvatar from '~/lib/components/UserAvatar.svelte';
 	import ProfilePost from '~/lib/components/ProfilePost.svelte';
 	import EditProfileModal from '~/lib/features/EditProfileModal.svelte';
-	import * as searchService from '~/core/services/searchService';
+	import * as searchService from '~/lib/services/searchService';
 
 	type Status = 'idle' | 'loading' | 'success' | 'error' | 'not_found';
 
