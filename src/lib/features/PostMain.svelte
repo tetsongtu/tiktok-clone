@@ -12,58 +12,17 @@
 
 	let { video }: Props = $props();
 
+	// State
 	let hasClickedLike = $state(false);
 	let activeVideoId = $state<number | null>(null);
-	let isPlaying = $state(true);
-	let isMuted = $state(true);
+	let videoState = $state({ isPlaying: true, isMuted: false });
 	let videoEl = $state<HTMLVideoElement>();
 	let containerEl = $state<HTMLDivElement>();
 
-	$effect(() => {
-		activeVideoId = $commentStore.activeVideoId;
-	});
-
+	// Derived
 	const showComments = $derived(activeVideoId === video.id);
 	const isAnyCommentOpen = $derived(activeVideoId !== null);
-
-	function handleToggleComments() {
-		if (showComments) {
-			commentStore.setActiveVideoId(null);
-			goto('/');
-		} else {
-			commentStore.setActiveVideoId(video.id);
-			goto(`/?video=${video.id}`);
-		}
-	}
-
-	function handleLike() {
-		hasClickedLike = true;
-	}
-
-	function handleShare() {
-		// TODO: Implement share
-	}
-
-	function togglePlayPause() {
-		if (!videoEl) return;
-
-		if (videoEl.paused) {
-			videoEl.play();
-			isPlaying = true;
-		} else {
-			videoEl.pause();
-			isPlaying = false;
-		}
-	}
-
-	function toggleMute() {
-		if (!videoEl) return;
-
-		videoEl.muted = !videoEl.muted;
-		isMuted = videoEl.muted;
-	}
-
-	function getAspectRatio() {
+	const aspectRatio = $derived.by(() => {
 		const width = video?.meta?.video?.resolution_x;
 		const height = video?.meta?.video?.resolution_y;
 
@@ -71,37 +30,77 @@
 
 		const ratio = width / height;
 
-		if (Math.abs(ratio - 1) < 0.15) {
-			return { class: 'aspect-square', isWide: true };
-		} else if (ratio > 1.3) {
-			return { class: 'aspect-video', isWide: true };
+		if (Math.abs(ratio - 1) < 0.15) return { class: 'aspect-square', isWide: true };
+		if (ratio > 1.3) return { class: 'aspect-video', isWide: true };
+		return { class: 'aspect-[9/16]', isWide: false };
+	});
+
+	// Sync active video
+	$effect(() => {
+		activeVideoId = $commentStore.activeVideoId;
+	});
+
+	// Handlers
+	const handleToggleComments = () => {
+		if (showComments) {
+			commentStore.setActiveVideoId(null);
+			goto('/');
 		} else {
-			return { class: 'aspect-[9/16]', isWide: false };
+			commentStore.setActiveVideoId(video.id);
+			goto(`/?video=${video.id}`);
 		}
-	}
+	};
 
-	const { class: aspectRatio, isWide } = getAspectRatio();
+	const togglePlayPause = () => {
+		if (!videoEl) return;
 
+		if (videoEl.paused) {
+			videoEl.play();
+			videoState.isPlaying = true;
+		} else {
+			videoEl.pause();
+			videoState.isPlaying = false;
+		}
+	};
+
+	const toggleMute = () => {
+		if (!videoEl) return;
+		const newMutedState = !videoEl.muted;
+		videoEl.muted = newMutedState;
+		videoState.isMuted = newMutedState;
+	};
+
+	// Video intersection observer
 	$effect(() => {
 		if (!video || !videoEl || !containerEl) return;
 
-		videoEl.muted = true;
 		videoEl.autoplay = true;
 		videoEl.playsInline = true;
 
 		const observer = new IntersectionObserver(
 			(entries) => {
-				if (!videoEl) return;
+				const videoElement = videoEl;
+				if (!videoElement) return;
 				
 				if (entries[0].isIntersecting) {
-					videoEl.play().catch(() => {});
+					// Tự động phát và bật âm thanh khi video hiển thị
+					videoElement.muted = false;
+					videoState.isMuted = false;
+					videoState.isPlaying = true;
+					videoElement.play().catch(() => {
+						// Fallback: nếu không thể phát với âm thanh, thử muted
+						videoElement.muted = true;
+						videoState.isMuted = true;
+						videoElement.play().catch(() => {});
+					});
 					
 					if (activeVideoId !== null) {
 						commentStore.setActiveVideoId(video.id);
 						goto(`/?video=${video.id}`);
 					}
 				} else {
-					videoEl.pause();
+					videoElement.pause();
+					videoState.isPlaying = false;
 				}
 			},
 			{ threshold: 0.5 }
@@ -122,11 +121,10 @@
 	<div class="relative flex items-center justify-center">
 		<video
 			bind:this={videoEl}
-			class="{aspectRatio} rounded-2xl object-cover {isAnyCommentOpen && isWide
+			class="{aspectRatio.class} rounded-2xl object-cover {isAnyCommentOpen && aspectRatio.isWide
 				? 'h-[85vh] max-w-[50vw]'
 				: 'h-[95vh] max-w-[60vw]'} cursor-pointer"
 			loop
-			muted
 			autoplay
 			playsinline
 			src={video?.file_url}
@@ -134,21 +132,21 @@
 		></video>
 		
 		<!-- Video Controls Overlay -->
-		<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-			{#if !isPlaying}
+		{#if !videoState.isPlaying}
+			<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
 				<div class="bg-black/50 rounded-full p-4">
 					<IconPlay class="w-12 h-12 text-white" />
 				</div>
-			{/if}
-		</div>
+			</div>
+		{/if}
 
 		<!-- Volume Control -->
 		<button
 			onclick={toggleMute}
-			aria-label={isMuted ? 'Unmute' : 'Mute'}
-			class="absolute bottom-4 right-4 bg-black/50 hover:bg-black/70 rounded-full p-2 pointer-events-auto"
+			aria-label={videoState.isMuted ? 'Bật âm thanh' : 'Tắt âm thanh'}
+			class="absolute bottom-4 right-4 bg-black/50 hover:bg-black/70 rounded-full p-2 transition-colors"
 		>
-			{#if isMuted}
+			{#if videoState.isMuted}
 				<IconMute class="w-6 h-6 text-white" />
 			{:else}
 				<IconVolume class="w-6 h-6 text-white" />
@@ -190,10 +188,9 @@
 			</div>
 
 			<div id="post-likes-{video.id}">
-				<!-- Like Button -->
 				<ActionButton
 					count={video.likes_count}
-					onclick={handleLike}
+					onclick={() => hasClickedLike = true}
 					disabled={hasClickedLike}
 					isActive={hasClickedLike}
 					isLoading={hasClickedLike}
@@ -201,13 +198,11 @@
 					<IconHeart class="w-6 h-6 {hasClickedLike ? 'text-[#ff2626]' : 'text-gray-700'}" />
 				</ActionButton>
 
-				<!-- Comment Button -->
 				<ActionButton count={video.comments_count} onclick={handleToggleComments}>
 					<IconComment class="w-6 h-6 text-gray-700" />
 				</ActionButton>
 
-				<!-- Share Button -->
-				<ActionButton count={video.shares_count} onclick={handleShare}>
+				<ActionButton count={video.shares_count} onclick={() => {}}>
 					<IconShare class="w-6 h-6 text-gray-700" />
 				</ActionButton>
 			</div>
