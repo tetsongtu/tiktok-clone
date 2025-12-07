@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { commentStore } from '~/lib/stores/commentStore';
-	import { goto } from '$app/navigation';
+	import { goto, replaceState } from '$app/navigation';
+	import { page } from '$app/stores';
 	import type { Video } from '~/lib/types/user';
 	import VideoPlayer from './post/VideoPlayer.svelte';
 	import VideoInfo from './post/VideoInfo.svelte';
@@ -36,12 +37,13 @@
 	});
 
 	const handleToggleComments = () => {
+		const username = video?.user?.nickname;
 		if (showComments) {
 			commentStore.setActiveVideoId(null);
-			goto('/');
+			replaceState('/', {});
 		} else {
 			commentStore.setActiveVideoId(video.id);
-			goto(`/?video=${video.id}`);
+			replaceState(`/@${username}/video/${video.id}`, {});
 		}
 	};
 
@@ -91,8 +93,9 @@
 					});
 					
 					if (activeVideoId !== null) {
+						const username = video?.user?.nickname;
 						commentStore.setActiveVideoId(video.id);
-						goto(`/?video=${video.id}`);
+						replaceState(`/@${username}/video/${video.id}`, {});
 					}
 				} else {
 					videoElement.pause();

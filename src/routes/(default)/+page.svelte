@@ -3,8 +3,14 @@
 	import PostMain from '~/lib/features/PostMain.svelte';
 	import * as videoService from '~/lib/services/videoService';
 	import { commentStore } from '~/lib/stores/commentStore';
-	import { goto } from '$app/navigation';
+	import { goto, replaceState } from '$app/navigation';
 	import type { Video } from '~/lib/types/user';
+
+	interface Props {
+		initialVideoId?: number;
+	}
+
+	let { initialVideoId }: Props = $props();
 
 	const VIDEOS_PER_BATCH = 5;
 	const MAX_VIDEO_ID = 109;
@@ -14,6 +20,28 @@
 	let refreshKey = $state(0);
 	let isFetchingRef = false;
 	let fetchedIdsRef = new Set<number>();
+
+	// Load initial video nếu có, sau đó fetch thêm video random
+	$effect(() => {
+		if (initialVideoId && !videos.find(v => v.id === initialVideoId)) {
+			(async () => {
+				try {
+					const result = await videoService.getVideo(initialVideoId);
+					if (result) {
+						const video = result.data || result;
+						videos = [video];
+						fetchedIdsRef.add(initialVideoId);
+						commentStore.setActiveVideoId(initialVideoId);
+						
+						// Fetch thêm video random ngay sau đó
+						await fetchVideos();
+					}
+				} catch (error) {
+					console.error('Failed to load initial video:', error);
+				}
+			})();
+		}
+	});
 
 	async function fetchVideos() {
 		if (isFetchingRef) return;
@@ -91,6 +119,27 @@
 		};
 	});
 
+	// Scroll đến video khi reload từ URL
+	$effect(() => {
+		const scrollToVideoId = $commentStore.activeVideoId;
+		if (!scrollToVideoId || videos.length === 0) return;
+
+		const videoIndex = videos.findIndex(v => v.id === scrollToVideoId);
+		if (videoIndex === -1) return;
+
+		const mainEl = document.getElementById('MainContent');
+		const scrollEl = (mainEl?.querySelector('.overflow-y-auto') as HTMLElement) || mainEl;
+		
+		if (scrollEl) {
+			// Scroll đến video
+			const videoHeight = window.innerHeight;
+			scrollEl.scrollTo({
+				top: videoIndex * videoHeight,
+				behavior: 'smooth'
+			});
+		}
+	});
+
 	const activeVideoId = $derived($commentStore.activeVideoId);
 	const activePost = $derived(videos.find((v) => v.id === activeVideoId));
 	const isDrawerOpen = $derived(activeVideoId !== null && videos.length > 0);
@@ -114,7 +163,7 @@
 					aria-label="Close comments"
 					onclick={() => {
 						commentStore.setActiveVideoId(null);
-						goto('/');
+						replaceState('/', {});
 					}} 
 					class="text-gray-500 hover:text-gray-700"
 				>
