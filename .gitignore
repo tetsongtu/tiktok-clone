@@ -16,6 +16,9 @@ dist-ssr
 .svelte-kit
 build
 
+# Vercel
+.vercel
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
