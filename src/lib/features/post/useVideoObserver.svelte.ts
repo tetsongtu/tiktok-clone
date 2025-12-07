@@ -1,0 +1,40 @@
+import { commentStore } from '~/lib/stores/commentStore';
+import { replaceState } from '$app/navigation';
+import type { Video } from '~/lib/types/user';
+
+export function useVideoObserver(
+	video: Video,
+	videoEl: HTMLVideoElement | undefined,
+	containerEl: HTMLDivElement | undefined,
+	activeVideoId: number | null
+) {
+	if (!video || !videoEl || !containerEl) return;
+
+	videoEl.autoplay = true;
+	videoEl.playsInline = true;
+	videoEl.muted = true;
+
+	const observer = new IntersectionObserver(
+		(entries) => {
+			if (!videoEl) return;
+			
+			if (entries[0].isIntersecting) {
+				videoEl.play().catch(() => {
+					videoEl.play().catch(() => {});
+				});
+				
+				if (activeVideoId !== null) {
+					const username = video?.user?.nickname;
+					commentStore.setActiveVideoId(video.id);
+					replaceState(`/@${username}/video/${video.id}`, {});
+				}
+			} else {
+				videoEl.pause();
+			}
+		},
+		{ threshold: 0.5 }
+	);
+
+	observer.observe(containerEl);
+	return () => observer.disconnect();
+}

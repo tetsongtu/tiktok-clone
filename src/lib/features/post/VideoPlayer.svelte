@@ -5,15 +5,31 @@
 		src: string;
 		aspectRatio: { class: string; isWide: boolean };
 		isAnyCommentOpen: boolean;
-		videoState: { isPlaying: boolean; isMuted: boolean };
-		onTogglePlayPause: () => void;
-		onToggleMute: () => void;
 		onVideoMount?: (el: HTMLVideoElement) => void;
 	}
 
-	let { src, aspectRatio, isAnyCommentOpen, videoState, onTogglePlayPause, onToggleMute, onVideoMount }: Props = $props();
+	let { src, aspectRatio, isAnyCommentOpen, onVideoMount }: Props = $props();
 
 	let videoEl = $state<HTMLVideoElement>();
+	let videoState = $state({ isPlaying: true, isMuted: true });
+
+	const togglePlayPause = () => {
+		if (!videoEl) return;
+		if (videoEl.paused) {
+			videoEl.play();
+			videoState.isPlaying = true;
+		} else {
+			videoEl.pause();
+			videoState.isPlaying = false;
+		}
+	};
+
+	const toggleMute = () => {
+		if (!videoEl) return;
+		const newMutedState = !videoEl.muted;
+		videoEl.muted = newMutedState;
+		videoState.isMuted = newMutedState;
+	};
 
 	$effect(() => {
 		if (videoEl && onVideoMount) {
@@ -23,6 +39,7 @@
 </script>
 
 <!-- svelte-ignore a11y_media_has_caption -->
+<!-- svelte-ignore a11y_media_has_caption -->
 <video
 	bind:this={videoEl}
 	class="{aspectRatio.class} rounded-2xl object-cover {isAnyCommentOpen && aspectRatio.isWide
@@ -31,8 +48,9 @@
 	loop
 	autoplay
 	playsinline
+	muted
 	{src}
-	onclick={onTogglePlayPause}
+	onclick={togglePlayPause}
 ></video>
 
 {#if !videoState.isPlaying}
@@ -44,7 +62,7 @@
 {/if}
 
 <button
-	onclick={onToggleMute}
+	onclick={toggleMute}
 	aria-label={videoState.isMuted ? 'Bật âm thanh' : 'Tắt âm thanh'}
 	class="absolute bottom-4 right-4 bg-black/50 hover:bg-black/70 rounded-full p-2 transition-colors"
 >

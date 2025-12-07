@@ -6,6 +6,7 @@
 	import VideoInfo from './post/VideoInfo.svelte';
 	import VideoActions from './post/VideoActions.svelte';
 	import VideoUserProfile from './post/VideoUserProfile.svelte';
+	import { useVideoObserver } from './post/useVideoObserver.svelte';
 
 	interface Props {
 		video: Video;
@@ -15,7 +16,6 @@
 
 	let hasClickedLike = $state(false);
 	let activeVideoId = $state<number | null>(null);
-	let videoState = $state({ isPlaying: true, isMuted: true });
 	let videoEl = $state<HTMLVideoElement>();
 	let containerEl = $state<HTMLDivElement>();
 
@@ -39,29 +39,10 @@
 		const username = video?.user?.nickname;
 		if (showComments) {
 			commentStore.setActiveVideoId(null);
-			replaceState('/', {});
 		} else {
 			commentStore.setActiveVideoId(video.id);
-			replaceState(`/@${username}/video/${video.id}`, {});
 		}
-	};
-
-	const togglePlayPause = () => {
-		if (!videoEl) return;
-		if (videoEl.paused) {
-			videoEl.play();
-			videoState.isPlaying = true;
-		} else {
-			videoEl.pause();
-			videoState.isPlaying = false;
-		}
-	};
-
-	const toggleMute = () => {
-		if (!videoEl) return;
-		const newMutedState = !videoEl.muted;
-		videoEl.muted = newMutedState;
-		videoState.isMuted = newMutedState;
+		replaceState(showComments ? '/' : `/@${username}/video/${video.id}`, {});
 	};
 
 	const handleUserClick = () => {
@@ -71,38 +52,7 @@
 	};
 
 	$effect(() => {
-		if (!video || !videoEl || !containerEl) return;
-
-		videoEl.autoplay = true;
-		videoEl.playsInline = true;
-		videoEl.muted = true;
-
-		const observer = new IntersectionObserver(
-			(entries) => {
-				const videoElement = videoEl;
-				if (!videoElement) return;
-				
-				if (entries[0].isIntersecting) {
-					videoState.isPlaying = true;
-					videoElement.play().catch(() => {
-						videoElement.play().catch(() => {});
-					});
-					
-					if (activeVideoId !== null) {
-						const username = video?.user?.nickname;
-						commentStore.setActiveVideoId(video.id);
-						replaceState(`/@${username}/video/${video.id}`, {});
-					}
-				} else {
-					videoElement.pause();
-					videoState.isPlaying = false;
-				}
-			},
-			{ threshold: 0.5 }
-		);
-
-		observer.observe(containerEl);
-		return () => observer.disconnect();
+		return useVideoObserver(video, videoEl, containerEl, activeVideoId);
 	});
 </script>
 
@@ -115,9 +65,6 @@
 			src={video?.file_url}
 			{aspectRatio}
 			{isAnyCommentOpen}
-			{videoState}
-			onTogglePlayPause={togglePlayPause}
-			onToggleMute={toggleMute}
 			onVideoMount={(el) => videoEl = el}
 		/>
 
