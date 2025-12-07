@@ -130,8 +130,7 @@
 						type="button"
 						onclick={() => {
 							if (activePost.user) {
-								const userData = JSON.parse(JSON.stringify(activePost.user));
-								goto(`/@${activePost.user.nickname}`, { state: { user: userData } });
+								goto(`/@${activePost.user.nickname}`);
 							}
 						}}
 						class="font-semibold hover:underline text-left"

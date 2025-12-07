@@ -170,9 +170,10 @@
 					type="button"
 					onclick={() => {
 						if (video?.user) {
-							const userData = JSON.parse(JSON.stringify(video.user));
-							const videoData = JSON.parse(JSON.stringify(video));
-							goto(`/@${video.user.nickname}`, { state: { user: userData, video: videoData } });
+							const videoData = {
+								file_url: video.file_url,
+							};
+							goto(`/@${video.user.nickname}`, { state: { video: videoData } });
 						}
 					}}
 					class="flex justify-center"

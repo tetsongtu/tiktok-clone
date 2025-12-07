@@ -26,8 +26,10 @@
 					type="button"
 					onclick={(e) => {
 						e.stopPropagation();
-						const userData = JSON.parse(JSON.stringify(account));
-						goto(`/@${account.nickname}`, { state: { user: userData } });
+						const video = account.popular_video ? {
+							file_url: account.popular_video.file_url,
+						} : undefined;
+						goto(`/@${account.nickname}`, { state: { video } });
 					}}
 					class="flex items-center px-2 py-1 rounded hover:bg-gray-50 w-full text-left cursor-pointer"
 				>

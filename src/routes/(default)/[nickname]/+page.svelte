@@ -49,15 +49,7 @@
 				return;
 			}
 
-			// Check if data passed via navigation state
-			const stateUser = (page.state as any)?.user as SuggestedUser | User | undefined;
-			if (stateUser && stateUser.nickname === nickname) {
-				profileData = stateUser;
-				profileCache.set(nickname, stateUser);
-				status = 'success';
-				lastLoadedNickname = nickname;
-				return;
-			}
+
 
 			// If logged in and viewing own profile
 			if (user?.nickname === nickname) {
@@ -200,6 +192,12 @@
 		{#if profileData?.bio}
 			<p class="pt-6 text-gray-700 text-base max-w-[600px] leading-relaxed text-left">
 				{profileData.bio}
+			</p>
+		{/if}
+
+		{#if userVideos.length > 0 && userVideos[0].description}
+			<p class="pt-4 text-gray-600 text-base max-w-[600px] leading-relaxed text-left italic">
+				"{userVideos[0].description}"
 			</p>
 		{/if}
 
