@@ -5,6 +5,7 @@
 	import Menu from '~/lib/components/Menu.svelte';
 	import AuthModal from '~/lib/features/AuthModal.svelte';
 	import Tooltip from '~/lib/components/Tooltip.svelte';
+	import { IconUpload, IconMessage, IconInbox, IconPlus, IconDots } from '~/lib/components/icons';
 
 	let showAuthModal = $state(false);
 	const user = $derived($userStore);
@@ -60,29 +61,17 @@
 	{#if isLoggedIn}
 		<Tooltip content="Upload video">
 			<a href="/upload" aria-label="Upload video" class="p-2 hover:bg-gray-100 rounded-full">
-				<svg class="w-6 h-6" viewBox="0 0 256 256" fill="currentColor">
-					<path
-						d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66-5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,113.37V24a8,8,0,0,0-16,0v89.37L93.66,87a8,8,0,0,0-11.32,11.32Z"
-					></path>
-				</svg>
+				<IconUpload class="w-6 h-6" />
 			</a>
 		</Tooltip>
 		<Tooltip content="Messages">
 			<button aria-label="Messages" class="p-2 hover:bg-gray-100 rounded-full">
-				<svg class="w-6 h-6" viewBox="0 0 256 256" fill="currentColor">
-					<path
-						d="M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Z"
-					></path>
-				</svg>
+				<IconMessage class="w-6 h-6" />
 			</button>
 		</Tooltip>
 		<Tooltip content="Inbox">
 			<button aria-label="Inbox" class="p-2 hover:bg-gray-100 rounded-full relative">
-				<svg class="w-6 h-6" viewBox="0 0 256 256" fill="currentColor">
-					<path
-						d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM98.71,128,40,181.81V74.19Zm11.84,10.85,12,11.05a8,8,0,0,0,10.82,0l12-11.05,58,53.15H52.57ZM157.29,128,216,74.18V181.82Z"
-					></path>
-				</svg>
+				<IconInbox class="w-6 h-6" />
 				<span
 					class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
 				>
@@ -93,11 +82,7 @@
 	{:else}
 		<Button variant="outline" onclick={openAuthModal}>
 			{#snippet children()}
-				<svg class="w-5 h-5 mr-2" viewBox="0 0 256 256" fill="currentColor">
-					<path
-						d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"
-					></path>
-				</svg>
+				<IconPlus class="w-5 h-5 mr-2" />
 				Upload
 			{/snippet}
 		</Button>
@@ -114,11 +99,7 @@
 				<UserAvatar size={10} {user} />
 			{:else}
 				<div class="p-2 hover:bg-gray-100 rounded-full">
-					<svg class="w-6 h-6" viewBox="0 0 256 256" fill="currentColor">
-						<path
-							d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z"
-						></path>
-					</svg>
+					<IconDots class="w-6 h-6" />
 				</div>
 			{/if}
 		</div>

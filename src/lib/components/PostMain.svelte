@@ -12,6 +12,8 @@
 
 	let hasClickedLike = $state(false);
 	let activeVideoId = $state<string | null>(null);
+	let isPlaying = $state(true);
+	let isMuted = $state(true);
 
 	$effect(() => {
 		activeVideoId = $commentStore.activeVideoId;
@@ -36,6 +38,27 @@
 
 	function handleShare() {
 		// TODO: Implement share
+	}
+
+	function togglePlayPause() {
+		const video = document.getElementById(`video-${post?.id}`) as HTMLVideoElement;
+		if (!video) return;
+
+		if (video.paused) {
+			video.play();
+			isPlaying = true;
+		} else {
+			video.pause();
+			isPlaying = false;
+		}
+	}
+
+	function toggleMute() {
+		const video = document.getElementById(`video-${post?.id}`) as HTMLVideoElement;
+		if (!video) return;
+
+		video.muted = !video.muted;
+		isMuted = video.muted;
 	}
 
 	function getAspectRatio() {
@@ -101,14 +124,49 @@
 		<video
 			class="{aspectRatio} rounded-2xl object-cover {isAnyCommentOpen && isWide
 				? 'h-[85vh] max-w-[50vw]'
-				: 'h-[95vh] max-w-[60vw]'}"
+				: 'h-[95vh] max-w-[60vw]'} cursor-pointer"
 			id="video-{post?.id}"
 			loop
 			muted
 			autoplay
 			playsinline
 			src={post?.file_url}
+			onclick={togglePlayPause}
 		></video>
+		
+		<!-- Video Controls Overlay -->
+		<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+			{#if !isPlaying}
+				<div class="bg-black/50 rounded-full p-4">
+					<svg class="w-12 h-12 text-white" viewBox="0 0 256 256" fill="currentColor">
+						<path
+							d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"
+						></path>
+					</svg>
+				</div>
+			{/if}
+		</div>
+
+		<!-- Volume Control -->
+		<button
+			onclick={toggleMute}
+			aria-label={isMuted ? 'Unmute' : 'Mute'}
+			class="absolute bottom-4 right-4 bg-black/50 hover:bg-black/70 rounded-full p-2 pointer-events-auto"
+		>
+			{#if isMuted}
+				<svg class="w-6 h-6 text-white" viewBox="0 0 256 256" fill="currentColor">
+					<path
+						d="M155.51,24.81a8,8,0,0,0-8.42.88L77.25,80H32A16,16,0,0,0,16,96v64a16,16,0,0,0,16,16H77.25l69.84,54.31A8,8,0,0,0,160,224V32A8,8,0,0,0,155.51,24.81ZM213.66,146.34l18.35,18.35a8,8,0,0,1-11.32,11.32L202.34,157.66l-18.35,18.35a8,8,0,0,1-11.32-11.32L191,146.34l-18.35-18.35a8,8,0,0,1,11.32-11.32L202.34,135l18.35-18.35a8,8,0,0,1,11.32,11.32Z"
+					></path>
+				</svg>
+			{:else}
+				<svg class="w-6 h-6 text-white" viewBox="0 0 256 256" fill="currentColor">
+					<path
+						d="M155.51,24.81a8,8,0,0,0-8.42.88L77.25,80H32A16,16,0,0,0,16,96v64a16,16,0,0,0,16,16H77.25l69.84,54.31A8,8,0,0,0,160,224V32A8,8,0,0,0,155.51,24.81ZM224,104a8,8,0,0,1,0,16,48.05,48.05,0,0,0,0-96,8,8,0,0,1,0-16,64.07,64.07,0,0,1,0,128,8,8,0,0,1,0-16,48.05,48.05,0,0,0,0-96Z"
+					></path>
+				</svg>
+			{/if}
+		</button>
 		<div class="absolute bottom-0 left-0 right-0 pointer-events-none">
 			<div
 				class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50 rounded-b-2xl"
