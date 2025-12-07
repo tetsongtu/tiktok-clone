@@ -65,12 +65,12 @@
 </script>
 
 {#if !post}
-	<div class="fixed top-0 right-0 h-full w-[450px] z-50" style="transform: translateX(100%)" />
+	<div class="fixed top-0 right-0 h-full w-[450px] z-50" style="transform: translateX(100%)"></div>
 {:else}
 	<div
 		data-comment-drawer
 		class="fixed top-0 right-0 h-full w-[450px] bg-white shadow-2xl z-50 flex flex-col"
-		style="transform: {isOpen && shouldRender ? 'translateX(0)' : 'translateX(100%)'}; transition: transform 0.3s ease-in-out;"
+		style="transform: {isOpen && shouldRender ? 'translateX(0)' : 'translateX(100%)'};"
 	>
 		<!-- Header -->
 		<div class="p-4 border-b">
@@ -111,11 +111,11 @@
 								{/if}
 							</div>
 						</div>
-						<button class="text-gray-400">
+						<button aria-label="Like comment" class="text-gray-400">
 							<svg class="w-4 h-4" viewBox="0 0 256 256" fill="currentColor">
 								<path
 									d="M240,94c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,220.66,16,164,16,94A62.07,62.07,0,0,1,78,32c20.65,0,38.73,8.88,50,23.89C139.27,40.88,157.35,32,178,32A62.07,62.07,0,0,1,240,94Z"
-								/>
+								></path>
 							</svg>
 						</button>
 					</div>
@@ -126,18 +126,18 @@
 		<!-- Actions & Input -->
 		<div class="border-t p-4">
 			<div class="flex items-center gap-4 mb-4">
-				<button>
+				<button aria-label="Like video">
 					<svg class="w-7 h-7" viewBox="0 0 256 256" fill="currentColor">
 						<path
 							d="M240,94c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,220.66,16,164,16,94A62.07,62.07,0,0,1,78,32c20.65,0,38.73,8.88,50,23.89C139.27,40.88,157.35,32,178,32A62.07,62.07,0,0,1,240,94Z"
-						/>
+						></path>
 					</svg>
 				</button>
-				<button>
+				<button aria-label="Share video">
 					<svg class="w-7 h-7" viewBox="0 0 256 256" fill="currentColor">
 						<path
 							d="M237.66,106.35l-80-80A8,8,0,0,0,144,32V72.35c-25.94,2.22-54.59,14.92-78.16,34.91-28.38,24.08-46.05,55.11-49.76,87.37a12,12,0,0,0,20.68,9.58c11-11.71,50.14-48.74,107.24-52V192a8,8,0,0,0,13.66,5.65l80-80A8,8,0,0,0,237.66,106.35Z"
-						/>
+						></path>
 					</svg>
 				</button>
 			</div>

@@ -4,29 +4,13 @@
 :root {
     /* Colors */
     --primary: #fe2c55;
-    --black: #000;
-    --white: #fff;
     --text-color: #161823;
-    --text-rose: #f43f5e;
 
     /* Typography */
     --font-family: 'Roboto', sans-serif;
     --font-size-base: 16px;
     --font-weight-normal: 400;
-    --font-weight-medium: 500;
-    --font-weight-semibold: 600;
     --font-weight-bold: 700;
-
-    /* Layout */
-    --default-layout-height: 69px;
-    --default-layout-width: 960px;
-
-    /* Spacing */
-    --spacing-xs: 4px;
-    --spacing-sm: 8px;
-    --spacing-md: 16px;
-    --spacing-lg: 24px;
-    --spacing-xl: 32px;
 }
 
 /* Reset */
@@ -72,35 +56,4 @@ h6 {
 p {
     font-family: var(--font-family);
     line-height: 1.5;
-}
-
-/* Typography Scale */
-.text-display {
-    font-size: 32px;
-    font-weight: var(--font-weight-bold);
-}
-
-.text-heading {
-    font-size: 24px;
-    font-weight: var(--font-weight-bold);
-}
-
-.text-title {
-    font-size: 20px;
-    font-weight: var(--font-weight-semibold);
-}
-
-.text-body {
-    font-size: 16px;
-    font-weight: var(--font-weight-normal);
-}
-
-.text-caption {
-    font-size: 14px;
-    font-weight: var(--font-weight-normal);
-}
-
-.text-small {
-    font-size: 12px;
-    font-weight: var(--font-weight-normal);
 }

@@ -17,7 +17,7 @@
 	let name = $state('');
 	let isSubmitting = $state(false);
 	let previewImageUrl = $state<string | null>(null);
-	let fileInput: HTMLInputElement;
+	let fileInput = $state<HTMLInputElement>();
 
 	const user = $derived($userStore || GUEST_USER);
 
@@ -44,8 +44,7 @@
 	async function handleApply() {
 		isSubmitting = true;
 		try {
-			// TODO: Save profile changes
-			console.log('Saving profile:', { name, bio });
+			// TODO: Implement save profile API call
 			onClose();
 		} catch (error) {
 			console.error('Error saving profile:', error);
@@ -67,6 +66,7 @@
 						<UserAvatar size={16} {user} />
 						<button
 							type="button"
+							aria-label="Edit profile photo"
 							class="absolute bottom-0 right-0 rounded-full bg-white shadow-xl border border-gray-300 w-8 h-8 flex items-center justify-center"
 						>
 							<svg class="w-4 h-4" viewBox="0 0 256 256" fill="currentColor">

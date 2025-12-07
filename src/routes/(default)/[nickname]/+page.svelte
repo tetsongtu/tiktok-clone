@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
+	import { page } from '$app/state';
 	import { userStore } from '~/lib/stores/userStore';
 	import UserAvatar from '~/lib/components/UserAvatar.svelte';
 	import ProfilePost from '~/lib/components/ProfilePost.svelte';
@@ -9,7 +8,7 @@
 
 	type Status = 'idle' | 'loading' | 'success' | 'error' | 'not_found';
 
-	const rawNickname = $derived($page.params.nickname || '');
+	const rawNickname = $derived(page.params.nickname || '');
 	const nickname = $derived(rawNickname.replace('@', '').trim());
 	const user = $derived($userStore);
 	const isOwnProfile = $derived(user?.nickname === nickname);
@@ -57,12 +56,8 @@
 		}
 	}
 
-	onMount(() => {
-		loadProfile();
-	});
-
 	$effect(() => {
-		// Reload when nickname or user changes
+		// Load profile when nickname or user changes
 		nickname;
 		user;
 		loadProfile();
@@ -135,7 +130,7 @@
 				<span class="text-gray-500 font-normal text-base">Đang theo dõi</span>
 			</div>
 
-			<div class="w-px h-8 bg-gray-300" />
+			<div class="w-px h-8 bg-gray-300"></div>
 			<div class="text-left">
 				<span class="text-base font-normal text-gray-900 block">
 					{profileData?.likes_count || 0}
@@ -150,28 +145,28 @@
 			</p>
 		{/if}
 
-		<ul class="w-full flex items-center pt-8 border-b-2 border-gray-200 relative">
-			<li
+		<div class="w-full flex items-center pt-8 border-b-2 border-gray-200 relative">
+			<button
 				onclick={() => (activeTab = 'videos')}
 				class="w-60 text-center py-3 text-base font-normal cursor-pointer {activeTab === 'videos'
 					? 'text-black'
 					: 'text-gray-500'}"
 			>
 				Video
-			</li>
-			<li
+			</button>
+			<button
 				onclick={() => (activeTab = 'liked')}
 				class="w-60 text-center py-3 text-base font-normal cursor-pointer {activeTab === 'liked'
 					? 'text-black'
 					: 'text-gray-500'}"
 			>
 				Đã thích
-			</li>
+			</button>
 			<div
 				class="absolute bottom-0 left-0 h-[3px] bg-black transition-transform duration-300"
 				style="width: 240px; transform: translateX({activeTab === 'videos' ? '0%' : '100%'})"
-			/>
-		</ul>
+			></div>
+		</div>
 
 		<div class="mt-6">
 			{#if activeTab === 'videos'}

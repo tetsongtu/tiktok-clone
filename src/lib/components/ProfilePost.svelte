@@ -38,14 +38,14 @@
 			</svg>
 		</div>
 	{:else}
-		<a href="/post/{post.id}/{post.user_id}">
+		<a href="/post/{post.id}/{post.user_id}" aria-label="View video post">
 			<video
 				id="video{post.id}"
 				muted
 				loop
 				class="aspect-[3/4] object-cover rounded-md"
 				src={post.video_url}
-			/>
+			></video>
 		</a>
 	{/if}
 	<div class="px-1">

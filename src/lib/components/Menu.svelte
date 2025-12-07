@@ -19,13 +19,15 @@
 		items: MenuItem[];
 		onChange?: (item: MenuItem) => void;
 		children: any;
+		hover?: boolean;
 	}
 
-	let { items = [], onChange = () => {}, children }: Props = $props();
+	let { items = [], onChange = () => {}, children, hover = false }: Props = $props();
 
 	let isOpen = $state(false);
 	let history = $state<{ title?: string; data: MenuItem[] }[]>([]);
 	let menuRef: HTMLDivElement;
+	let hideTimeout: ReturnType<typeof setTimeout>;
 
 	const currentMenu = $derived(history[history.length - 1] || { data: items });
 
@@ -34,6 +36,22 @@
 		if (menuRef && !menuRef.contains(target)) {
 			isOpen = false;
 			history = [];
+		}
+	}
+
+	function handleMouseEnter() {
+		if (hover) {
+			clearTimeout(hideTimeout);
+			isOpen = true;
+		}
+	}
+
+	function handleMouseLeave() {
+		if (hover) {
+			hideTimeout = setTimeout(() => {
+				isOpen = false;
+				history = [];
+			}, 200);
 		}
 	}
 
@@ -71,8 +89,18 @@
 	});
 </script>
 
-<div class="relative" bind:this={menuRef}>
-	<button onclick={() => (isOpen = !isOpen)} class="cursor-pointer">
+<div 
+	role="menu"
+	tabindex="-1"
+	class="relative" 
+	bind:this={menuRef}
+	onmouseenter={handleMouseEnter}
+	onmouseleave={handleMouseLeave}
+>
+	<button 
+		onclick={() => !hover && (isOpen = !isOpen)} 
+		class="cursor-pointer"
+	>
 		{@render children()}
 	</button>
 

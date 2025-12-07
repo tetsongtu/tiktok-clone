@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	let showWarning = $state(false);
 	let isZoomCorrect = $state(true);
@@ -10,15 +9,16 @@
 		isZoomCorrect = zoomLevel === 100;
 	}
 
-	onMount(() => {
+	// Check zoom on mount and resize
+	$effect(() => {
 		checkZoom();
 		window.addEventListener('resize', checkZoom);
 		return () => window.removeEventListener('resize', checkZoom);
 	});
 
+	// Show warning when route changes and zoom is not 100%
 	$effect(() => {
-		// Show warning when route changes and zoom is not 100%
-		$page.url.pathname;
+		page.url.pathname;
 		
 		if (!isZoomCorrect) {
 			showWarning = true;

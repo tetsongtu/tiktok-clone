@@ -150,7 +150,7 @@
 				</div>
 
 				{#if view === 'login'}
-					<a href="#" class="text-gray-500 text-sm">Forgot password?</a>
+					<button type="button" onclick={() => {}} class="text-gray-500 text-sm hover:underline">Forgot password?</button>
 				{/if}
 
 				<Button variant="primary" class="w-full mt-4">

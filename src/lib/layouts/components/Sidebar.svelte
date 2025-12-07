@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import MenuItem from './MenuItem.svelte';
 	import Search from './Search.svelte';
 	import SuggestedAccounts from '~/lib/features/SuggestedAccounts.svelte';

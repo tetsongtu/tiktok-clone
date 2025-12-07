@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { commentStore } from '~/lib/stores/commentStore';
 	import UserAvatar from './UserAvatar.svelte';
 	import ActionButton from './ActionButton.svelte';
@@ -12,7 +11,6 @@
 	let { post }: Props = $props();
 
 	let hasClickedLike = $state(false);
-	let userLiked = $state(false);
 	let activeVideoId = $state<string | null>(null);
 
 	$effect(() => {
@@ -59,21 +57,14 @@
 
 	const { class: aspectRatio, isWide } = getAspectRatio();
 
-	onMount(() => {
-		if (!post) {
-			console.warn('⚠️ PostMain: No post data');
-			return;
-		}
+	$effect(() => {
+		if (!post) return;
 
 		const video = document.getElementById(`video-${post?.id}`) as HTMLVideoElement;
 		const postMainElement = document.getElementById(`post-main-${post?.id}`);
 
-		if (!postMainElement || !video) {
-			console.warn('⚠️ PostMain: Missing elements', { postMainElement, video });
-			return;
-		}
+		if (!postMainElement || !video) return;
 
-		// Set video to autoplay when loaded
 		video.muted = true;
 		video.autoplay = true;
 		video.playsInline = true;
@@ -81,10 +72,8 @@
 		const observer = new IntersectionObserver(
 			(entries) => {
 				if (entries[0].isIntersecting) {
-					video.play().catch((err) => {
-						console.log('Video play failed:', err);
-					});
-
+					video.play().catch(() => {});
+					
 					if (activeVideoId !== null) {
 						commentStore.setActiveVideoId(post.id);
 						goto(`/?video=${post.id}`);
@@ -93,7 +82,7 @@
 					video.pause();
 				}
 			},
-			{ threshold: 0.6 }
+			{ threshold: 0.5 }
 		);
 
 		observer.observe(postMainElement);
@@ -153,13 +142,13 @@
 					count={post.likes_count}
 					onclick={handleLike}
 					disabled={hasClickedLike}
-					isActive={userLiked}
+					isActive={hasClickedLike}
 					isLoading={hasClickedLike}
 				>
 					<svg
 						class="w-6 h-6"
 						viewBox="0 0 256 256"
-						fill={userLiked ? '#ff2626' : '#374151'}
+						fill={hasClickedLike ? '#ff2626' : '#374151'}
 					>
 						<path
 							d="M240,94c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,220.66,16,164,16,94A62.07,62.07,0,0,1,78,32c20.65,0,38.73,8.88,50,23.89C139.27,40.88,157.35,32,178,32A62.07,62.07,0,0,1,240,94Z"

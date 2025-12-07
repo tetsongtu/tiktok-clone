@@ -59,7 +59,7 @@
 <nav class="flex items-center gap-2">
 	{#if isLoggedIn}
 		<Tooltip content="Upload video">
-			<a href="/upload" class="p-2 hover:bg-gray-100 rounded-full">
+			<a href="/upload" aria-label="Upload video" class="p-2 hover:bg-gray-100 rounded-full">
 				<svg class="w-6 h-6" viewBox="0 0 256 256" fill="currentColor">
 					<path
 						d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66-5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,113.37V24a8,8,0,0,0-16,0v89.37L93.66,87a8,8,0,0,0-11.32,11.32Z"
@@ -68,7 +68,7 @@
 			</a>
 		</Tooltip>
 		<Tooltip content="Messages">
-			<button class="p-2 hover:bg-gray-100 rounded-full">
+			<button aria-label="Messages" class="p-2 hover:bg-gray-100 rounded-full">
 				<svg class="w-6 h-6" viewBox="0 0 256 256" fill="currentColor">
 					<path
 						d="M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Z"
@@ -77,7 +77,7 @@
 			</button>
 		</Tooltip>
 		<Tooltip content="Inbox">
-			<button class="p-2 hover:bg-gray-100 rounded-full relative">
+			<button aria-label="Inbox" class="p-2 hover:bg-gray-100 rounded-full relative">
 				<svg class="w-6 h-6" viewBox="0 0 256 256" fill="currentColor">
 					<path
 						d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM98.71,128,40,181.81V74.19Zm11.84,10.85,12,11.05a8,8,0,0,0,10.82,0l12-11.05,58,53.15H52.57ZM157.29,128,216,74.18V181.82Z"
@@ -108,7 +108,7 @@
 		</Button>
 	{/if}
 
-	<Menu items={userMenu}>
+	<Menu items={userMenu} hover={true}>
 		<div class="ml-2">
 			{#if isLoggedIn}
 				<UserAvatar size={10} {user} />

@@ -41,8 +41,12 @@
 
 {#if isOpen}
 	<div
+		role="dialog"
+		aria-modal="true"
+		tabindex="-1"
 		class="modal-overlay fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4"
 		onclick={handleClickOutside}
+		onkeydown={(e) => e.key === 'Escape' && onClose()}
 	>
 		<div
 			class="bg-white rounded-lg shadow-2xl overflow-hidden"
@@ -52,8 +56,6 @@
 				<div class="flex items-center justify-between p-4 border-b">
 					{#if onBack}
 						<button onclick={onBack} class="text-2xl font-bold">&lt;</button>
-					{:else}
-						<div></div>
 					{/if}
 					{#if title}
 						<h2 class="text-xl font-semibold">{title}</h2>

@@ -25,7 +25,7 @@
 
 	function createNewPost() {
 		if (!file) return;
-		console.log('Creating new post with:', { file, caption });
+		// TODO: Implement upload functionality
 	}
 
 	const canPost = $derived(!isUploading && file);
@@ -96,7 +96,7 @@
 					muted
 					loop
 					src={fileDisplay}
-				/>
+				></video>
 				<button
 					onclick={discard}
 					class="absolute -bottom-12 z-50 flex justify-center gap-32 w-full p-2 border border-gray-300 rounded-xl"

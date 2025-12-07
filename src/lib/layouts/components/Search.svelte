@@ -80,6 +80,7 @@
 	>
 		<Tooltip content="Search">
 			<button
+				aria-label="Search"
 				class={classNames(
 					'h-full border-r border-r-gray-300 pr-2',
 					hasText ? 'text-[rgba(22,24,35,0.75)]' : 'opacity-50'
@@ -102,7 +103,7 @@
 			class="w-full p-4 bg-transparent placeholder:text-gray-400 text-base outline-none"
 		/>
 		{#if showClear}
-			<button class="mr-2 rounded-full p-1 hover:bg-gray-200" onclick={handleClear}>
+			<button aria-label="Clear search" class="mr-2 rounded-full p-1 hover:bg-gray-200" onclick={handleClear}>
 				<svg class="w-3 h-3" viewBox="0 0 256 256" fill="currentColor">
 					<path
 						d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"
