@@ -3,12 +3,13 @@
 	import Search from './Search.svelte';
 	import SuggestedAccounts from '~/lib/features/SuggestedAccounts.svelte';
 	import * as userServices from '~/lib/services/userService';
+	import type { SuggestedUser } from '~/lib/types/user';
 
 	const INIT_PAGE = 1;
 	const PER_PAGE = 5;
 
 	let currentPage = $state(INIT_PAGE);
-	let suggestedUsers = $state<any[]>([]);
+	let suggestedUsers = $state<SuggestedUser[]>([]);
 	let fetchedRef = false;
 
 	const SIDEBAR_MENU = [

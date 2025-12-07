@@ -7,6 +7,7 @@
 	import EditProfileModal from '~/lib/features/EditProfileModal.svelte';
 	import * as searchService from '~/lib/services/searchService';
 	import * as videoService from '~/lib/services/videoService';
+	import type { User, SuggestedUser, Video } from '~/lib/types/user';
 
 	type Status = 'idle' | 'loading' | 'success' | 'error' | 'not_found';
 
@@ -15,16 +16,16 @@
 	const user = $derived($userStore);
 	const isOwnProfile = $derived(user?.nickname === nickname);
 
-	let profileData = $state<any>(null);
+	let profileData = $state<SuggestedUser | User | null>(null);
 	let status = $state<Status>('idle');
 	let error = $state<string>('');
 	let showEditProfile = $state(false);
 	let activeTab = $state<'videos' | 'liked'>('videos');
-	let userVideos = $state<any[]>([]);
+	let userVideos = $state<Video[]>([]);
 	let lastLoadedNickname = $state<string>('');
 	
 	// Cache profiles to avoid re-fetching
-	const profileCache = new Map<string, any>();
+	const profileCache = new Map<string, SuggestedUser | User>();
 
 	$effect(() => {
 		let timeoutId: ReturnType<typeof setTimeout>;
@@ -48,6 +49,16 @@
 				return;
 			}
 
+			// Check if data passed via navigation state
+			const stateUser = (page.state as any)?.user as SuggestedUser | User | undefined;
+			if (stateUser && stateUser.nickname === nickname) {
+				profileData = stateUser;
+				profileCache.set(nickname, stateUser);
+				status = 'success';
+				lastLoadedNickname = nickname;
+				return;
+			}
+
 			// If logged in and viewing own profile
 			if (user?.nickname === nickname) {
 				profileData = user;
@@ -56,9 +67,9 @@
 				return;
 			}
 
-			// Check cache only if not logged in user's profile
-			if (profileCache.has(nickname) && !user) {
-				profileData = profileCache.get(nickname);
+			// Check cache
+			if (profileCache.has(nickname)) {
+				profileData = profileCache.get(nickname) || null;
 				status = 'success';
 				lastLoadedNickname = nickname;
 				return;
@@ -72,7 +83,7 @@
 			timeoutId = setTimeout(async () => {
 				try {
 					const results = await searchService.search(nickname, 'less');
-					const foundUser = results?.find((u: any) => u.nickname === nickname);
+					const foundUser = results?.find((u) => u.nickname === nickname) || null;
 					
 					if (foundUser) {
 						profileData = foundUser;
@@ -95,25 +106,18 @@
 	});
 
 	$effect(() => {
-		async function loadVideos() {
-			if (!profileData) return;
-
-			// TODO: Replace with real API endpoint to fetch user's videos
-			// For now, fetch 1 video as mock data
-			try {
-				const result = await videoService.getVideo(1);
-				if (result) {
-					userVideos = [result.data || result];
-				} else {
-					userVideos = [];
-				}
-			} catch (err) {
-				console.error('Error loading videos:', err);
-				userVideos = [];
-			}
+		if (!profileData) {
+			userVideos = [];
+			return;
 		}
 
-		loadVideos();
+		// Check if profileData has popular_video (from SuggestedUser)
+		if ('popular_video' in profileData && profileData.popular_video) {
+			userVideos = [profileData.popular_video];
+		} else {
+			// TODO: Fetch user's videos from API when available
+			userVideos = [];
+		}
 	});
 </script>
 
@@ -220,7 +224,7 @@
 				{#if userVideos.length > 0}
 					<div class="grid grid-cols-6 gap-4">
 						{#each userVideos as video (video.id)}
-							<ProfilePost post={video} />
+							<ProfilePost {video} />
 						{/each}
 					</div>
 				{:else}

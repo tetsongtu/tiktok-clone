@@ -1,15 +1,19 @@
 <script lang="ts">
 	import UserAvatar from '~/lib/components/UserAvatar.svelte';
+	import type { User, SuggestedUser } from '~/lib/types/user';
 
 	interface Props {
-		user: any;
+		user: User | SuggestedUser;
 	}
 
 	let { user }: Props = $props();
 </script>
 
 <div class="w-full p-4">
-	<a href="/@{user.nickname}">
+	<a 
+		href="/@{user.nickname}"
+		data-sveltekit-preload-data="tap"
+	>
 		<header class="flex justify-between items-start">
 			<UserAvatar {user} />
 			<button

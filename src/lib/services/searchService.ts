@@ -1,6 +1,7 @@
 import * as httpRequest from '~/lib/utils/httpRequest';
+import type { User } from '~/lib/types/user';
 
-export const search = async (q: string, type = 'less') => {
+export const search = async (q: string, type = 'less'): Promise<User[]> => {
     try {
         const data = await httpRequest.get(`users/search`, {
             params: {

@@ -4,9 +4,10 @@
 	import classNames from 'classnames';
 	import * as searchServices from '~/lib/services/searchService';
 	import Tooltip from '~/lib/components/Tooltip.svelte';
+	import type { User } from '~/lib/types/user';
 
 	let searchValue = $state('');
-	let searchResult = $state<any[]>([]);
+	let searchResult = $state<User[]>([]);
 	let showResult = $state(false);
 	let loading = $state(false);
 	let inputRef: HTMLInputElement;

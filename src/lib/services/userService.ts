@@ -1,4 +1,5 @@
 import * as httpRequest from '~/lib/utils/httpRequest';
+import type { SuggestedUser } from '~/lib/types/user';
 
 interface GetSuggestedParams {
     page: number;
@@ -8,7 +9,7 @@ interface GetSuggestedParams {
 export async function getSuggested({
     page,
     perPage,
-}: GetSuggestedParams): Promise<any[]> {
+}: GetSuggestedParams): Promise<SuggestedUser[]> {
     try {
         const data = await httpRequest.get(`users/suggested`, {
             params: {

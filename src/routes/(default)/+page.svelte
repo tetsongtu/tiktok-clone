@@ -4,12 +4,13 @@
 	import * as videoService from '~/lib/services/videoService';
 	import { commentStore } from '~/lib/stores/commentStore';
 	import { goto } from '$app/navigation';
+	import type { Video } from '~/lib/types/user';
 
 	const VIDEOS_PER_BATCH = 5;
 	const MAX_VIDEO_ID = 109;
 	const SCROLL_THRESHOLD = 800;
 
-	let videos = $state<any[]>([]);
+	let videos = $state<Video[]>([]);
 	let refreshKey = $state(0);
 	let isFetchingRef = false;
 	let fetchedIdsRef = new Set<number>();
@@ -39,7 +40,7 @@
 				}
 				return null;
 			})
-			.filter((video): video is any => video !== null);
+			.filter((video): video is Video => video !== null);
 
 		videos = [...videos, ...newVideos];
 		isFetchingRef = false;
@@ -97,7 +98,7 @@
 
 <div>
 	{#each videos as video, index (`${video.id}-${index}`)}
-		<PostMain post={video} />
+		<PostMain {video} />
 	{/each}
 
 	<!-- Comment Drawer -->

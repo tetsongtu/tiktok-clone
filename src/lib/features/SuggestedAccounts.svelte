@@ -3,10 +3,12 @@
 	import UserAvatar from '~/lib/components/UserAvatar.svelte';
 	import AccountPreview from './AccountPreview.svelte';
 	import Tooltip from '~/lib/components/Tooltip.svelte';
+	import type { SuggestedUser } from '~/lib/types/user';
+	import { goto } from '$app/navigation';
 
 	interface Props {
 		label: string;
-		data?: any[];
+		data?: SuggestedUser[];
 		onSeeAll?: () => void;
 	}
 
@@ -20,9 +22,14 @@
 	{#each data as account (account.id)}
 		<Tooltip offset={[-20, -20]} delay={500} placement="bottom">
 			{#snippet children()}
-				<a
-					href="/@{account.nickname}"
-					class="flex items-center px-2 py-1 rounded hover:bg-gray-50 w-full"
+				<button
+					type="button"
+					onclick={(e) => {
+						e.stopPropagation();
+						const userData = JSON.parse(JSON.stringify(account));
+						goto(`/@${account.nickname}`, { state: { user: userData } });
+					}}
+					class="flex items-center px-2 py-1 rounded hover:bg-gray-50 w-full text-left cursor-pointer"
 				>
 					<UserAvatar user={account} />
 					<section class="ml-3 flex-1 min-w-0">
@@ -34,7 +41,7 @@
 						</p>
 						<p class="text-base truncate">{account?.first_name} {account?.last_name}</p>
 					</section>
-				</a>
+				</button>
 			{/snippet}
 			{#snippet render()}
 				<div class="bg-white rounded-lg shadow-xl border border-gray-200 min-w-[308px]">

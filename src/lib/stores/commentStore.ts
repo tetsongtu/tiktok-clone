@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
 interface CommentStore {
-    activeVideoId: string | null;
+    activeVideoId: number | null;
 }
 
 function createCommentStore() {
@@ -11,7 +11,7 @@ function createCommentStore() {
 
     return {
         subscribe,
-        setActiveVideoId: (id: string | null) =>
+        setActiveVideoId: (id: number | null) =>
             update((store) => ({ ...store, activeVideoId: id })),
     };
 }
