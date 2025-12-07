@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { commentStore } from '~/lib/stores/commentStore';
 	import Image from '~/lib/components/Image.svelte';
 	import LoadingOverlay from '~/lib/components/LoadingOverlay.svelte';
 	import images from '~/lib/assets/images';
@@ -10,11 +10,8 @@
 		e.preventDefault();
 		loading = true;
 
-		// Close comment drawer
-		const drawer = document.querySelector('[data-comment-drawer]') as HTMLElement;
-		if (drawer) {
-			drawer.style.transform = 'translateX(100%)';
-		}
+		// Reset comment
+		commentStore.setActiveVideoId(null);
 
 		if ((window as any).closeCommentDrawer) {
 			(window as any).closeCommentDrawer();
@@ -25,12 +22,10 @@
 			(window as any).refreshVideoFeed();
 		}
 
-		// Navigate to home
-		goto('/').then(() => {
-			setTimeout(() => {
-				loading = false;
-			}, 300);
-		});
+		// Reload page để reset URL về /
+		setTimeout(() => {
+			window.location.href = '/';
+		}, 300);
 	}
 </script>
 
