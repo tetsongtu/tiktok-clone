@@ -22,4 +22,3 @@ export { default as IconComment } from './IconComment.svelte';
 export { default as IconSmiley } from './IconSmiley.svelte';
 export { default as IconSplitVertical } from './IconSplitVertical.svelte';
 export { default as IconChartBar } from './IconChartBar.svelte';
-export { default as IconInfo } from './IconInfo.svelte';

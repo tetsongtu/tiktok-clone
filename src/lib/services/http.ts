@@ -1,159 +1,42 @@
 import axios, { type AxiosRequestConfig, type AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
-// ============================================
-// Config
-// ============================================
-
-const HTTP_CONFIG = {
-	timeout: 10000,
-	retryAttempts: 3,
-	retryDelay: 1000,
-	retryStatusCodes: [408, 429, 500, 502, 503, 504] as number[],
-} as const;
-
-// ============================================
-// HTTP Client
-// ============================================
+const RETRY_STATUS = [408, 429, 500, 502, 503, 504];
 
 const httpClient = axios.create({
 	baseURL: import.meta.env.VITE_API_URL,
-	timeout: HTTP_CONFIG.timeout,
-	headers: {
-		'Content-Type': 'application/json',
-	},
+	timeout: 10000,
 });
 
-// ============================================
-// Request Interceptor
-// ============================================
-
-httpClient.interceptors.request.use(
-	(config: InternalAxiosRequestConfig) => {
-		// Add auth token if available
-		if (typeof window !== 'undefined') {
-			const token = localStorage.getItem('auth_token');
-			if (token && config.headers) {
-				config.headers.Authorization = `Bearer ${token}`;
-			}
-		}
-		return config;
-	},
-	(error) => Promise.reject(error)
-);
-
-// ============================================
-// Response Interceptor
-// ============================================
-
+// Auto-retry on server errors
 httpClient.interceptors.response.use(
-	(response) => response,
+	(res) => res,
 	async (error: AxiosError) => {
-		const config = error.config as InternalAxiosRequestConfig & { _retryCount?: number };
-
-		// Check if we should retry
-		const shouldRetry =
-			config &&
-			HTTP_CONFIG.retryStatusCodes.includes(error.response?.status || 0) &&
-			(config._retryCount || 0) < HTTP_CONFIG.retryAttempts;
-
-		if (shouldRetry) {
-			config._retryCount = (config._retryCount || 0) + 1;
-			await sleep(HTTP_CONFIG.retryDelay * config._retryCount);
+		const config = error.config as InternalAxiosRequestConfig & { _retry?: number };
+		if (config && RETRY_STATUS.includes(error.response?.status || 0) && (config._retry || 0) < 3) {
+			config._retry = (config._retry || 0) + 1;
+			await new Promise((r) => setTimeout(r, 1000 * config._retry!));
 			return httpClient(config);
 		}
-
 		return Promise.reject(error);
 	}
 );
 
-// ============================================
-// Error Class
-// ============================================
-
 export class ApiError extends Error {
-	constructor(
-		message: string,
-		public statusCode?: number,
-		public originalError?: unknown
-	) {
+	constructor(message: string, public statusCode?: number) {
 		super(message);
 		this.name = 'ApiError';
 	}
-
-	static fromAxiosError(error: AxiosError, fallbackMessage: string): ApiError {
-		const message = (error.response?.data as { message?: string })?.message
-			|| error.message
-			|| fallbackMessage;
-		return new ApiError(message, error.response?.status, error);
-	}
-
-	get isNetworkError(): boolean {
-		return !this.statusCode;
-	}
-
-	get isServerError(): boolean {
-		return !!this.statusCode && this.statusCode >= 500;
-	}
-
-	get isClientError(): boolean {
-		return !!this.statusCode && this.statusCode >= 400 && this.statusCode < 500;
-	}
-
-	get isUnauthorized(): boolean {
-		return this.statusCode === 401;
-	}
-
-	get isNotFound(): boolean {
-		return this.statusCode === 404;
-	}
 }
 
-// ============================================
-// Helper Functions
-// ============================================
-
-function sleep(ms: number): Promise<void> {
-	return new Promise((resolve) => setTimeout(resolve, ms));
+function handleError(error: unknown, path: string): never {
+	const e = error as AxiosError;
+	throw new ApiError(e.message || `Request failed: ${path}`, e.response?.status);
 }
-
-// ============================================
-// HTTP Methods
-// ============================================
 
 export async function get<T>(path: string, options: AxiosRequestConfig = {}): Promise<T> {
 	try {
-		const response = await httpClient.get<T>(path, options);
-		return response.data;
+		return (await httpClient.get<T>(path, options)).data;
 	} catch (error) {
-		throw ApiError.fromAxiosError(error as AxiosError, `GET request failed: ${path}`);
+		handleError(error, path);
 	}
 }
-
-export async function post<T>(path: string, data?: unknown, options: AxiosRequestConfig = {}): Promise<T> {
-	try {
-		const response = await httpClient.post<T>(path, data, options);
-		return response.data;
-	} catch (error) {
-		throw ApiError.fromAxiosError(error as AxiosError, `POST request failed: ${path}`);
-	}
-}
-
-export async function put<T>(path: string, data?: unknown, options: AxiosRequestConfig = {}): Promise<T> {
-	try {
-		const response = await httpClient.put<T>(path, data, options);
-		return response.data;
-	} catch (error) {
-		throw ApiError.fromAxiosError(error as AxiosError, `PUT request failed: ${path}`);
-	}
-}
-
-export async function del<T>(path: string, options: AxiosRequestConfig = {}): Promise<T> {
-	try {
-		const response = await httpClient.delete<T>(path, options);
-		return response.data;
-	} catch (error) {
-		throw ApiError.fromAxiosError(error as AxiosError, `DELETE request failed: ${path}`);
-	}
-}
-
-export default httpClient;

@@ -1,20 +1,6 @@
 import type { GuestUser } from '$lib/types';
 
-// Re-export API endpoints
 export * from './api';
-
-// ============================================
-// App Config
-// ============================================
-
-export const APP_CONFIG = {
-	name: 'TikTok',
-	version: '0.0.1',
-} as const;
-
-// ============================================
-// Video Feed Config
-// ============================================
 
 export const VIDEO_FEED = {
 	VIDEOS_PER_BATCH: 5,
@@ -22,18 +8,7 @@ export const VIDEO_FEED = {
 	SCROLL_THRESHOLD: 800,
 } as const;
 
-// ============================================
-// Pagination Config
-// ============================================
-
-export const PAGINATION = {
-	INIT_PAGE: 1,
-	PER_PAGE: 5,
-} as const;
-
-// ============================================
-// UI Config
-// ============================================
+export const PAGINATION = { PER_PAGE: 5 } as const;
 
 export const UI = {
 	TOOLTIP_DELAY: 500,
@@ -42,34 +17,11 @@ export const UI = {
 	LOADING_DELAY: 300,
 } as const;
 
-// ============================================
-// Sidebar Menu
-// ============================================
-
 export const SIDEBAR_MENU = [
-	{
-		title: 'For You',
-		to: '/',
-		icon: 'house',
-		iconFill: 'house-fill',
-	},
-	{
-		title: 'Following',
-		to: '/following',
-		icon: 'users',
-		iconFill: 'users-fill',
-	},
-	{
-		title: 'LIVE',
-		to: '/live',
-		icon: 'video',
-		iconFill: 'video-fill',
-	},
+	{ title: 'For You', to: '/', icon: 'house', iconFill: 'house-fill' },
+	{ title: 'Following', to: '/following', icon: 'users', iconFill: 'users-fill' },
+	{ title: 'LIVE', to: '/live', icon: 'video', iconFill: 'video-fill' },
 ] as const;
-
-// ============================================
-// Guest User
-// ============================================
 
 export const GUEST_USER: GuestUser = {
 	id: 1,
@@ -85,15 +37,10 @@ export const GUEST_USER: GuestUser = {
 	videos: [],
 };
 
-// ============================================
-// Validation
-// ============================================
-
 export const VALIDATION = {
 	NICKNAME_PATTERN: /^[a-zA-Z0-9_]+$/,
 	NICKNAME_MAX_LENGTH: 30,
 	EMAIL_PATTERN: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
 	PASSWORD_MIN_LENGTH: 6,
-	PASSWORD_MAX_LENGTH: 50,
 	BIO_MAX_LENGTH: 80,
 } as const;

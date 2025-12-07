@@ -14,42 +14,17 @@
 		{ id: 'videos' as TabType, label: 'Video', count: videosCount },
 		{ id: 'liked' as TabType, label: 'Đã thích', count: likedCount },
 	]);
-
-	const activeIndex = $derived(TABS.findIndex((t) => t.id === activeTab));
-
-	function handleKeyDown(e: KeyboardEvent, tab: TabType) {
-		if (e.key === 'Enter' || e.key === ' ') {
-			e.preventDefault();
-			onTabChange(tab);
-		}
-	}
 </script>
 
-<nav class="w-full pt-8 border-b-2 border-gray-200 relative" aria-label="Profile tabs">
-	<div class="flex" role="tablist">
+<nav class="w-full pt-8 border-b-2 border-gray-200 relative">
+	<div class="flex">
 		{#each TABS as tab (tab.id)}
-			{@const isActive = activeTab === tab.id}
-			<button
-				role="tab"
-				aria-selected={isActive}
-				aria-controls="tabpanel-{tab.id}"
-				tabindex={isActive ? 0 : -1}
-				onclick={() => onTabChange(tab.id)}
-				onkeydown={(e) => handleKeyDown(e, tab.id)}
-				class="w-60 flex items-center justify-center gap-2 py-3 text-base font-medium cursor-pointer transition-colors {isActive
-					? 'text-black'
-					: 'text-gray-500 hover:text-gray-700'}"
-			>
-				<span>{tab.label}</span>
-				{#if tab.count > 0}
-					<span class="text-sm text-gray-400">({tab.count})</span>
-				{/if}
+			<button onclick={() => onTabChange(tab.id)}
+				class="w-60 flex items-center justify-center gap-2 py-3 font-medium {activeTab === tab.id ? 'text-black' : 'text-gray-500'}">
+				{tab.label}
+				{#if tab.count > 0}<span class="text-sm text-gray-400">({tab.count})</span>{/if}
 			</button>
 		{/each}
 	</div>
-	<div
-		class="absolute bottom-0 left-0 h-[3px] bg-black transition-transform duration-300 ease-out"
-		style="width: 240px; transform: translateX({activeIndex * 100}%)"
-		aria-hidden="true"
-	></div>
+	<div class="absolute bottom-0 left-0 h-[3px] bg-black transition-transform duration-300" style="width: 240px; transform: translateX({activeTab === 'videos' ? '0' : '100'}%)"></div>
 </nav>

@@ -4,110 +4,60 @@
 	import { SuggestedAccounts } from '$lib/features';
 	import { userService } from '$lib/services';
 	import { userStore } from '$lib/stores';
-	import { SIDEBAR_MENU, PAGINATION, APP_CONFIG } from '$lib/constants';
+	import { SIDEBAR_MENU, PAGINATION } from '$lib/constants';
 	import type { SuggestedUser } from '$lib/types';
 
-	let currentPage = $state(PAGINATION.INIT_PAGE);
-	let suggestedUsers = $state<SuggestedUser[]>([]);
-	let isLoading = $state(false);
+	let page = $state(1);
+	let users = $state<SuggestedUser[]>([]);
+	let loading = $state(false);
 	let hasMore = $state(true);
-	let fetchedRef = false;
+	let fetched = false;
 
 	const isLoggedIn = $derived(userStore.isLoggedIn());
-	const currentYear = new Date().getFullYear();
 
 	$effect(() => {
-		if (fetchedRef && currentPage === PAGINATION.INIT_PAGE) return;
-		fetchedRef = true;
-		loadSuggestedUsers();
+		if (fetched && page === 1) return;
+		fetched = true;
+		loadUsers();
 	});
 
-	async function loadSuggestedUsers() {
-		if (isLoading || !hasMore) return;
-
-		isLoading = true;
+	async function loadUsers() {
+		if (loading || !hasMore) return;
+		loading = true;
 		try {
-			const data = await userService.getSuggested({
-				page: currentPage,
-				perPage: PAGINATION.PER_PAGE,
-			});
-
-			if (data.length < PAGINATION.PER_PAGE) {
-				hasMore = false;
-			}
-
-			suggestedUsers = currentPage === PAGINATION.INIT_PAGE
-				? data
-				: [...suggestedUsers, ...data];
-		} catch (error) {
-			console.error('Failed to load suggested users:', error);
-		} finally {
-			isLoading = false;
-		}
+			const data = await userService.getSuggested({ page, perPage: PAGINATION.PER_PAGE });
+			if (data.length < PAGINATION.PER_PAGE) hasMore = false;
+			users = page === 1 ? data : [...users, ...data];
+		} catch (e) { console.error(e); }
+		loading = false;
 	}
-
-	function handleSeeAll() {
-		if (!isLoading && hasMore) {
-			currentPage++;
-		}
-	}
-
-	const footerLinks = [
-		{ label: 'Company', href: '#' },
-		{ label: 'Program', href: '#' },
-		{ label: 'Terms & Policies', href: '#' },
-	] as const;
 </script>
 
-<aside
-	id="Sidebar"
-	class="fixed top-[70px] bottom-0 w-[280px] px-2.5 z-40 overflow-y-auto"
-	aria-label="Sidebar navigation"
->
+<aside id="Sidebar" class="fixed top-[70px] bottom-0 w-[280px] px-2.5 z-40 overflow-y-auto">
 	<Search />
-
-	<nav class="my-3" aria-label="Main navigation">
+	<nav class="my-3">
 		{#each SIDEBAR_MENU as item (item.title)}
 			<MenuItem {...item} />
 		{/each}
 	</nav>
 
-	<section aria-label="Suggested accounts">
-		<SuggestedAccounts
-			label="Suggested accounts"
-			data={suggestedUsers}
-			onSeeAll={handleSeeAll}
-			{isLoading}
-			showSeeAll={hasMore}
-		/>
-	</section>
+	<SuggestedAccounts label="Suggested accounts" data={users} onSeeAll={() => !loading && hasMore && page++} isLoading={loading} showSeeAll={hasMore} />
 
 	{#if isLoggedIn}
-		<section aria-label="Following accounts">
-			<SuggestedAccounts label="Following" data={[]} />
-		</section>
+		<SuggestedAccounts label="Following" data={[]} />
 	{/if}
 
-	<footer class="py-4 w-full text-sm">
+	<footer class="py-4 text-sm text-gray-500">
 		<hr class="border-gray-300 w-[90%] mb-4" />
-
 		{#if !isLoggedIn}
-			<div class="text-gray-600 mb-4">
-				<p class="font-medium">Following accounts</p>
-				<p class="text-gray-500">Accounts you follow will appear here</p>
-			</div>
+			<p class="font-medium text-gray-600">Following accounts</p>
+			<p class="mb-4">Accounts you follow will appear here</p>
 			<hr class="border-gray-300 w-[90%] mb-4" />
 		{/if}
-
-		<nav aria-label="Footer links">
-			<ul class="text-gray-500 space-y-1">
-				{#each footerLinks as link (link.label)}
-					<li>
-						<a href={link.href} class="hover:underline">{link.label}</a>
-					</li>
-				{/each}
-				<li class="pt-2">© {currentYear} {APP_CONFIG.name}</li>
-			</ul>
-		</nav>
+		<ul class="space-y-1">
+			<li><span class="cursor-pointer hover:underline">Company</span></li>
+			<li><span class="cursor-pointer hover:underline">Terms & Policies</span></li>
+			<li class="pt-2">© {new Date().getFullYear()} TikTok</li>
+		</ul>
 	</footer>
 </aside>
