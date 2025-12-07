@@ -1,6 +1,6 @@
 <script lang="ts">
-	import '~/global.css';
-	import ZoomWarning from '~/lib/components/ZoomWarning.svelte';
+	import '$lib/../global.css';
+	import { ZoomWarning } from '$lib/components';
 	import type { Snippet } from 'svelte';
 
 	interface Props {

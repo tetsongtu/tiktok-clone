@@ -1,9 +1,9 @@
 <script lang="ts">
-	import ActionButton from '~/lib/components/ActionButton.svelte';
-	import { IconHeart, IconComment, IconShare } from '~/lib/components/icons';
-	import { commentStore } from '~/lib/stores/commentStore';
+	import { ActionButton } from '$lib/components';
+	import { IconHeart, IconComment, IconShare } from '$lib/components/icons';
+	import { commentStore } from '$lib/stores';
 	import { replaceState } from '$app/navigation';
-	import type { Video } from '~/lib/types/user';
+	import type { Video } from '$lib/types';
 
 	interface Props {
 		video: Video;
@@ -14,16 +14,12 @@
 
 	let { video, hasClickedLike, onLike, onShare }: Props = $props();
 
-	let showComments = $state(false);
-
-	$effect(() => {
-		showComments = $commentStore.activeVideoId === video.id;
-	});
+	const showComments = $derived(commentStore.isOpen(video.id));
 
 	const handleToggleComments = () => {
 		const username = video?.user?.nickname;
 		if (showComments) {
-			commentStore.setActiveVideoId(null);
+			commentStore.close();
 		} else {
 			commentStore.setActiveVideoId(video.id);
 		}

@@ -1,14 +1,18 @@
 <script lang="ts">
 	import classNames from 'classnames';
+	import type { Snippet } from 'svelte';
+
+	type ButtonVariant = 'primary' | 'outline';
+	type ButtonSize = 'small' | 'large';
 
 	interface Props {
-		variant?: 'primary' | 'outline';
-		size?: 'small' | 'large';
+		variant?: ButtonVariant;
+		size?: ButtonSize;
 		rounded?: boolean;
 		disabled?: boolean;
 		class?: string;
 		onclick?: () => void;
-		children?: any;
+		children?: Snippet;
 	}
 
 	let {
@@ -25,7 +29,7 @@
 		classNames(
 			'inline-flex items-center justify-center font-semibold transition-colors',
 			{
-				'bg-[#F02C56] text-white hover:bg-[#d02648]': variant === 'primary' && !disabled,
+				'bg-primary text-white hover:bg-primary-hover': variant === 'primary' && !disabled,
 				'border-2 border-gray-300 text-gray-700 hover:bg-gray-50':
 					variant === 'outline' && !disabled,
 				'px-4 py-2 text-sm': size === 'small',

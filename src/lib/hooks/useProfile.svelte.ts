@@ -1,59 +1,58 @@
 import { page } from '$app/state';
-import { get } from 'svelte/store';
-import { userStore } from '~/lib/stores/userStore';
-import * as searchService from '~/lib/services/searchService';
-import type { User, SuggestedUser } from '~/lib/types/user';
-
-type Status = 'idle' | 'loading' | 'success' | 'error' | 'not_found';
+import { userStore } from '$lib/stores';
+import { searchService } from '$lib/services';
+import { VALIDATION, UI } from '$lib/constants';
+import type { User, SuggestedUser, ProfileStatus } from '$lib/types';
 
 export function useProfile() {
 	let rawNickname = $state(page.params.nickname || '');
 	let nickname = $derived(rawNickname.replace('@', '').trim());
-	let user = $state(get(userStore));
-	let isOwnProfile = $derived(user?.nickname === nickname);
+	let isOwnProfile = $derived(userStore.current?.nickname === nickname);
 
 	let profileData = $state<SuggestedUser | User | null>(null);
-	let status = $state<Status>('idle');
-	let error = $state<string>('');
-	let lastLoadedNickname = $state<string>('');
-
-	// Update rawNickname when page params change
-	$effect(() => {
-		rawNickname = page.params.nickname || '';
-		user = get(userStore);
-	});
+	let status = $state<ProfileStatus>('idle');
+	let error = $state('');
+	let lastLoadedNickname = $state('');
 
 	const profileCache = new Map<string, SuggestedUser | User>();
+
+	$effect(() => {
+		rawNickname = page.params.nickname || '';
+	});
 
 	$effect(() => {
 		let timeoutId: ReturnType<typeof setTimeout>;
 
 		async function loadProfile() {
-			// Reset when nickname changes
 			if (lastLoadedNickname !== nickname) {
 				profileData = null;
 				status = 'idle';
 			}
 
 			// Validate nickname
-			if (!nickname || !/^[a-zA-Z0-9_]+$/.test(nickname) || nickname.length > 30) {
+			if (
+				!nickname ||
+				!VALIDATION.NICKNAME_PATTERN.test(nickname) ||
+				nickname.length > VALIDATION.NICKNAME_MAX_LENGTH
+			) {
 				status = 'error';
 				error = 'Invalid username';
 				lastLoadedNickname = nickname;
 				return;
 			}
 
-			// If viewing own profile, use data from userStore
-			if (user?.nickname === nickname) {
-				profileData = user;
+			// Own profile - use store data
+			const currentUser = userStore.current;
+			if (currentUser?.nickname === nickname) {
+				profileData = currentUser;
 				status = 'success';
 				lastLoadedNickname = nickname;
 				return;
 			}
 
-			// Check memory cache
+			// Check cache
 			if (profileCache.has(nickname)) {
-				profileData = profileCache.get(nickname) || null;
+				profileData = profileCache.get(nickname)!;
 				status = 'success';
 				lastLoadedNickname = nickname;
 				return;
@@ -66,9 +65,7 @@ export function useProfile() {
 
 			timeoutId = setTimeout(async () => {
 				try {
-					const results = await searchService.search(nickname, 'less');
-					const foundUser = results?.find((u) => u.nickname === nickname) || null;
-
+					const foundUser = await searchService.findByNickname(nickname);
 					if (foundUser) {
 						profileData = foundUser;
 						profileCache.set(nickname, foundUser);
@@ -77,23 +74,32 @@ export function useProfile() {
 						status = 'not_found';
 						error = 'User not found';
 					}
-				} catch (err) {
+				} catch {
 					status = 'error';
 					error = 'Failed to load profile';
 				}
-			}, 300);
+			}, UI.DEBOUNCE_DELAY);
 		}
 
 		loadProfile();
-
 		return () => clearTimeout(timeoutId);
 	});
 
 	return {
-		get nickname() { return nickname; },
-		get profileData() { return profileData; },
-		get status() { return status; },
-		get error() { return error; },
-		get isOwnProfile() { return isOwnProfile; }
+		get nickname() {
+			return nickname;
+		},
+		get profileData() {
+			return profileData;
+		},
+		get status() {
+			return status;
+		},
+		get error() {
+			return error;
+		},
+		get isOwnProfile() {
+			return isOwnProfile;
+		},
 	};
 }

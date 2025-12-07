@@ -1,6 +1,6 @@
 <script lang="ts">
-	import UserAvatar from '~/lib/components/UserAvatar.svelte';
-	import type { User, SuggestedUser } from '~/lib/types/user';
+	import { UserAvatar } from '$lib/components';
+	import type { User, SuggestedUser } from '$lib/types';
 
 	interface Props {
 		user: User | SuggestedUser;
@@ -17,7 +17,7 @@
 		<header class="flex justify-between items-start">
 			<UserAvatar {user} />
 			<button
-				class="rounded-md py-4 px-6 text-base text-white font-normal bg-[var(--primary)]"
+				class="rounded-md py-4 px-6 text-base text-white font-normal bg-primary"
 			>
 				Follow
 			</button>

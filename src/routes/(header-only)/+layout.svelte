@@ -1,8 +1,9 @@
 <script lang="ts">
-	import Header from '~/lib/layouts/Header.svelte';
+	import { Header } from '$lib/layouts';
+	import type { Snippet } from 'svelte';
 
 	interface Props {
-		children: any;
+		children: Snippet;
 	}
 
 	let { children }: Props = $props();

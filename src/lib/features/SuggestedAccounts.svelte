@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { IconCheckCircle } from '~/lib/components/icons';
-	import UserAvatar from '~/lib/components/UserAvatar.svelte';
-	import AccountPreview from './AccountPreview.svelte';
-	import Tooltip from '~/lib/components/Tooltip.svelte';
-	import type { SuggestedUser } from '~/lib/types/user';
 	import { goto } from '$app/navigation';
+	import { IconCheckCircle } from '$lib/components/icons';
+	import { UserAvatar, Tooltip } from '$lib/components';
+	import AccountPreview from './AccountPreview.svelte';
+	import { UI } from '$lib/constants';
+	import type { SuggestedUser } from '$lib/types';
 
 	interface Props {
 		label: string;
@@ -20,7 +20,7 @@
 
 <div class="max-h-[250px] overflow-y-auto">
 	{#each data as account (account.id)}
-		<Tooltip offset={[-20, -20]} delay={500} placement="bottom">
+		<Tooltip offset={UI.TOOLTIP_OFFSET} delay={UI.TOOLTIP_DELAY} placement="bottom">
 			{#snippet children()}
 				<button
 					type="button"
@@ -57,7 +57,7 @@
 
 {#if onSeeAll}
 	<button
-		class="block px-2 pb-2 text-base font-normal text-[#fe2c55] cursor-pointer w-full text-left"
+		class="block px-2 pb-2 text-base font-normal text-primary cursor-pointer w-full text-left"
 		onclick={onSeeAll}
 	>
 		See all

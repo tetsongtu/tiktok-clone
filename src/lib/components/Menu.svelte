@@ -1,10 +1,5 @@
-<script lang="ts">
-	import { IconCaretRight } from '~/lib/components/icons';
-	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
-	import classNames from 'classnames';
-
-	interface MenuItem {
+<script lang="ts" module>
+	export interface MenuItem {
 		icon?: string;
 		title: string;
 		to?: string;
@@ -15,11 +10,19 @@
 			data: MenuItem[];
 		};
 	}
+</script>
+
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import classNames from 'classnames';
+	import type { Snippet } from 'svelte';
+	import { IconCaretRight } from '$lib/components/icons';
 
 	interface Props {
 		items: MenuItem[];
 		onChange?: (item: MenuItem) => void;
-		children: any;
+		children: Snippet;
 		hover?: boolean;
 	}
 

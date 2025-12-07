@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { IconSpinner } from '~/lib/components/icons';
+	import { IconSpinner } from '$lib/components/icons';
 	import ProfilePost from './ProfilePost.svelte';
-	import type { Video } from '~/lib/types/user';
+	import type { Video } from '$lib/types';
 
 	interface Props {
 		activeTab: 'videos' | 'liked';

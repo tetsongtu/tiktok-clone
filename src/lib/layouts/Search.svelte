@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { IconSearch, IconClose, IconCheckCircle, IconSpinner } from '~/lib/components/icons';
 	import { onMount } from 'svelte';
 	import classNames from 'classnames';
-	import * as searchServices from '~/lib/services/searchService';
-	import Tooltip from '~/lib/components/Tooltip.svelte';
-	import type { User } from '~/lib/types/user';
+	import { IconSearch, IconClose, IconCheckCircle, IconSpinner } from '$lib/components/icons';
+	import { Tooltip } from '$lib/components';
+	import { searchService } from '$lib/services';
+	import { UI } from '$lib/constants';
+	import type { User } from '$lib/types';
 
 	let searchValue = $state('');
 	let searchResult = $state<User[]>([]);
@@ -21,8 +22,7 @@
 
 		loading = true;
 		try {
-			const result = await searchServices.search(query);
-			searchResult = result;
+			searchResult = await searchService.search(query);
 		} catch (error) {
 			console.error('Search error:', error);
 			searchResult = [];
@@ -47,7 +47,7 @@
 		clearTimeout(debounceTimer);
 		debounceTimer = setTimeout(() => {
 			searchAccounts(searchValue);
-		}, 500);
+		}, UI.DEBOUNCE_DELAY + 200);
 	}
 
 	function handleClear() {

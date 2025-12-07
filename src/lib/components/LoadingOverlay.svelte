@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { IconSpinner } from '$lib/components/icons';
 	import NotificationBanner from './NotificationBanner.svelte';
-	import { IconSpinner } from '~/lib/components/icons';
 </script>
 
 <NotificationBanner type="info">

@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { IconSpinner, IconUserCircle } from '~/lib/components/icons';
-
-	type Status = 'idle' | 'loading' | 'success' | 'error' | 'not_found';
+	import { IconSpinner, IconUserCircle } from '$lib/components/icons';
+	import type { ProfileStatus } from '$lib/types';
 
 	interface Props {
-		status: Status;
+		status: ProfileStatus;
 		error?: string;
 		nickname: string;
 	}
@@ -16,7 +15,7 @@
 	<div class="text-center">
 		{#if status === 'loading'}
 			<div class="flex flex-col items-center gap-4">
-				<IconSpinner class="w-12 h-12 text-[#F02C56] animate-spin" />
+				<IconSpinner class="w-12 h-12 text-primary animate-spin" />
 				<p class="text-gray-600 text-base">Đang tải hồ sơ...</p>
 			</div>
 		{:else}

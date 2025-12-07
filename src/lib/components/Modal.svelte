@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import type { Snippet } from 'svelte';
 
 	interface Props {
 		isOpen: boolean;
@@ -8,7 +9,7 @@
 		title?: string;
 		maxWidth?: string;
 		maxHeight?: string;
-		children: any;
+		children: Snippet;
 	}
 
 	let {
@@ -22,17 +23,14 @@
 	}: Props = $props();
 
 	function handleClickOutside(e: MouseEvent) {
-		const target = e.target as HTMLElement;
-		if (target.classList.contains('modal-overlay')) {
+		if ((e.target as HTMLElement).classList.contains('modal-overlay')) {
 			onClose();
 		}
 	}
 
 	onMount(() => {
 		const handleEscape = (e: KeyboardEvent) => {
-			if (e.key === 'Escape' && isOpen) {
-				onClose();
-			}
+			if (e.key === 'Escape' && isOpen) onClose();
 		};
 		document.addEventListener('keydown', handleEscape);
 		return () => document.removeEventListener('keydown', handleEscape);

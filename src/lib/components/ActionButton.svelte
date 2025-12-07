@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { IconSpinner } from '~/lib/components/icons';
 	import classNames from 'classnames';
+	import type { Snippet } from 'svelte';
+	import { IconSpinner } from '$lib/components/icons';
 
 	interface Props {
 		count?: number;
@@ -8,7 +9,7 @@
 		disabled?: boolean;
 		isActive?: boolean;
 		isLoading?: boolean;
-		children: any;
+		children: Snippet;
 	}
 
 	let {

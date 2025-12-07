@@ -1,7 +1,7 @@
 <script lang="ts">
-	import UserAvatar from '~/lib/components/UserAvatar.svelte';
-	import { IconPlus } from '~/lib/components/icons';
-	import type { User } from '~/lib/types/user';
+	import { UserAvatar } from '$lib/components';
+	import { IconPlus } from '$lib/components/icons';
+	import type { User } from '$lib/types';
 
 	interface Props {
 		user?: User;
@@ -19,7 +19,7 @@
 	<button
 		aria-label="Follow"
 		onclick={onFollowClick}
-		class="text-white flex justify-center items-center absolute size-8 rounded-full top-14 bg-[var(--primary)]"
+		class="text-white flex justify-center items-center absolute size-8 rounded-full top-14 bg-primary"
 	>
 		<IconPlus class="w-3 h-3" />
 	</button>

@@ -1,6 +1,6 @@
-import { commentStore } from '~/lib/stores/commentStore';
 import { replaceState } from '$app/navigation';
-import type { Video } from '~/lib/types/user';
+import { commentStore } from '$lib/stores';
+import type { Video } from '$lib/types';
 
 export function useVideoObserver(
 	video: Video,

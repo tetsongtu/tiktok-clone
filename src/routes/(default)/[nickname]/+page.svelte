@@ -1,12 +1,14 @@
 <script lang="ts">
-	import ProfileHeader from '~/lib/features/ProfileHeader.svelte';
-	import ProfileStats from '~/lib/features/ProfileStats.svelte';
-	import ProfileTabs from '~/lib/features/ProfileTabs.svelte';
-	import ProfileContent from '~/lib/features/ProfileContent.svelte';
-	import ProfileLoading from '~/lib/features/ProfileLoading.svelte';
-	import EditProfileModal from '~/lib/features/EditProfileModal.svelte';
-	import { useProfile } from '~/lib/hooks/useProfile.svelte';
-	import { useProfileVideos } from '~/lib/hooks/useProfileVideos.svelte';
+	import {
+		ProfileHeader,
+		ProfileStats,
+		ProfileTabs,
+		ProfileContent,
+		ProfileLoading,
+		EditProfileModal
+	} from '$lib/features';
+	import { useProfile } from '$lib/hooks';
+	import { useProfileVideos } from '$lib/hooks';
 
 	const profile = useProfile();
 	const videos = useProfileVideos(() => profile.profileData, () => profile.nickname);

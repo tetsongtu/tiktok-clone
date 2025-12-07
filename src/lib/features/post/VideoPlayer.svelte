@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { IconPlay, IconMute, IconVolume } from '~/lib/components/icons';
+	import { IconPlay, IconMute, IconVolume } from '$lib/components/icons';
+	import type { AspectRatio, VideoState } from '$lib/types';
 
 	interface Props {
 		src: string;
-		aspectRatio: { class: string; isWide: boolean };
+		aspectRatio: AspectRatio;
 		isAnyCommentOpen: boolean;
 		onVideoMount?: (el: HTMLVideoElement) => void;
 	}
@@ -11,7 +12,7 @@
 	let { src, aspectRatio, isAnyCommentOpen, onVideoMount }: Props = $props();
 
 	let videoEl = $state<HTMLVideoElement>();
-	let videoState = $state({ isPlaying: true, isMuted: true });
+	let videoState = $state<VideoState>({ isPlaying: true, isMuted: true });
 
 	const togglePlayPause = () => {
 		if (!videoEl) return;

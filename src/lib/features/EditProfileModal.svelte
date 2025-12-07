@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { IconPencil, IconSpinner } from '~/lib/components/icons';
-	import Modal from '~/lib/components/Modal.svelte';
-	import Button from '~/lib/components/Button.svelte';
-	import UserAvatar from '~/lib/components/UserAvatar.svelte';
-	import { userStore } from '~/lib/stores/userStore';
-	import { GUEST_USER } from '~/lib/constants/guestUser';
+	import { IconPencil, IconSpinner } from '$lib/components/icons';
+	import { Modal, Button, UserAvatar } from '$lib/components';
+	import { userStore } from '$lib/stores';
+	import { GUEST_USER } from '$lib/constants';
 
 	interface Props {
 		onClose: () => void;
@@ -20,7 +18,7 @@
 	let previewImageUrl = $state<string | null>(null);
 	let fileInput = $state<HTMLInputElement>();
 
-	const user = $derived($userStore || GUEST_USER);
+	const user = $derived(userStore.current || GUEST_USER);
 
 	function handleImageSelect(e: Event) {
 		const target = e.target as HTMLInputElement;

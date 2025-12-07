@@ -1,47 +1,23 @@
 <script lang="ts">
 	import MenuItem from './MenuItem.svelte';
 	import Search from './Search.svelte';
-	import SuggestedAccounts from '~/lib/features/SuggestedAccounts.svelte';
-	import * as userServices from '~/lib/services/userService';
-	import type { SuggestedUser } from '~/lib/types/user';
+	import { SuggestedAccounts } from '$lib/features';
+	import { userService } from '$lib/services';
+	import { SIDEBAR_MENU, PAGINATION } from '$lib/constants';
+	import type { SuggestedUser } from '$lib/types';
 
-	const INIT_PAGE = 1;
-	const PER_PAGE = 5;
-
-	let currentPage = $state(INIT_PAGE);
+	let currentPage = $state(PAGINATION.INIT_PAGE);
 	let suggestedUsers = $state<SuggestedUser[]>([]);
 	let fetchedRef = false;
 
-	const SIDEBAR_MENU = [
-		{
-			title: 'For You',
-			to: '/',
-			icon: 'house',
-			iconFill: 'house-fill',
-		},
-		{
-			title: 'Following',
-			to: '/following',
-			icon: 'users',
-			iconFill: 'users-fill',
-		},
-		{
-			title: 'LIVE',
-			to: '/live',
-			icon: 'video',
-			iconFill: 'video-fill',
-		},
-	];
-
-	// Load when page changes (like useEffect with [page])
 	$effect(() => {
-		if (fetchedRef && currentPage === INIT_PAGE) return;
+		if (fetchedRef && currentPage === PAGINATION.INIT_PAGE) return;
 		fetchedRef = true;
 
-		userServices
-			.getSuggested({ page: currentPage, perPage: PER_PAGE })
+		userService
+			.getSuggested({ page: currentPage, perPage: PAGINATION.PER_PAGE })
 			.then((data) => {
-				suggestedUsers = currentPage === INIT_PAGE ? data : [...suggestedUsers, ...data];
+				suggestedUsers = currentPage === PAGINATION.INIT_PAGE ? data : [...suggestedUsers, ...data];
 			})
 			.catch(console.error);
 	});

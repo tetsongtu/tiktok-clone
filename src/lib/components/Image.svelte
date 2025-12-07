@@ -1,6 +1,6 @@
 <script lang="ts">
 	import classNames from 'classnames';
-	import images from '~/lib/assets/images';
+	import images from '$lib/assets/images';
 
 	interface Props {
 		src: string;

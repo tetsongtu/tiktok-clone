@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { IconPencil } from '~/lib/components/icons';
-	import UserAvatar from '~/lib/components/UserAvatar.svelte';
-	import type { User, SuggestedUser } from '~/lib/types/user';
+	import { IconPencil } from '$lib/components/icons';
+	import { UserAvatar } from '$lib/components';
+	import type { User, SuggestedUser } from '$lib/types';
 
 	interface Props {
 		profileData: User | SuggestedUser;
@@ -37,7 +37,7 @@
 			</button>
 		{:else}
 			<button
-				class="inline-flex items-center justify-center rounded-lg py-2.5 px-6 text-base text-white font-normal bg-[#F02C56] shadow-md"
+				class="inline-flex items-center justify-center rounded-lg py-2.5 px-6 text-base text-white font-normal bg-primary shadow-md"
 			>
 				Theo dõi
 			</button>

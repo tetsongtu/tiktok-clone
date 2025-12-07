@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { IconUpload, IconSpinner, IconCheckCircle, IconSplitVertical } from '~/lib/components/icons';
-	import Button from '~/lib/components/Button.svelte';
+	import { IconUpload, IconSpinner, IconCheckCircle, IconSplitVertical } from '$lib/components/icons';
+	import { Button } from '$lib/components';
 
 	let fileDisplay = $state('');
 	let caption = $state('');
@@ -52,9 +52,7 @@
 					<p class="text-sm">Up to 30 minutes</p>
 					<p class="text-sm">Less than 2 GB</p>
 				</div>
-				<span
-					class="w-4/5 mt-8 py-1.5 px-2 rounded-sm text-base text-white bg-[#F02C56] cursor-pointer"
-				>
+				<span class="w-4/5 mt-8 py-1.5 px-2 rounded-sm text-base text-white bg-primary cursor-pointer">
 					Select file
 				</span>
 				<input
@@ -74,7 +72,7 @@
 						class="absolute inset-0 flex items-center justify-center z-20 rounded-xl bg-black/50"
 					>
 						<div class="flex items-center gap-1">
-							<IconSpinner class="w-8 h-8 text-[#F02C56] animate-spin" />
+							<IconSpinner class="w-8 h-8 text-primary animate-spin" />
 							<span class="text-white font-bold">Uploading...</span>
 						</div>
 					</div>
@@ -91,12 +89,12 @@
 					class="absolute -bottom-12 z-50 flex justify-center gap-32 w-full p-2 border border-gray-300 rounded-xl"
 				>
 					<div class="flex items-center overflow-hidden text-ellipsis whitespace-nowrap">
-						<IconCheckCircle class="w-4 h-4 shrink-0 text-[#F02C56]" />
+						<IconCheckCircle class="w-4 h-4 shrink-0 text-primary" />
 						<span class="pl-1 overflow-hidden text-xs font-semibold text-ellipsis">
 							{file?.name}
 						</span>
 					</div>
-					<span class="ml-2 text-xs font-semibold text-[#F02C56]">Cancel</span>
+					<span class="ml-2 text-xs font-semibold text-primary">Cancel</span>
 				</button>
 			</div>
 		{/if}

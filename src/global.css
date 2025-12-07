@@ -1,59 +1,57 @@
 @import 'tailwindcss';
 
-/* CSS Variables */
+/* ============================================
+   Tailwind Theme Extensions
+   ============================================ */
+@theme {
+	--color-primary: #fe2c55;
+	--color-primary-hover: #d02648;
+	--color-text: #161823;
+}
+
+/* ============================================
+   CSS Custom Properties
+   ============================================ */
 :root {
-    /* Colors */
-    --primary: #fe2c55;
-    --text-color: #161823;
-
-    /* Typography */
-    --font-family: 'Roboto', sans-serif;
-    --font-size-base: 16px;
-    --font-weight-normal: 400;
-    --font-weight-bold: 700;
+	--font-family: 'Roboto', sans-serif;
 }
 
-/* Reset */
-* {
-    box-sizing: border-box;
+/* ============================================
+   Base Reset & Defaults
+   ============================================ */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
 }
 
-/* Body */
 body {
-    margin: 0;
-    overflow: hidden;
-    font-family: var(--font-family);
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-normal);
-    text-rendering: optimizeSpeed;
-    color: var(--text-color);
-    line-height: 1.5;
+	margin: 0;
+	overflow: hidden;
+	font-family: var(--font-family);
+	font-size: 16px;
+	font-weight: 400;
+	color: var(--text-color);
+	line-height: 1.5;
+	text-rendering: optimizeSpeed;
 }
 
-/* Scrollbar */
+/* Hide scrollbar */
 ::-webkit-scrollbar {
-    width: 0;
+	width: 0;
 }
 
-/* Global Elements */
+/* ============================================
+   Typography
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--font-family);
+	font-weight: 700;
+	line-height: 1.2;
+}
+
 button {
-    font-family: var(--font-family);
-    font-size: var(--font-size-base);
-    cursor: pointer;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: var(--font-family);
-    font-weight: var(--font-weight-bold);
-    line-height: 1.2;
-}
-
-p {
-    font-family: var(--font-family);
-    line-height: 1.5;
+	font-family: var(--font-family);
+	font-size: inherit;
+	cursor: pointer;
 }

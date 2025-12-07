@@ -1,15 +1,12 @@
 <script lang="ts">
-	import { userStore } from '~/lib/stores/userStore';
-	import Button from '~/lib/components/Button.svelte';
-	import UserAvatar from '~/lib/components/UserAvatar.svelte';
-	import Menu from '~/lib/components/Menu.svelte';
-	import AuthModal from '~/lib/features/AuthModal.svelte';
-	import Tooltip from '~/lib/components/Tooltip.svelte';
-	import { IconUpload, IconMessage, IconInbox, IconPlus, IconDots } from '~/lib/components/icons';
+	import { userStore } from '$lib/stores';
+	import { Button, UserAvatar, Menu, Tooltip } from '$lib/components';
+	import { AuthModal } from '$lib/features';
+	import { IconUpload, IconMessage, IconInbox, IconPlus, IconDots } from '$lib/components/icons';
 
 	let showAuthModal = $state(false);
-	const user = $derived($userStore);
-	const isLoggedIn = $derived(user !== null);
+	const user = $derived(userStore.current);
+	const isLoggedIn = $derived(userStore.isLoggedIn());
 
 	const MENU_ITEMS = [
 		{
@@ -28,7 +25,7 @@
 	];
 
 	function handleLogout() {
-		userStore.set(null);
+		userStore.logout();
 	}
 
 	function openAuthModal() {
@@ -96,7 +93,7 @@
 	<Menu items={userMenu} hover={true}>
 		<div class="ml-2">
 			{#if isLoggedIn}
-				<UserAvatar size={10} {user} />
+				<UserAvatar size={10} user={user ?? undefined} />
 			{:else}
 				<div class="p-2 hover:bg-gray-100 rounded-full">
 					<IconDots class="w-6 h-6" />

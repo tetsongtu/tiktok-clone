@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { IconClose, IconHeart, IconShare } from '~/lib/components/icons';
-	import { commentStore } from '~/lib/stores/commentStore';
+	import { IconClose, IconHeart, IconShare } from '$lib/components/icons';
+	import { commentStore } from '$lib/stores';
 	import { goto, replaceState } from '$app/navigation';
-	import type { Video } from '~/lib/types/user';
+	import type { Video } from '$lib/types';
 
 	interface Props {
 		post: Video | null;
@@ -28,7 +28,7 @@
 			<button 
 				aria-label="Close comments"
 				onclick={() => {
-					commentStore.setActiveVideoId(null);
+					commentStore.close();
 					replaceState('/', {});
 				}} 
 				class="text-gray-500 hover:text-gray-700"

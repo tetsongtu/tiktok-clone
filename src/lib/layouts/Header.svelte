@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { commentStore } from '~/lib/stores/commentStore';
-	import Image from '~/lib/components/Image.svelte';
-	import LoadingOverlay from '~/lib/components/LoadingOverlay.svelte';
-	import images from '~/lib/assets/images';
+	import { Image, LoadingOverlay } from '$lib/components';
+	import { commentStore } from '$lib/stores';
+	import { UI } from '$lib/constants';
+	import images from '$lib/assets/images';
 
 	let loading = $state(false);
 
@@ -10,12 +10,12 @@
 		e.preventDefault();
 		loading = true;
 
-		commentStore.setActiveVideoId(null);
+		commentStore.close();
 		(window as any).closeCommentDrawer?.();
 
 		setTimeout(() => {
 			window.location.href = '/';
-		}, 300);
+		}, UI.LOADING_DELAY);
 	}
 </script>
 

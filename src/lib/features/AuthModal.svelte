@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { IconUserCircle, IconSmiley } from '~/lib/components/icons';
-	import { userStore } from '~/lib/stores/userStore';
-	import Modal from '~/lib/components/Modal.svelte';
-	import Button from '~/lib/components/Button.svelte';
-	import { GUEST_USER } from '~/lib/constants/guestUser';
+	import { IconUserCircle, IconSmiley } from '$lib/components/icons';
+	import { userStore } from '$lib/stores';
+	import { Modal, Button } from '$lib/components';
+	import { GUEST_USER } from '$lib/constants';
 
 	interface Props {
 		isOpen: boolean;
@@ -49,9 +48,9 @@
 		onClose();
 	}
 
-	function handleSuccess(userData?: any) {
+	function handleSuccess(userData?: typeof GUEST_USER) {
 		if (userData) {
-			userStore.set(userData);
+			userStore.login(userData);
 		}
 		resetAndClose();
 	}
@@ -158,7 +157,7 @@
 		<div class="mt-6 text-center">
 			<p class="flex items-center justify-center gap-2">
 				<span class="text-gray-600">{config.footerText}</span>
-				<button onclick={switchView} class="text-[var(--primary)] font-semibold">
+				<button onclick={switchView} class="text-primary font-semibold">
 					{config.footerAction}
 				</button>
 			</p>

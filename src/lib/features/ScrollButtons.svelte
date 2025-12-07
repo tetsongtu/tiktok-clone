@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { IconArrowUp, IconArrowDown } from '~/lib/components/icons';
+	import { IconArrowUp, IconArrowDown } from '$lib/components/icons';
 
 	let ready = $state(false);
 	let canScrollUp = $state(false);

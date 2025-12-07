@@ -1,21 +1,23 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
 	interface Props {
 		class?: string;
 		size?: number | string;
-		children: any;
+		children: Snippet;
 	}
 
-	let props: Props = $props();
-	
-	const sizeValue = $derived(typeof props.size === 'number' ? `${props.size}px` : (props.size || '24px'));
+	let { class: className = '', size = 24, children }: Props = $props();
+
+	const sizeValue = $derived(typeof size === 'number' ? `${size}px` : size);
 </script>
 
 <svg
-	class={props.class || ''}
+	class={className}
 	style="width: {sizeValue}; height: {sizeValue}"
 	viewBox="0 0 256 256"
 	fill="currentColor"
 	aria-hidden="true"
 >
-	{@render props.children()}
+	{@render children()}
 </svg>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { IconChartBar } from '~/lib/components/icons';
-	import type { Video } from '~/lib/types/user';
+	import { IconChartBar } from '$lib/components/icons';
+	import type { Video } from '$lib/types';
 
 	interface Props {
 		video: Video;

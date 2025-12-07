@@ -1,6 +1,6 @@
 import { page } from '$app/state';
-import { getCachedVideo, setCachedVideo } from '~/lib/utils/profileCache';
-import type { User, SuggestedUser, Video } from '~/lib/types/user';
+import { getCachedVideo, setCachedVideo } from '$lib/utils';
+import type { User, SuggestedUser, Video } from '$lib/types';
 
 export function useProfileVideos(getProfileData: () => SuggestedUser | User | null, getNickname: () => string) {
 	let userVideos = $state<Video[]>([]);

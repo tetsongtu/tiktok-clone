@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { User, SuggestedUser } from '~/lib/types/user';
+	import type { User, SuggestedUser } from '$lib/types';
 
 	interface Props {
 		profileData: User | SuggestedUser;

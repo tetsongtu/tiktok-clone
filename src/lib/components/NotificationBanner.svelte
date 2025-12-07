@@ -1,12 +1,16 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
+	type BannerType = 'info' | 'warning' | 'error' | 'success';
+
 	interface Props {
-		type?: 'info' | 'warning' | 'error' | 'success';
-		children: any;
+		type?: BannerType;
+		children: Snippet;
 	}
 
 	let { type = 'info', children }: Props = $props();
 
-	const styles = {
+	const styles: Record<BannerType, string> = {
 		info: 'bg-gradient-to-r from-purple-600 to-pink-600',
 		warning: 'bg-gradient-to-br from-red-400 to-red-500',
 		error: 'bg-gradient-to-r from-red-600 to-red-700',
