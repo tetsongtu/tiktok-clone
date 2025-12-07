@@ -7,9 +7,10 @@
 		activeTab: 'videos' | 'liked';
 		userVideos: Video[];
 		isOwnProfile: boolean;
+		nickname: string;
 	}
 
-	let { activeTab, userVideos, isOwnProfile }: Props = $props();
+	let { activeTab, userVideos, isOwnProfile, nickname }: Props = $props();
 </script>
 
 <div class="mt-6">
@@ -17,7 +18,7 @@
 		{#if userVideos.length > 0}
 			<div class="grid grid-cols-6 gap-4">
 				{#each userVideos as video (video.id)}
-					<ProfilePost {video} />
+					<ProfilePost {video} {nickname} />
 				{/each}
 			</div>
 		{:else}

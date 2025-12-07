@@ -35,7 +35,7 @@
 
 		<ProfileTabs {activeTab} onTabChange={(tab) => (activeTab = tab)} />
 
-		<ProfileContent {activeTab} userVideos={videos.userVideos} isOwnProfile={profile.isOwnProfile} />
+		<ProfileContent {activeTab} userVideos={videos.userVideos} isOwnProfile={profile.isOwnProfile} nickname={profile.nickname} />
 	</div>
 {/if}
 
