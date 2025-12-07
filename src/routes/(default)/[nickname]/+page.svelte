@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import { userStore } from '~/lib/stores/userStore';
 	import UserAvatar from '~/lib/components/UserAvatar.svelte';
-	import ProfilePost from '~/lib/components/ProfilePost.svelte';
+	import ProfilePost from '~/lib/features/ProfilePost.svelte';
 	import EditProfileModal from '~/lib/features/EditProfileModal.svelte';
 	import * as searchService from '~/lib/services/searchService';
 

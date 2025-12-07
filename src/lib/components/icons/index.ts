@@ -8,3 +8,4 @@ export { default as IconSearch } from './IconSearch.svelte';
 export { default as IconClose } from './IconClose.svelte';
 export { default as IconHeart } from './IconHeart.svelte';
 export { default as IconSpinner } from './IconSpinner.svelte';
+export { default as IconPlay } from './IconPlay.svelte';

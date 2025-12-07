@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { commentStore } from '~/lib/stores/commentStore';
-	import UserAvatar from './UserAvatar.svelte';
-	import ActionButton from './ActionButton.svelte';
+	import UserAvatar from '~/lib/components/UserAvatar.svelte';
+	import ActionButton from '~/lib/components/ActionButton.svelte';
 	import { goto } from '$app/navigation';
 
 	interface Props {

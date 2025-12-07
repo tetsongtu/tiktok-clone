@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Header from '~/lib/layouts/components/Header.svelte';
+	import Header from '~/lib/layouts/Header.svelte';
 
 	interface Props {
 		children: any;

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Image from '~/lib/components/Image.svelte';
-	import LoadingOverlay from './LoadingOverlay.svelte';
+	import LoadingOverlay from '~/lib/components/LoadingOverlay.svelte';
 	import images from '~/lib/assets/images';
 
 	let loading = $state(false);

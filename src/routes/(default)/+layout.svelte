@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Header from '~/lib/layouts/components/Header.svelte';
-	import Sidebar from '~/lib/layouts/components/Sidebar.svelte';
-	import TopRightActionBar from '~/lib/layouts/components/TopRightActionBar.svelte';
-	import ScrollButtons from '~/lib/layouts/components/ScrollButtons.svelte';
+	import Header from '~/lib/layouts/Header.svelte';
+	import Sidebar from '~/lib/layouts/Sidebar.svelte';
+	import TopRightActionBar from '~/lib/layouts/TopRightActionBar.svelte';
+	import ScrollButtons from '~/lib/features/ScrollButtons.svelte';
 	import type { Snippet } from 'svelte';
 
 	interface Props {
