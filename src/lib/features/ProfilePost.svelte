@@ -19,7 +19,7 @@
 </script>
 
 <div class="relative cursor-pointer">
-	<a href="/post/{video.id}/{video.user?.id}" aria-label="View video post">
+	<a href="/@{video.user?.nickname}/video/{video.user?.id}" aria-label="View video post">
 		<div 
 			role="button"
 			tabindex="0"

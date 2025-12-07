@@ -29,7 +29,7 @@
 
 	const handleUserClick = () => {
 		if (video?.user) {
-			goto(`/@${video.user.nickname}`, { state: { video: { file_url: video.file_url } } });
+			goto(`/@${video.user.nickname}`, { state: { video: { file_url: video.file_url, id:video.id } } });
 		}
 	};
 

@@ -28,6 +28,7 @@
 						e.stopPropagation();
 						const video = account.popular_video ? {
 							file_url: account.popular_video.file_url,
+							id: account.popular_video.id
 						} : undefined;
 						goto(`/@${account.nickname}`, { state: { video } });
 					}}
