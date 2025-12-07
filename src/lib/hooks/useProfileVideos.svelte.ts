@@ -2,10 +2,13 @@ import { page } from '$app/state';
 import { getCachedVideo, setCachedVideo } from '~/lib/utils/profileCache';
 import type { User, SuggestedUser, Video } from '~/lib/types/user';
 
-export function useProfileVideos(profileData: SuggestedUser | User | null, nickname: string) {
+export function useProfileVideos(getProfileData: () => SuggestedUser | User | null, getNickname: () => string) {
 	let userVideos = $state<Video[]>([]);
 
 	$effect(() => {
+		const profileData = getProfileData();
+		const nickname = getNickname();
+		
 		if (!profileData) {
 			userVideos = [];
 			return;

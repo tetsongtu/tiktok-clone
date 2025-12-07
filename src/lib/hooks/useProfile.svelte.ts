@@ -7,15 +7,21 @@ import type { User, SuggestedUser } from '~/lib/types/user';
 type Status = 'idle' | 'loading' | 'success' | 'error' | 'not_found';
 
 export function useProfile() {
-	const rawNickname = $derived(page.params.nickname || '');
-	const nickname = $derived(rawNickname.replace('@', '').trim());
-	const user = $derived(get(userStore));
-	const isOwnProfile = $derived(user?.nickname === nickname);
+	let rawNickname = $state(page.params.nickname || '');
+	let nickname = $derived(rawNickname.replace('@', '').trim());
+	let user = $state(get(userStore));
+	let isOwnProfile = $derived(user?.nickname === nickname);
 
 	let profileData = $state<SuggestedUser | User | null>(null);
 	let status = $state<Status>('idle');
 	let error = $state<string>('');
 	let lastLoadedNickname = $state<string>('');
+
+	// Update rawNickname when page params change
+	$effect(() => {
+		rawNickname = page.params.nickname || '';
+		user = get(userStore);
+	});
 
 	const profileCache = new Map<string, SuggestedUser | User>();
 
@@ -27,11 +33,6 @@ export function useProfile() {
 			if (lastLoadedNickname !== nickname) {
 				profileData = null;
 				status = 'idle';
-			}
-
-			// Validate URL format
-			if (!rawNickname.startsWith('@') && rawNickname !== nickname) {
-				return;
 			}
 
 			// Validate nickname
