@@ -15,7 +15,7 @@
 
 	let hasClickedLike = $state(false);
 	let activeVideoId = $state<number | null>(null);
-	let videoState = $state({ isPlaying: true, isMuted: false });
+	let videoState = $state({ isPlaying: true, isMuted: true });
 	let videoEl = $state<HTMLVideoElement>();
 	let containerEl = $state<HTMLDivElement>();
 
@@ -75,6 +75,7 @@
 
 		videoEl.autoplay = true;
 		videoEl.playsInline = true;
+		videoEl.muted = true;
 
 		const observer = new IntersectionObserver(
 			(entries) => {
