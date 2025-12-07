@@ -21,50 +21,22 @@
 	let isFetchingRef = false;
 	let fetchedIdsRef = new Set<number>();
 
-	// Load initial video nếu có, sau đó fetch thêm video random
-	$effect(() => {
-		if (initialVideoId && !videos.find(v => v.id === initialVideoId)) {
-			(async () => {
-				try {
-					const result = await videoService.getVideo(initialVideoId);
-					if (result) {
-						const video = result.data || result;
-						videos = [video];
-						fetchedIdsRef.add(initialVideoId);
-						commentStore.setActiveVideoId(initialVideoId);
-						
-						// Fetch thêm video random ngay sau đó
-						await fetchVideos();
-					}
-				} catch (error) {
-					console.error('Failed to load initial video:', error);
-				}
-			})();
-		}
-	});
-
 	async function fetchVideos() {
 		if (isFetchingRef) return;
 		isFetchingRef = true;
 
-		const attempts = VIDEOS_PER_BATCH * 3;
 		const videoIds: number[] = [];
-		
-		for (let i = 0; i < attempts && videoIds.length < VIDEOS_PER_BATCH; i++) {
+		for (let i = 0; i < VIDEOS_PER_BATCH * 3 && videoIds.length < VIDEOS_PER_BATCH; i++) {
 			const id = Math.floor(Math.random() * MAX_VIDEO_ID) + 1;
-			if (!fetchedIdsRef.has(id)) {
-				videoIds.push(id);
-			}
+			if (!fetchedIdsRef.has(id)) videoIds.push(id);
 		}
 
 		const results = await Promise.allSettled(videoIds.map((id) => videoService.getVideo(id)));
-
 		const newVideos = results
 			.map((result, index) => {
 				if (result.status === 'fulfilled' && result.value) {
 					fetchedIdsRef.add(videoIds[index]);
-					const videoData = result.value.data || result.value;
-					return videoData;
+					return result.value.data || result.value;
 				}
 				return null;
 			})
@@ -74,6 +46,27 @@
 		isFetchingRef = false;
 	}
 
+	// Load initial video
+	$effect(() => {
+		if (!initialVideoId || videos.find(v => v.id === initialVideoId)) return;
+
+		(async () => {
+			try {
+				const result = await videoService.getVideo(initialVideoId);
+				if (result) {
+					const video = result.data || result;
+					videos = [video];
+					fetchedIdsRef.add(initialVideoId);
+					commentStore.setActiveVideoId(initialVideoId);
+					await fetchVideos();
+				}
+			} catch (error) {
+				console.error('Failed to load initial video:', error);
+			}
+		})();
+	});
+
+	// Refresh handler
 	$effect(() => {
 		if (refreshKey > 0) {
 			videos = [];
@@ -82,23 +75,17 @@
 		}
 	});
 
+	// Scroll & window handlers
 	$effect(() => {
-		if (videos.length === 0 && !isFetchingRef) {
-			fetchVideos();
-		}
+		if (videos.length === 0 && !isFetchingRef) fetchVideos();
 
 		const mainEl = document.getElementById('MainContent');
 		const scrollEl = (mainEl?.querySelector('.overflow-y-auto') as HTMLElement) || mainEl;
-
 		if (!scrollEl) return;
 
 		const handleScroll = () => {
-			const isNearBottom =
-				scrollEl.scrollTop + scrollEl.clientHeight >= scrollEl.scrollHeight - SCROLL_THRESHOLD;
-
-			if (isNearBottom && !isFetchingRef) {
-				fetchVideos();
-			}
+			const isNearBottom = scrollEl.scrollTop + scrollEl.clientHeight >= scrollEl.scrollHeight - SCROLL_THRESHOLD;
+			if (isNearBottom && !isFetchingRef) fetchVideos();
 		};
 
 		scrollEl.addEventListener('scroll', handleScroll);
@@ -107,37 +94,13 @@
 			commentStore.setActiveVideoId(null);
 			refreshKey++;
 		};
-
-		(window as any).closeCommentDrawer = () => {
-			commentStore.setActiveVideoId(null);
-		};
+		(window as any).closeCommentDrawer = () => commentStore.setActiveVideoId(null);
 
 		return () => {
 			scrollEl?.removeEventListener('scroll', handleScroll);
 			delete (window as any).refreshVideoFeed;
 			delete (window as any).closeCommentDrawer;
 		};
-	});
-
-	// Scroll đến video khi reload từ URL
-	$effect(() => {
-		const scrollToVideoId = $commentStore.activeVideoId;
-		if (!scrollToVideoId || videos.length === 0) return;
-
-		const videoIndex = videos.findIndex(v => v.id === scrollToVideoId);
-		if (videoIndex === -1) return;
-
-		const mainEl = document.getElementById('MainContent');
-		const scrollEl = (mainEl?.querySelector('.overflow-y-auto') as HTMLElement) || mainEl;
-		
-		if (scrollEl) {
-			// Scroll đến video
-			const videoHeight = window.innerHeight;
-			scrollEl.scrollTo({
-				top: videoIndex * videoHeight,
-				behavior: 'smooth'
-			});
-		}
 	});
 
 	const activeVideoId = $derived($commentStore.activeVideoId);
@@ -192,35 +155,25 @@
 
 			<!-- Comments List -->
 			<div class="flex-1 overflow-y-auto p-4 space-y-4">
-				<div class="flex items-start gap-4">
-					<img src="/default-avatar.png" alt="user1" class="w-8 h-8 rounded-full" />
-					<div class="flex-1">
-						<p class="font-semibold text-sm">user1</p>
-						<p class="text-gray-700 text-sm mt-1">Great video!</p>
-						<div class="flex items-center gap-4 mt-2 text-xs text-gray-500">
-							<button class="hover:text-gray-700">Trả lời</button>
-							<span>10 lượt thích</span>
+				{#each [
+					{ user: 'user1', text: 'Great video!', likes: 10 },
+					{ user: 'user2', text: 'Amazing content 🔥', likes: 5 }
+				] as comment}
+					<div class="flex items-start gap-4">
+						<img src="/default-avatar.png" alt={comment.user} class="w-8 h-8 rounded-full" />
+						<div class="flex-1">
+							<p class="font-semibold text-sm">{comment.user}</p>
+							<p class="text-gray-700 text-sm mt-1">{comment.text}</p>
+							<div class="flex items-center gap-4 mt-2 text-xs text-gray-500">
+								<button class="hover:text-gray-700">Trả lời</button>
+								<span>{comment.likes} lượt thích</span>
+							</div>
 						</div>
+						<button aria-label="Like comment" class="text-gray-400 hover:text-red-500">
+							<IconHeart class="w-4 h-4" />
+						</button>
 					</div>
-					<button aria-label="Like comment" class="text-gray-400 hover:text-red-500">
-						<IconHeart class="w-4 h-4" />
-					</button>
-				</div>
-
-				<div class="flex items-start gap-4">
-					<img src="/default-avatar.png" alt="user2" class="w-8 h-8 rounded-full" />
-					<div class="flex-1">
-						<p class="font-semibold text-sm">user2</p>
-						<p class="text-gray-700 text-sm mt-1">Amazing content 🔥</p>
-						<div class="flex items-center gap-4 mt-2 text-xs text-gray-500">
-							<button class="hover:text-gray-700">Trả lời</button>
-							<span>5 lượt thích</span>
-						</div>
-					</div>
-					<button aria-label="Like comment" class="text-gray-400 hover:text-red-500">
-						<IconHeart class="w-4 h-4" />
-					</button>
-				</div>
+				{/each}
 			</div>
 
 			<!-- Actions & Input -->

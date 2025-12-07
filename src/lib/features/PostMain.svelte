@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { commentStore } from '~/lib/stores/commentStore';
 	import { goto, replaceState } from '$app/navigation';
-	import { page } from '$app/stores';
 	import type { Video } from '~/lib/types/user';
 	import VideoPlayer from './post/VideoPlayer.svelte';
 	import VideoInfo from './post/VideoInfo.svelte';
