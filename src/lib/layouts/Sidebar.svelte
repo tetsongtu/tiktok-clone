@@ -16,16 +16,19 @@
 			title: 'For You',
 			to: '/',
 			icon: 'house',
+			iconFill: 'house-fill',
 		},
 		{
 			title: 'Following',
 			to: '/following',
 			icon: 'users',
+			iconFill: 'users-fill',
 		},
 		{
 			title: 'LIVE',
 			to: '/live',
 			icon: 'video',
+			iconFill: 'video-fill',
 		},
 	];
 
