@@ -165,17 +165,28 @@
 			</div>
 		</div>
 		<div class="absolute -right-22 bottom-0 flex items-center flex-col gap-4">
-			<a class="flex justify-center mb-4 group" href="/@{video?.user?.nickname}">
-				<div class="flex justify-center">
+			<div class="flex justify-center mb-4 group relative">
+				<button
+					type="button"
+					onclick={() => {
+						if (video?.user) {
+							const userData = JSON.parse(JSON.stringify(video.user));
+							const videoData = JSON.parse(JSON.stringify(video));
+							goto(`/@${video.user.nickname}`, { state: { user: userData, video: videoData } });
+						}
+					}}
+					class="flex justify-center"
+				>
 					<UserAvatar user={video.user} size={18} />
-					<button
-						aria-label="Follow"
-						class="text-white flex justify-center items-center absolute size-8 rounded-full top-14 bg-[var(--primary)]"
-					>
-						<IconPlus class="w-3 h-3" />
-					</button>
-				</div>
-			</a>
+				</button>
+				<button
+					aria-label="Follow"
+					onclick={(e) => e.stopPropagation()}
+					class="text-white flex justify-center items-center absolute size-8 rounded-full top-14 bg-[var(--primary)]"
+				>
+					<IconPlus class="w-3 h-3" />
+				</button>
+			</div>
 
 			<div id="post-likes-{video.id}">
 				<!-- Like Button -->

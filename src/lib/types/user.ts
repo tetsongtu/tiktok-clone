@@ -16,6 +16,8 @@ export interface SuggestedUser extends User {
 	popular_video?: Video;
 }
 
+
+
 export interface Video {
 	id: number;
 	description: string;

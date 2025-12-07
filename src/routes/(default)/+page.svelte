@@ -126,9 +126,18 @@
 			<div class="p-4 border-b flex items-start gap-4">
 				<img src={activePost.user?.avatar || '/default-avatar.png'} alt={activePost.user?.nickname} class="w-10 h-10 rounded-full" />
 				<div class="flex-1">
-					<a href="/@{activePost.user?.nickname}" class="font-semibold hover:underline">
+					<button
+						type="button"
+						onclick={() => {
+							if (activePost.user) {
+								const userData = JSON.parse(JSON.stringify(activePost.user));
+								goto(`/@${activePost.user.nickname}`, { state: { user: userData } });
+							}
+						}}
+						class="font-semibold hover:underline text-left"
+					>
 						{activePost.user?.nickname}
-					</a>
+					</button>
 					<p class="text-gray-600 text-sm mt-1">{activePost.description}</p>
 				</div>
 			</div>

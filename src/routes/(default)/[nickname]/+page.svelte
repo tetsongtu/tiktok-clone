@@ -111,6 +111,13 @@
 			return;
 		}
 
+		// Check if video passed via navigation state
+		const stateVideo = (page.state as any)?.video as Video | undefined;
+		if (stateVideo) {
+			userVideos = [stateVideo];
+			return;
+		}
+
 		// Check if profileData has popular_video (from SuggestedUser)
 		if ('popular_video' in profileData && profileData.popular_video) {
 			userVideos = [profileData.popular_video];
